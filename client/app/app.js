@@ -10,6 +10,10 @@ angular.module('fahrtenbuchApp', [
 ])
   .config(function ($routeProvider, $locationProvider, $httpProvider) {
     $routeProvider
+      .when('/trip', {
+        templateUrl: 'trip/trip.html',
+        controller: 'TripCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
