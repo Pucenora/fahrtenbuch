@@ -22,47 +22,65 @@
         <label class="btn btn-primary" ng-model="trip.type" btn-radio="'business'">business</label>
     	</div>
 	  </div>
+    <hr />
 
     <!-- if business trip -->
   	<div class="form-group">
-  		<label>account:</label> 
-      <div class="btn-group" dropdown is-open="status.isopen">
-	      <button type="button" class="btn btn-primary dropdown-toggle">
-	        Sparda <span class="caret"></span>
-	      </button>
-	      <ul class="dropdown-menu" role="menu">
-          <li ng-repeat="choice in items">
-            <a href>{{choice}}</a>
-          </li>
-	      </ul>
-	    </div><br /> 
-
-	  	<label>client:</label><input type="text" ng-model="trip.client" class="form-control" /><br />
+      <div class="row"> 
+        <div class="col-xs-4">
+      		<label>account:</label><br /> 
+          <div class="btn-group" dropdown is-open="status.isopen">
+    	      <button type="button" class="btn btn-primary dropdown-toggle">
+    	        Sparda <span class="caret"></span>
+    	      </button>
+    	      <ul class="dropdown-menu" role="menu">
+              <li ng-repeat="choice in items">
+                <a href>{{choice}}</a>
+              </li>
+    	      </ul>
+    	    </div><br />
+        </div>
+      
+        <div class="col-xs-8">
+	  	    <label>client:</label><input type="text" ng-model="trip.client" class="form-control" /><br />
+        </div>
+      </div> 
 	  </div>
+    <hr />
 
     <div class="form-group">
-      <label>kilometer start:</label><input type="text" ng-model="trip.trip.kilometer_start" class="form-control" /><br />
-      <label>kilometer end:</label><input type="text" ng-model="trip.trip.kilometer_end" class="form-control" /><br />
-      <label>kilometer:</label><input type="text" ng-model="trip.trip.kilometer" class="form-control" /><br />
-    </div>
-
-    <div class="form-group">    
-      <label>origin:</label>      
       <div class="row"> 
         <div class="col-xs-6">
+          <label>kilometer start:</label><input type="text" ng-model="trip.trip.kilometer_start" class="form-control" /><br />
+        </div>
+
+        <div class="col-xs-6">
+          <label>kilometer end:</label><input type="text" ng-model="trip.trip.kilometer_end" class="form-control" /><br />
+        </div>
+      </div>
+
+      <div class="row"> 
+        <div class="col-xs-12">
+          <label>kilometer:</label><input type="text" ng-model="trip.trip.kilometer" class="form-control" /><br />
+        </div>
+      </div>
+        
+      <label>origin:</label>      
+      <div class="row"> 
+        <div class="col-xs-8">
           <input type="text" ng-model="trip.origin" class="form-control" />
         </div>
-        <div class="col-xs-6">
+        <div class="col-xs-4">
           <input type="datetime" ng-model="trip.origin_time" class="form-control" />
         </div>
       </div>
       
       <label>destination:</label>        
       <div class="row"> 
-        <div class="col-xs-6">
+        <div class="col-xs-8">
           <input type="text" ng-model="trip.destination" class="form-control" />
         </div>
-        <div class="col-xs-6">
+        <div class="col-xs-4">
           <input type="datetime" ng-model="trip.destination_time" class="form-control" />
         </div>
       </div>
