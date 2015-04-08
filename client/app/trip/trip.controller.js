@@ -2,22 +2,36 @@
 
 angular.module('fahrtenbuchApp')
 
-	.controller('CreateTripCtrl', function ($scope, $http, socket) {
+	.controller('TripCtrl', function ($scope, $http, socket, $location) {
+	
+		$scope.addTrip = function() {
+			$location.path("/trip/new");
+		}	
 
-	  $scope.items = [
-	    'Sparda',
-	    'Dresdner',
-	    'Sparkasse'
+	})	
+
+	.controller('CreateTripCtrl', function ($scope, $http, socket, $location) {
+
+	  $scope.accounts = [
+	    {name:'Sparda'},
+	    {name:'Dresdner'},
+	    {name:'Sparkasse'},
 	  ];
 
-		$scope.addThing = function() {
+	  $scope.trip = {};
+	  $scope.trip.account = $scope.accounts[0];
 
-			// @todo validation
+		$scope.addTrip = function() {
 
-			//
-			$http.post('/api/trip', { 
-		  	title: 'Test'
-	  	});
+			console.log($scope.trip);
+
+			// var json_data = JSON.stringify($scope.trip);
+			// console.log(json_data);
+
+			// $http.post('/api/trip', json_data);
+
+			// redirect
+			// $location.path("/trip");
 
 		  // if($scope.corporate == true) {
 		  // 	$scope.type = 'corporate';
@@ -25,31 +39,9 @@ angular.module('fahrtenbuchApp')
 		  // 	$scope.type = 'noncorporate';
 		  // }
 
-		  // $http.post('/api/trip', { 
-		  // 	title: $scope.title,
-		  // 	driver: $scope.driver,
-		  // 	car: $scope.car,
-		  // 	type: $scope.type,
-		  // 	account: $scope.account,
-		  // 	client: $scope.client,
-		  // 	kilometer_start: $scope.kilometer_start,
-		  // 	kilometer_end: $scope.kilometer_end,
-		  // 	kilometer: $scope.kilometer,
-		  // 	origin: $scope.origin,
-		  // 	origin_time: $scope.origin_time,
-		  // 	destination: $scope.destination,
-		  // 	destination_time: $scope.destination_time,
-		  // });
-
-		  // @todo redirect
+			// type, account
 		};
 	})
-
-	.controller('TripCtrl', function ($scope, $http, socket) {
-	
-		// @todo
-
-	})	
 
 	.controller('DetailTripCtrl', function ($scope, $http, socket) {
 
