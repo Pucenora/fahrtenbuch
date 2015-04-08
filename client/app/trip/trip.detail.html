@@ -1,0 +1,61 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div ng-controller="DetailTripCtrl">
+	<div class="container">
+	  <div class="row">
+	    <div class="col-lg-12">
+	      <h1 class="page-header">Details: {{trip.title}}</h1>
+	    </div>
+	  </div>
+
+	  <table class="table table-responsive">
+	    <tr>
+	    	<th>driver:</th>
+	    	<td>{{trip.driver}}</td>
+	  	</tr>
+	  	    
+	  	<tr>
+	    	<th>car:</th>
+	    	<td>{{trip.car}}</td>
+	  	</tr>
+	  	    
+	  	<tr>
+	    	<th>type:</th>
+	    	<td>{{trip.type}}</td>
+	  	</tr>
+	  	
+	  	<!-- if business trip -->    
+	  	<tr>
+	    	<th>account:</th>
+	    	<td>{{trip.account}}</td>
+	  	</tr>
+	  	    
+	  	<tr>
+	    	<th>client:</th>
+	    	<td>{{trip.client}}</td>
+	  	</tr>
+	  	<!-- end -->
+	  	    
+	  	<tr>
+	    	<th>kilometer start</th>
+	    	<td>{{trip.kilometer_start}}</td>
+	  	</tr>
+	  	    
+	  	<tr>
+	    	<th>kilometer end</th>
+	    	<td>{{trip.kilometer_end}}</td>
+	  	</tr>
+
+	  	<tr>
+	    	<th>origin</th>
+	    	<td>{{trip.origin}} {{trip.origin_time | date:"dd.MM.yyyy 'um' HH:mm 'Uhr'"}}</td>
+	    	<!-- | date:'medium' -->
+	  	</tr>
+
+	  	<tr>
+	    	<th>destination</th>
+	    	<td>{{trip.destination}} {{trip.destination_time | date:"dd.MM.yyyy 'um' HH:mm 'Uhr'"}}</td>
+	  	</tr>
+		</table>
+	</div>
+</div>

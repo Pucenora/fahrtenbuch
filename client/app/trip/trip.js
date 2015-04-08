@@ -6,5 +6,13 @@ angular.module('fahrtenbuchApp')
       .when('/trip', {
         templateUrl: 'app/trip/trip.html',
         controller: 'TripCtrl'
+      })
+      .when('/trip/new', {
+        templateUrl: 'app/trip/trip.create.html',
+        controller: 'CreateTripCtrl'
+      })
+      .when('/trip/detail', { // :id', {
+        templateUrl: 'app/trip/trip.detail.html',
+        controller: 'DetailTripCtrl'
       });
   });

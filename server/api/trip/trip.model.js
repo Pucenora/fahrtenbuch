@@ -17,5 +17,5 @@ var TripSchema = new Schema({
 	destination_time: Date,
 });
 
-TripSchema.plugin(autoIncrement.plugin, 'Trip');
+// TripSchema.plugin(autoIncrement.plugin, 'Trip');
 module.exports = mongoose.model('Trip', TripSchema);
