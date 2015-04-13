@@ -26,27 +26,26 @@ angular.module('fahrtenbuchApp')
 	    {name:'Sparkasse'},
 	  ];
 
+	  $scope.hourStep = 1;
+  	$scope.minuteStep = 15;
+
 	  $scope.trip = {};
-	  $scope.trip.account = $scope.accounts[0];
+	  
+	  $scope.trip.account = $scope.accounts[0]; 
+		$scope.trip.origin_time = new Date();
+		$scope.trip.destination_time = new Date();
+
 
 		$scope.addTrip = function() {
 
-			console.log($scope.trip);
+			$scope.trip.account = $scope.trip.account.name;
+			// console.log($scope.trip);
+			
+			var json_data = JSON.stringify($scope.trip);
+			$http.post('/api/trips', json_data);
 
-		var json_data = JSON.stringify($scope.trip);
-
-		$http.post('/api/trips', json_data);
-
-		// redirect
-		$location.path("/trip");
-
-	  // if($scope.corporate == true) {
-	  // 	$scope.type = 'corporate';
-	  // } else {
-	  // 	$scope.type = 'noncorporate';
-	  // }
-
-		// type, account
+			// redirect
+			$location.path("/trip");
 		};
 	})
 
@@ -63,5 +62,21 @@ angular.module('fahrtenbuchApp')
       socket.syncUpdates('trip', $scope.trip);
     });
 
+	})
+
+	.directive('datetimez', function() {
+    return {
+        restrict: 'A',
+        require : 'ngModel',
+        link: function(scope, element, attrs, ngModelCtrl) {
+          element.datetimepicker({           
+           language: 'en',
+           pickDate: false,          
+          }).on('changeDate', function(e) {
+            ngModelCtrl.$setViewValue(e.date);
+            scope.$apply();
+          });
+        }
+    };
 	})
 ;

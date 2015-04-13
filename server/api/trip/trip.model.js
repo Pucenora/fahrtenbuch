@@ -8,6 +8,7 @@ var TripSchema = new Schema({
 	car: String,
 	type: String,
 	account: String,
+	client: String,
 	kilometer_start: Number,
 	kilometer_end: Number,
 	kilometer: Number,
