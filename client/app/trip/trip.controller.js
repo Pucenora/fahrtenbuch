@@ -8,7 +8,6 @@ angular.module('fahrtenbuchApp')
 
     $http.get('/api/trips').success(function(trips) {
       $scope.trips = trips;
-      // console.log(trips[0].__v);
       socket.syncUpdates('trip', $scope.trips);
     });
 
@@ -39,7 +38,6 @@ angular.module('fahrtenbuchApp')
 		$scope.addTrip = function() {
 
 			$scope.trip.account = $scope.trip.account.name;
-			// console.log($scope.trip);
 			
 			var json_data = JSON.stringify($scope.trip);
 			$http.post('/api/trips', json_data);

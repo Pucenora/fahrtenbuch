@@ -8,6 +8,12 @@
 var Thing = require('../api/thing/thing.model');
 var User = require('../api/user/user.model');
 var Trip = require('../api/trip/trip.model');
+var time = new Date();
+
+Date.prototype.addHours= function(h){
+  this.setHours(this.getHours()+h);
+  return this;
+}
 
 Thing.find({}).remove(function() {
   Thing.create({
@@ -55,13 +61,16 @@ Trip.find({}).remove(function() {
     car: 'BMW A-BC-42',
     type: 'private',
     account: 'Sparda',
+    client: 'BMW',
     kilometer_start: 2000,
     kilometer_end: 2100,
     kilometer: 100,
     origin: 'Ulm',
-    origin_time: 'bla',
+    origin_time: time,
     destination: 'München',
-    destination_time: 'bla'
-  }
+    destination_time: time.addHours(2)
+  }, function() {
+      console.log('finished populating trips');
+    }
   );
 });
