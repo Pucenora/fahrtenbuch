@@ -4,6 +4,15 @@ angular.module('fahrtenbuchApp')
 
 	.controller('TripCtrl', function ($scope, $http, socket, $location) {
 	
+	$scope.trips = [];
+
+    $http.get('/api/trips').success(function(trips) {
+      $scope.trips = trips;
+      socket.syncUpdates('trip', $scope.trips);
+    });
+
+    console.log($scope.trips);
+
 		$scope.addTrip = function() {
 			$location.path("/trip/new");
 		}	
@@ -25,21 +34,20 @@ angular.module('fahrtenbuchApp')
 
 			console.log($scope.trip);
 
-			// var json_data = JSON.stringify($scope.trip);
-			// console.log(json_data);
+		var json_data = JSON.stringify($scope.trip);
 
-			// $http.post('/api/trip', json_data);
+		$http.post('/api/trips', json_data);
 
-			// redirect
-			// $location.path("/trip");
+		// redirect
+		$location.path("/trip");
 
-		  // if($scope.corporate == true) {
-		  // 	$scope.type = 'corporate';
-		  // } else {
-		  // 	$scope.type = 'noncorporate';
-		  // }
+	  // if($scope.corporate == true) {
+	  // 	$scope.type = 'corporate';
+	  // } else {
+	  // 	$scope.type = 'noncorporate';
+	  // }
 
-			// type, account
+		// type, account
 		};
 	})
 

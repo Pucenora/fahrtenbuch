@@ -4,7 +4,15 @@
 	<div ng-controller="TripCtrl">
 	  <div class="row">
 	    <div class="col-lg-12">
-	      <h1 class="page-header">Hier ist die Trip Overview</h1>
+	      <h1 class="page-header">Trip Overview</h1>
+	    </div>
+	  </div>
+
+    <div class="row">
+	    <div class="col-lg-12">
+	      <ul ng-repeat="trip in trips">
+	        <li><a href="#" tooltip="{{trip.origin}} - {{trip.destination}}">{{trip.origin}} - {{trip.destination}}</a></li>
+	      </ul>
 	    </div>
 	  </div>
 
