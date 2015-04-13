@@ -11,7 +11,7 @@ angular.module('fahrtenbuchApp')
         templateUrl: 'app/trip/trip.create.html',
         controller: 'CreateTripCtrl'
       })
-      .when('/trip/detail', { // :id', {
+      .when('/trip/:id', {
         templateUrl: 'app/trip/trip.detail.html',
         controller: 'DetailTripCtrl'
       });

@@ -8,10 +8,9 @@ angular.module('fahrtenbuchApp')
 
     $http.get('/api/trips').success(function(trips) {
       $scope.trips = trips;
+      // console.log(trips[0].__v);
       socket.syncUpdates('trip', $scope.trips);
     });
-
-    console.log($scope.trips);
 
 		$scope.addTrip = function() {
 			$location.path("/trip/new");
@@ -51,22 +50,18 @@ angular.module('fahrtenbuchApp')
 		};
 	})
 
-	.controller('DetailTripCtrl', function ($scope, $http, socket) {
+	.controller('DetailTripCtrl', function ($scope, $http, $routeParams, socket) {
 
-		$scope.trip = { 
-	  	title: 'BMW München',
-	  	driver: 'Adam Außendienstmitarbeiter',
-	  	car: 'BMW #6',
-	  	type: 'geschäftlich',
-	  	account: 'Sparda',
-	  	client: 'BMW',
-	  	kilometer_start: '2000',
-	  	kilometer_end: '2100',
-	  	kilometer: '100',
-	  	origin: 'Ulm',
-	  	origin_time: new Date(),
-	  	destination: 'München',
-	  	destination_time: '11:00 Uhr',
-	  };
+		$scope.trip = {};
+
+		var myURL = '/api/trips/' + $routeParams.id;
+		console.log(myURL);
+
+    $http.get(myURL).success(function(trip) {
+      $scope.trip = trip;
+      console.log(trip);
+      socket.syncUpdates('trip', $scope.trip);
+    });
+
 	})
 ;
