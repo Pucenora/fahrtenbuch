@@ -60,6 +60,9 @@ angular.module('fahrtenbuchApp')
       socket.syncUpdates('trip', $scope.trip);
     });
 
+    $scope.returnToOverview = function() {
+			$location.path("/trip");
+		};
 	})
 
 	.directive('datetimez', function() {
