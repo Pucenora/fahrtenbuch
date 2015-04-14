@@ -8,6 +8,13 @@
   </div>
 
   <div ng-controller="CreateTripCtrl">
+
+    <button class="btn btn-success btn-lg" ng-click="startWatching()">Start</button>
+    <button class="btn btn-success btn-lg" ng-click="stopWatching()">Stop</button>
+    <i class="glyphicon glyphicon-map-marker btn-lg"></i>
+    <reverse-geocode lat="40.730885" lng="-73.997383" />
+    <hr />
+
     <form class="css-form" novalidate name="tripForm">
       <p class="input-group">
 
@@ -46,11 +53,6 @@
               <br /> 
               <select ng-model="trip.account" class="form-control" ng-options="account.name for account in accounts">
               </select>
-
-              <!--
-                <select ng-model="myColor" ng-options="color.name for color in colors"></select><br>
-              -->
-
               <br />
             </div>
           

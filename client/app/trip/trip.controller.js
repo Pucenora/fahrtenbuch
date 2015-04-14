@@ -19,21 +19,20 @@ angular.module('fahrtenbuchApp')
 
 	.controller('CreateTripCtrl', function ($scope, $http, socket, $location) {
 
-	  $scope.accounts = [
-	    {name:'Sparda'},
-	    {name:'Dresdner'},
-	    {name:'Sparkasse'},
-	  ];
+		$scope.hourStep = 1;
+  	$scope.minuteStep = 5;
+	 	$scope.accounts = [];
+	 	$scope.trip = {}; 
 
-	  $scope.hourStep = 1;
-  	$scope.minuteStep = 15;
+	  $http.get('/api/accounts').success(function(accounts) {
+	    $scope.accounts = accounts;
+		  $scope.trip.account = $scope.accounts[0]; 
+	  });
 
-	  $scope.trip = {};
-	  
-	  $scope.trip.account = $scope.accounts[0]; 
-		$scope.trip.origin_time = new Date();
+	  $scope.trip.origin_time = new Date();
 		$scope.trip.destination_time = new Date();
 
+		// var Geocoder = new google.maps.Geocoder();
 
 		$scope.addTrip = function() {
 
@@ -45,6 +44,29 @@ angular.module('fahrtenbuchApp')
 			// redirect
 			$location.path("/trip");
 		};
+
+		$scope.showPosition = function(position) {
+	    console.log("Latitude: " + position.coords.latitude);
+	    console.log("Longitude: " + position.coords.longitude);
+		}
+
+		$scope.startWatching = function() {
+	    if (navigator.geolocation) {
+	    		console.log(new Date());
+	        // navigator.geolocation.watchPosition($scope.showPosition);
+	        var latLngObject = navigator.geolocation.getCurrentPosition($scope.showPosition);
+	        // console.log(Geocoder.geocode( { 'latLng': latLngObject }, callback));
+	    } else {
+	        console.log("Geolocation is not supported by this browser.");
+	    }
+		}
+
+		$scope.stopWatching = function() {
+			console.log(new Date());
+			var latLngObject = navigator.geolocation.getCurrentPosition($scope.showPosition);
+			// console.log(Geocoder.geocode( { 'latLng': latLngObject }, callback));
+      // navigator.geolocation.clearWatch();
+		}
 	})
 
 	.controller('DetailTripCtrl', function ($scope, $http, $routeParams, socket) {
@@ -65,19 +87,26 @@ angular.module('fahrtenbuchApp')
 		};
 	})
 
-	.directive('datetimez', function() {
-    return {
-        restrict: 'A',
-        require : 'ngModel',
-        link: function(scope, element, attrs, ngModelCtrl) {
-          element.datetimepicker({           
-           language: 'en',
-           pickDate: false,          
-          }).on('changeDate', function(e) {
-            ngModelCtrl.$setViewValue(e.date);
-            scope.$apply();
-          });
-        }
-    };
-	})
+  // .directive('reverseGeocode', function () {
+  //     return {
+  //         restrict: 'E',
+  //         template: '<div></div>',
+  //         link: function (scope, element, attrs) {
+  //             var geocoder = new google.maps.Geocoder();
+  //             var latlng = new google.maps.LatLng(attrs.lat, attrs.lng);
+  //             geocoder.geocode({ 'latLng': latlng }, function (results, status) {
+  //                 if (status == google.maps.GeocoderStatus.OK) {
+  //                     if (results[1]) {
+  //                         element.text(results[1].formatted_address);
+  //                     } else {
+  //                         element.text('Location not found');
+  //                     }
+  //                 } else {
+  //                     element.text('Geocoder failed due to: ' + status);
+  //                 }
+  //             });
+  //         },
+  //         replace: true
+  //     }
+  // })
 ;

@@ -7,7 +7,7 @@ angular.module('fahrtenbuchApp', [
   'ngRoute',
   'btford.socket-io',
   'ui.bootstrap',
-  'ui.bootstrap.datetimepicker'
+  'ui.bootstrap.datetimepicker',
 ])
   .config(function ($routeProvider, $locationProvider, $httpProvider) {
     $routeProvider

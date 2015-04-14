@@ -8,6 +8,7 @@
 var Thing = require('../api/thing/thing.model');
 var User = require('../api/user/user.model');
 var Trip = require('../api/trip/trip.model');
+var Account = require('../api/account/account.model');
 var time = new Date();
 
 Date.prototype.addHours= function(h){
@@ -71,6 +72,19 @@ Trip.find({}).remove(function() {
     destination_time: time.addHours(2)
   }, function() {
       console.log('finished populating trips');
+    }
+  );
+});
+
+Account.find({}).remove(function() {
+  Account.create({
+    name: 'Sparda'
+  }, {
+    name: 'Dresdner'
+  }, {
+    name: 'Sparkasse'
+  }, function() {
+      console.log('finished populating accounts');
     }
   );
 });
