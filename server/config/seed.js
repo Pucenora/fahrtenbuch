@@ -9,6 +9,7 @@ var Thing = require('../api/thing/thing.model');
 var User = require('../api/user/user.model');
 var Trip = require('../api/trip/trip.model');
 var Account = require('../api/account/account.model');
+var Car = require('../api/car/car.model');
 var time = new Date();
 
 Date.prototype.addHours= function(h){
@@ -38,17 +39,52 @@ Thing.find({}).remove(function() {
   });
 });
 
+Car.find({}).remove(function() {
+  Car.create({
+    description: 'BMW i8',
+    license_tag: 'A-BC-42',
+    mileage: 2000,
+  }, {
+    description: 'BMW 1er',
+    license_tag: 'A-BC-123',
+    mileage: 3000,
+  }, {
+    description: 'BMW 3er',
+    license_tag: 'A-BC-321',
+    mileage: 4000,
+  }, function() {
+      console.log('finished populating accounts');
+    }
+  );
+});
+
+var newCar1 = new Car({
+  description: 'Mercedes A Klasse',
+  license_tag: 'A-Z-1234',
+  mileage: 81.331,
+});
+newCar1.save();
+
+var newCar2 = new Car({
+  description: 'Mercedes C Klasse',
+  license_tag: 'A-Z-4321',
+  mileage: 5000,
+});
+newCar2.save();
+
 User.find({}).remove(function() {
   User.create({
     provider: 'local',
     name: 'Test User',
     email: 'test@test.com',
+    default_car: newCar1,
     password: 'test'
   }, {
     provider: 'local',
     role: 'admin',
     name: 'Admin',
     email: 'admin@admin.com',
+    default_car: newCar2,
     password: 'admin'
   }, function() {
       console.log('finished populating users');
@@ -69,13 +105,13 @@ Account.find({}).remove(function() {
   );
 });
 
-var newAccount = new Account({name: 'Example Account'})
-newAccount.save()
+var newAccount = new Account({name: 'Example Account'});
+newAccount.save();
 
 Trip.find({}).remove(function() {
   Trip.create({
     driver: 'Außendienstmitarbeiter A',
-    car: 'BMW A-BC-42',
+    car: newCar2,
     type: 'private',
     account: newAccount,
     client: 'BMW',

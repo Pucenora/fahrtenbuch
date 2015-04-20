@@ -15,16 +15,30 @@ angular.module('fahrtenbuchApp')
 		}	
 	})	
 
-	.controller('CreateTripCtrl', function ($scope, $http, socket, $location) {
+	.controller('CreateTripCtrl', function ($scope, $http, socket, $location, Auth) {
 
 		$scope.hourStep = 1;
   	$scope.minuteStep = 5;
 	 	$scope.accounts = [];
+	 	$scope.cars = [];
 	 	$scope.trip = {}; 
+	 	$scope.user = Auth.getCurrentUser();
 
 	  $http.get('/api/accounts').success(function(accounts) {
 	    $scope.accounts = accounts;
-		  $scope.trip.account = $scope.accounts[0]; 
+		  // $scope.trip.account = $scope.accounts[0]; 
+	  });
+
+	  $http.get('/api/cars').success(function(cars) {
+	    $scope.cars = cars;
+	  });
+
+	  var carURL = '/api/cars/' + $scope.user.default_car;
+
+	  $http.get(carURL).success(function(car) {
+		  // $scope.trip.car = car;
+		  $scope.trip.car = $scope.cars[car.__v];
+		  $scope.trip.kilometer_start = car.mileage;
 	  });
 
 	  $scope.trip.origin_time = new Date();
@@ -34,7 +48,11 @@ angular.module('fahrtenbuchApp')
 
 		$scope.addTrip = function() {
 
-			$scope.trip.account = $scope.trip.account._id;
+			if($scope.trip.account) {
+				$scope.trip.account = $scope.trip.account._id;
+			}
+			$scope.trip.car = $scope.trip.car._id;
+			$scope.trip.driver = $scope.user.name;
 			$http.post('/api/trips', $scope.trip);
 
 			// redirect

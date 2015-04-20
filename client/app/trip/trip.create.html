@@ -20,18 +20,10 @@
 
       	<div class="form-group">
 
-      		<label>driver:</label>
-          <input type="text" ng-model="trip.driver" class="form-control" name="driver" required="" />
-          <div ng-show="tripForm.$submitted || tripForm.driver.$touched">
-            <div ng-show="tripForm.driver.$error.required">text field is required!</div>
-          </div>
-          <br />
-
     	    <label>car:</label>
-          <input type="text" ng-model="trip.car" class="form-control" name="car" required="" />
-          <div ng-show="tripForm.$submitted || tripForm.car.$touched">
-            <div ng-show="tripForm.car.$error.required">text field is required!</div>
-          </div>
+          <select ng-model="trip.car" class="form-control" ng-options="car.description for car in cars">
+          </select>
+
           <br />
 
     	    <label>type:</label>

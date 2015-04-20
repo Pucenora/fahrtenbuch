@@ -11,9 +11,10 @@ var TripSchema = new Schema({
 	// account: Schema.Types.ObjectId,
 	// account: { type: Schema.Types.ObjectId },
 	account  : { type: ObjectId, ref: 'Account' },
+	car: { type: ObjectId, ref: 'Car' },
 
 	driver: String,
-	car: String,
+	// car: String,
 	// account: String,
 	type: String,
 	
