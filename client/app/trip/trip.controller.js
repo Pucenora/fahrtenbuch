@@ -52,7 +52,7 @@ angular.module('fahrtenbuchApp')
 				$scope.trip.account = $scope.trip.account._id;
 			}
 			$scope.trip.car = $scope.trip.car._id;
-			$scope.trip.driver = $scope.user.name;
+			$scope.trip.user = $scope.user._id;
 			$http.post('/api/trips', $scope.trip);
 
 			// redirect

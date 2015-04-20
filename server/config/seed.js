@@ -53,7 +53,7 @@ Car.find({}).remove(function() {
     license_tag: 'A-BC-321',
     mileage: 4000,
   }, function() {
-      console.log('finished populating accounts');
+      console.log('finished populating cars');
     }
   );
 });
@@ -75,12 +75,6 @@ newCar2.save();
 User.find({}).remove(function() {
   User.create({
     provider: 'local',
-    name: 'Test User',
-    email: 'test@test.com',
-    default_car: newCar1,
-    password: 'test'
-  }, {
-    provider: 'local',
     role: 'admin',
     name: 'Admin',
     email: 'admin@admin.com',
@@ -91,6 +85,15 @@ User.find({}).remove(function() {
     }
   );
 });
+
+var newUser = new User({
+  provider: 'local',
+  name: 'Test User',
+  email: 'test@test.com',
+  default_car: newCar1,
+  password: 'test'
+});
+newUser.save();
 
 Account.find({}).remove(function() {
   Account.create({
@@ -110,7 +113,7 @@ newAccount.save();
 
 Trip.find({}).remove(function() {
   Trip.create({
-    driver: 'Außendienstmitarbeiter A',
+    user: newUser,
     car: newCar2,
     type: 'private',
     account: newAccount,

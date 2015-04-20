@@ -6,16 +6,11 @@ var mongoose = require('mongoose'),
 
 var TripSchema = new Schema({
 
-	// driver: Schema.Types.ObjectId,
-	// car: Schema.Types.ObjectId,
-	// account: Schema.Types.ObjectId,
-	// account: { type: Schema.Types.ObjectId },
+	user: { type: ObjectId, ref: 'User' },
 	account  : { type: ObjectId, ref: 'Account' },
 	car: { type: ObjectId, ref: 'Car' },
 
-	driver: String,
-	// car: String,
-	// account: String,
+	// enum
 	type: String,
 	
 	origin: String,

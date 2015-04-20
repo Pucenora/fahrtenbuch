@@ -25,6 +25,7 @@ exports.show = function(req, res) {
   Trip.findById(req.params.id)
   .populate('account')
   .populate('car')
+  .populate('user')
   .exec(function (err, trip) {
     if(err) { return handleError(res, err); }
     if(!trip) { return res.send(404); }
