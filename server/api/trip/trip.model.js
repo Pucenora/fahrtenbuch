@@ -1,21 +1,35 @@
 'use strict';
 
 var mongoose = require('mongoose'),
-  Schema = mongoose.Schema;
+  Schema = mongoose.Schema,
+  ObjectId = Schema.ObjectId;
 
 var TripSchema = new Schema({
+
+	// driver: Schema.Types.ObjectId,
+	// car: Schema.Types.ObjectId,
+	// account: Schema.Types.ObjectId,
+	// account: { type: Schema.Types.ObjectId },
+	account  : { type: ObjectId, ref: 'Account' },
+
 	driver: String,
 	car: String,
+	// account: String,
 	type: String,
-	account: String,
+	
+	origin: String,
+	origin_time: Date,
+	
+	// stays: [Schema.Types.ObjectId],
 	client: String,
+	destination: String,
+	destination_time: Date,
+
 	kilometer_start: Number,
 	kilometer_end: Number,
 	kilometer: Number,
-	origin: String,
-	origin_time: Date,
-	destination: String,
-	destination_time: Date,
+
+	// timestamp: Date,
 });
 
 module.exports = mongoose.model('Trip', TripSchema);

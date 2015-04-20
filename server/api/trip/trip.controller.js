@@ -22,7 +22,9 @@ exports.index = function(req, res) {
 
 // Get a single trip
 exports.show = function(req, res) {
-  Trip.findById(req.params.id, function (err, trip) {
+  Trip.findById(req.params.id)
+  .populate('account')
+  .exec(function (err, trip) {
     if(err) { return handleError(res, err); }
     if(!trip) { return res.send(404); }
     return res.json(trip);

@@ -56,12 +56,28 @@ User.find({}).remove(function() {
   );
 });
 
+Account.find({}).remove(function() {
+  Account.create({
+    name: 'Sparda'
+  }, {
+    name: 'Dresdner'
+  }, {
+    name: 'Sparkasse'
+  }, function() {
+      console.log('finished populating accounts');
+    }
+  );
+});
+
+var newAccount = new Account({name: 'Example Account'})
+newAccount.save()
+
 Trip.find({}).remove(function() {
   Trip.create({
     driver: 'Außendienstmitarbeiter A',
     car: 'BMW A-BC-42',
     type: 'private',
-    account: 'Sparda',
+    account: newAccount,
     client: 'BMW',
     kilometer_start: 2000,
     kilometer_end: 2100,
@@ -76,15 +92,6 @@ Trip.find({}).remove(function() {
   );
 });
 
-Account.find({}).remove(function() {
-  Account.create({
-    name: 'Sparda'
-  }, {
-    name: 'Dresdner'
-  }, {
-    name: 'Sparkasse'
-  }, function() {
-      console.log('finished populating accounts');
-    }
-  );
-});
+// Trip.find({}).populate('account').exec(function(err, trips) {
+//     console.log(trips);
+// });

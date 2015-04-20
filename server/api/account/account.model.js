@@ -7,4 +7,4 @@ var AccountSchema = new Schema({
 	name: String,
 });
 
-module.exports = mongoose.model('Acccount', AccountSchema);
+module.exports = mongoose.model('Account', AccountSchema);

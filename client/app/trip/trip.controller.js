@@ -36,7 +36,8 @@ angular.module('fahrtenbuchApp')
 
 		$scope.addTrip = function() {
 
-			$scope.trip.account = $scope.trip.account.name;
+			//
+			$scope.trip.account = $scope.trip.account._id;
 			
 			var json_data = JSON.stringify($scope.trip);
 			$http.post('/api/trips', json_data);
@@ -69,14 +70,14 @@ angular.module('fahrtenbuchApp')
 		}
 	})
 
-	.controller('DetailTripCtrl', function ($scope, $http, $routeParams, socket) {
+	.controller('DetailTripCtrl', function ($scope, $http, $routeParams, socket, $location) {
 
 		$scope.trip = {};
 
-		var myURL = '/api/trips/' + $routeParams.id;
-		console.log(myURL);
+		var tripURL = '/api/trips/' + $routeParams.id;
+		console.log(tripURL);
 
-    $http.get(myURL).success(function(trip) {
+    $http.get(tripURL).success(function(trip) {
       $scope.trip = trip;
       console.log(trip);
       socket.syncUpdates('trip', $scope.trip);
