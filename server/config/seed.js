@@ -6,17 +6,26 @@
 'use strict';
 
 var Thing = require('../api/thing/thing.model');
-var User = require('../api/user/user.model');
-var Trip = require('../api/trip/trip.model');
+
 var Account = require('../api/account/account.model');
 var Car = require('../api/car/car.model');
-var time = new Date();
+var User = require('../api/user/user.model');
+var Trip = require('../api/trip/trip.model');
 
+/**
+ * time managment
+ **/
 Date.prototype.addHours= function(h){
   this.setHours(this.getHours()+h);
   return this;
 }
 
+var time_start = new Date();
+var time_end = time_start.addHours(2);
+
+/**
+ * create all things
+ **/
 Thing.find({}).remove(function() {
   Thing.create({
     name : 'Development Tools',
@@ -39,6 +48,40 @@ Thing.find({}).remove(function() {
   });
 });
 
+/**
+ * create all accounts
+ **/
+var newAccount = new Account({name: 'Sparda'});
+newAccount.save();
+
+Account.find({}).remove(function() {
+  Account.create({
+    name: 'Dresdner'
+  }, {
+    name: 'Sparkasse'
+  }, function() {
+      console.log('finished populating accounts');
+    }
+  );
+});
+
+/**
+ * create all cars
+ **/
+var newCar1 = new Car({
+  description: 'Mercedes A Klasse',
+  license_tag: 'A-Z-1234',
+  mileage: 81.331,
+});
+newCar1.save();
+
+var newCar2 = new Car({
+  description: 'Mercedes C Klasse',
+  license_tag: 'A-Z-4321',
+  mileage: 5000,
+});
+newCar2.save();
+
 Car.find({}).remove(function() {
   Car.create({
     description: 'BMW i8',
@@ -58,19 +101,17 @@ Car.find({}).remove(function() {
   );
 });
 
-var newCar1 = new Car({
-  description: 'Mercedes A Klasse',
-  license_tag: 'A-Z-1234',
-  mileage: 81.331,
+/**
+ * create all users
+ **/
+var newUser = new User({
+  provider: 'local',
+  name: 'Test User',
+  email: 'test@test.com',
+  default_car: newCar1,
+  password: 'test'
 });
-newCar1.save();
-
-var newCar2 = new Car({
-  description: 'Mercedes C Klasse',
-  license_tag: 'A-Z-4321',
-  mileage: 5000,
-});
-newCar2.save();
+newUser.save();
 
 User.find({}).remove(function() {
   User.create({
@@ -86,51 +127,26 @@ User.find({}).remove(function() {
   );
 });
 
-var newUser = new User({
-  provider: 'local',
-  name: 'Test User',
-  email: 'test@test.com',
-  default_car: newCar1,
-  password: 'test'
-});
-newUser.save();
-
-Account.find({}).remove(function() {
-  Account.create({
-    name: 'Sparda'
-  }, {
-    name: 'Dresdner'
-  }, {
-    name: 'Sparkasse'
-  }, function() {
-      console.log('finished populating accounts');
-    }
-  );
-});
-
-var newAccount = new Account({name: 'Example Account'});
-newAccount.save();
-
+/**
+ * create all trips
+ **/
 Trip.find({}).remove(function() {
   Trip.create({
     user: newUser,
     car: newCar2,
-    type: 'private',
+    type: 'corporate',
     account: newAccount,
     client: 'BMW',
     kilometer_start: 2000,
     kilometer_end: 2100,
     kilometer: 100,
     origin: 'Ulm',
-    origin_time: time,
+    origin_time: time_start,
     destination: 'München',
-    destination_time: time.addHours(2)
+    destination_time: time_end,
+    timestamp: time_end,
   }, function() {
       console.log('finished populating trips');
     }
   );
 });
-
-// Trip.find({}).populate('account').exec(function(err, trips) {
-//     console.log(trips);
-// });

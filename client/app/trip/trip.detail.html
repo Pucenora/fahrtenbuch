@@ -37,24 +37,34 @@
 	  	<!-- end -->
 	  	    
 	  	<tr>
-	    	<th>kilometer start</th>
+	    	<th>kilometer start:</th>
 	    	<td>{{trip.kilometer_start}}</td>
 	  	</tr>
 	  	    
 	  	<tr>
-	    	<th>kilometer end</th>
+	    	<th>kilometer end:</th>
 	    	<td>{{trip.kilometer_end}}</td>
 	  	</tr>
 
 	  	<tr>
-	    	<th>origin</th>
+	    	<th>kilometer:</th>
+	    	<td>{{trip.kilometer}}</td>
+	  	</tr>
+
+	  	<tr>
+	    	<th>origin:</th>
 	    	<td>{{trip.origin}} {{trip.origin_time | date:"dd.MM.yyyy 'um' HH:mm 'Uhr'"}}</td>
 	    	<!-- | date:'medium' -->
 	  	</tr>
 
 	  	<tr>
-	    	<th>destination</th>
+	    	<th>destination:</th>
 	    	<td>{{trip.destination}} {{trip.destination_time | date:"dd.MM.yyyy 'um' HH:mm 'Uhr'"}}</td>
+	  	</tr>
+
+	  	<tr>
+	    	<th>timestamp:</th>
+	    	<td>{{trip.timestamp}}</td>
 	  	</tr>
 		</table>
 

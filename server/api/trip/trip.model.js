@@ -6,26 +6,26 @@ var mongoose = require('mongoose'),
 
 var TripSchema = new Schema({
 
-	user: { type: ObjectId, ref: 'User' },
-	account  : { type: ObjectId, ref: 'Account' },
-	car: { type: ObjectId, ref: 'Car' },
+	user: { type: ObjectId, ref: 'User', required: true },
+	account: { type: ObjectId, ref: 'Account' },
+	car: { type: ObjectId, ref: 'Car', required: true },
 
-	// enum
-	type: String,
+	type: { type: String, enum: ['corporate', 'noncorporate'], required: true },
 	
-	origin: String,
-	origin_time: Date,
+	origin: {type: String, required: true},
+	origin_time: {type: Date, required: true},
 	
 	// stays: [Schema.Types.ObjectId],
+	// mindestens 1
 	client: String,
 	destination: String,
 	destination_time: Date,
 
-	kilometer_start: Number,
-	kilometer_end: Number,
-	kilometer: Number,
+	kilometer_start: {type: Number, required: true},
+	kilometer_end: {type: Number, required: true},
+	kilometer: {type: Number, required: true},
 
-	// timestamp: Date,
+	timestamp: {type: Date, default: Date.now},
 });
 
 module.exports = mongoose.model('Trip', TripSchema);

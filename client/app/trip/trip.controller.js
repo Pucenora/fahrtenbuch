@@ -53,6 +53,7 @@ angular.module('fahrtenbuchApp')
 			}
 			$scope.trip.car = $scope.trip.car._id;
 			$scope.trip.user = $scope.user._id;
+			$scope.trip.timestamp = new Date();
 			$http.post('/api/trips', $scope.trip);
 
 			// redirect
