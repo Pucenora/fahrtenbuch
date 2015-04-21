@@ -23,7 +23,6 @@ var TripSchema = new Schema({
 
 	kilometer_start: {type: Number, required: true},
 	kilometer_end: {type: Number, required: true},
-	kilometer: {type: Number, required: true},
 
 	timestamp: {type: Date, default: Date.now},
 });

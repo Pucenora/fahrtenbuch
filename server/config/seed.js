@@ -139,7 +139,6 @@ Trip.find({}).remove(function() {
     client: 'BMW',
     kilometer_start: 2000,
     kilometer_end: 2100,
-    kilometer: 100,
     origin: 'Ulm',
     origin_time: time_start,
     destination: 'München',
