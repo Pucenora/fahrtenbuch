@@ -11,6 +11,7 @@ var Account = require('../api/account/account.model');
 var Car = require('../api/car/car.model');
 var User = require('../api/user/user.model');
 var Trip = require('../api/trip/trip.model');
+var Stay = require('../api/stay/stay.model');
 
 /**
  * time managment
@@ -128,6 +129,42 @@ User.find({}).remove(function() {
 });
 
 /**
+ * create all stays
+ **/
+var newStay1 = new Stay({
+  destination: 'Klinikum Augsburg',
+  client: 'Dr. House',
+  destination_time: time_start,
+});
+newStay1.save();
+
+var newStay2 = new Stay({
+  destination: 'Uniklinik Regensburg',
+  client: 'Dr. House',
+  destination_time: time_end,
+});
+newStay2.save();
+
+Stay.find({}).remove(function() {
+  Stay.create({
+    destination: 'Uniklinik Tübingen',
+    client: 'Dr. House, Prof. Proton',
+    destination_time: time_start,
+  }, {
+    destination: 'BKH Günzburg',
+    client: 'Dr. House',
+    destination_time: time_start,
+  }, {
+    destination: 'Stuttgarter Flughafen',
+    client: 'Mustermann',
+    destination_time: time_start,
+  }, function() {
+      console.log('finished populating stays');
+    }
+  );
+});
+
+/**
  * create all trips
  **/
 Trip.find({}).remove(function() {
@@ -136,13 +173,11 @@ Trip.find({}).remove(function() {
     car: newCar2,
     type: 'corporate',
     account: newAccount,
-    client: 'BMW',
     kilometer_start: 2000,
     kilometer_end: 2100,
     origin: 'Ulm',
     origin_time: time_start,
-    destination: 'München',
-    destination_time: time_end,
+    stays: [newStay1, newStay2],
     timestamp: time_end,
   }, function() {
       console.log('finished populating trips');

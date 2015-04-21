@@ -4,7 +4,7 @@
 	<div class="container">
 	  <div class="row">
 	    <div class="col-lg-12">
-	      <h1 class="page-header">Details: {{trip.origin}} - {{trip.destination}}</h1>
+	      <h1 class="page-header">Details: {{trip.origin}}</h1>
 	    </div>
 	  </div>
 
@@ -29,11 +29,6 @@
 	    	<th>account:</th>
 	    	<td>{{trip.account.name}}</td>
 	  	</tr>
-	  	    
-	  	<tr>
-	    	<th>client:</th>
-	    	<td>{{trip.client}}</td>
-	  	</tr>
 	  	<!-- end -->
 	  	    
 	  	<tr>
@@ -52,9 +47,14 @@
 	    	<!-- | date:'medium' -->
 	  	</tr>
 
-	  	<tr>
-	    	<th>destination:</th>
-	    	<td>{{trip.destination}} {{trip.destination_time | date:"dd.MM.yyyy 'um' HH:mm 'Uhr'"}}</td>
+	  	<tr ng-repeat-start="(key, stay) in trip.stays">
+	    	<th>destination {{key + 1}}:</th>
+	    	<td>{{stay.destination}} {{stay.destination_time | date:"dd.MM.yyyy 'um' HH:mm 'Uhr'"}}</td>
+	  	</tr>
+
+	  	<tr ng-repeat-end>
+	    	<th>client {{key + 1}}:</th>
+	    	<td>{{stay.client}}</td>
 	  	</tr>
 
 	  	<tr>

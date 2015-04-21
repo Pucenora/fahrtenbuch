@@ -26,6 +26,7 @@ exports.show = function(req, res) {
   .populate('account')
   .populate('car')
   .populate('user')
+  .populate('stays')
   .exec(function (err, trip) {
     if(err) { return handleError(res, err); }
     if(!trip) { return res.send(404); }
