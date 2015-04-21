@@ -25,6 +25,14 @@ exports.show = function(req, res) {
   });
 };
 
+// Creates a new stay in the DB.
+exports.create = function(req, res) {
+  Stay.create(req.body, function(err, stay) {
+    if(err) { return handleError(res, err); }
+    return res.json(201, stay);
+  });
+};
+
 function handleError(res, err) {
   return res.send(500, err);
 }

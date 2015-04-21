@@ -56,13 +56,30 @@ angular.module('fahrtenbuchApp')
 
 		$scope.addTrip = function() {
 
+			var stayIds = [];
 			if($scope.trip.account) {
 				$scope.trip.account = $scope.trip.account._id;
 			}
 			$scope.trip.car = $scope.trip.car._id;
 			$scope.trip.user = $scope.user._id;
 			$scope.trip.timestamp = new Date();
-			$http.post('/api/trips', $scope.trip);
+
+			var len = $scope.stays.length;
+			var counter = 0;
+
+			$scope.stays.forEach(function(stay) {
+				$http.post('/api/stays', stay).success(function(data, status, headers, config) {
+  				// console.log(data._id);  				
+  				stayIds.push(data._id);
+  				counter += 1;
+  				if (counter === len) {
+  					$scope.trip.stays = stayIds;
+						$http.post('/api/trips', $scope.trip);	
+  				}
+ 				}).error(function(data, status, headers, config) {
+ 					console.log(status);
+			  });
+			});
 
 			// redirect
 			$location.path("/trip");
