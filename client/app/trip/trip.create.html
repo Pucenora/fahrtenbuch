@@ -18,54 +18,44 @@
     <form class="css-form" novalidate name="tripForm">
       <p class="input-group">
 
-      	<div class="form-group">
+        <div class="row"> 
+          <div class="col-xs-12">
+            <div class="form-group">
+        	    <label>car:</label>
+              <select ng-model="trip.car" class="form-control" ng-options="car.description for car in cars">
+              </select>
+            </div>
+          </div>
+        </div>
 
-    	    <label>car:</label>
-          <select ng-model="trip.car" class="form-control" ng-options="car.description for car in cars">
-          </select>
 
-          <br />
+        <div class="row"> 
+          <div class="col-xs-12 col-md-3">
+            <div class="form-group">
+        	    <label>type:</label>
+              <br />
+              <div class="btn-group" name="type" ng-init="trip.type='noncorporate'" required="" >
+                <label class="btn btn-primary" ng-model="trip.type" value="'noncorporate'" btn-radio="'noncorporate'">private</label>
+                <label class="btn btn-primary" ng-model="trip.type" value="'corporate'" btn-radio="'corporate'">corporate</label>
+            	</div>
+            </div>
+          </div>
 
-    	    <label>type:</label>
-          <br />
-          <div class="btn-group" name="type" ng-init="trip.type='noncorporate'" required="" >
-            <label class="btn btn-primary" ng-model="trip.type" value="'noncorporate'" btn-radio="'noncorporate'">private</label>
-            <label class="btn btn-primary" ng-model="trip.type" value="'corporate'" btn-radio="'corporate'">corporate</label>
-        	</div>
-
-    	  </div>
-        <hr />
-
-        <!-- if business trip -->
-      	<div class="form-group">
-          <div class="row"> 
-            <div class="col-xs-4">
-
-          		<label>account:</label>
-              <br /> 
+            <!-- if business trip -->
+          <div class="col-xs-12 col-md-9">
+            <div class="form-group">
+              <label>account:</label>
               <select ng-model="trip.account" class="form-control" ng-options="account.name for account in accounts">
               </select>
-              <br />
             </div>
-          
-            <div class="col-xs-8">
-    	  	    <label>client:</label>
-              <input type="text" ng-model="trip.client" class="form-control" name="client" required="" />
-                <div ng-show="tripForm.$submitted || tripForm.client.$touched">
-                  <div ng-show="tripForm.client.$error.required">text field is required!</div>
-                </div>
-              <br />
-            </div>
-
+            <!-- end -->
           </div> 
-    	  </div>
+        </div>
         <hr />
-        <!-- end -->
 
-        <div class="form-group">
-          <div class="row"> 
-
-            <div class="col-xs-6">
+        <div class="row"> 
+          <div class="col-xs-6">
+            <div class="form-group">
               <label>kilometer start:</label>
               <input type="text" ng-model="trip.kilometer_start" class="form-control" name="kilometer_start" required="" />
               <div ng-show="tripForm.$submitted || tripForm.kilometer_start.$touched">
@@ -73,8 +63,10 @@
               </div>
               <br />
             </div>
+          </div>
 
-            <div class="col-xs-6">
+          <div class="col-xs-6">
+            <div class="form-group">
               <label>kilometer end:</label>
               <input type="text" ng-model="trip.kilometer_end" name="kilometer_end" class="form-control" required="" />
               <div ng-show="tripForm.$submitted || tripForm.kilometer_end.$touched">
@@ -82,28 +74,34 @@
               </div>
               <br />
             </div>
-
           </div>
+        </div>
 
-          <label>origin:</label>        
-          <div class="row"> 
-            <div class="col-xs-12">
+        <div class="row"> 
+          <div class="col-xs-12">
+            <div class="form-group">
+              <label>origin:</label>  
               <input type="text" ng-model="trip.origin" class="form-control" name="origin" required="" />
               <div ng-show="tripForm.$submitted || tripForm.origin.$touched">
                 <div ng-show="tripForm.origin.$error.required">text field is required!</div>
               </div>
             </div>
           </div>
+        </div>
 
-          <div class="row"> 
-            <div class="col-xs-12">
+        <div class="row"> 
+          <div class="col-xs-12">
+            <div class="form-group">
               <datetimepicker min-date="minDate" show-weeks="showWeeks" hour-step="hourStep" minute-step="minuteStep" ng-model="trip.origin_time" show-meridian="showMeridian" date-format="dd-MMM-yyyy" date-options="dateOptions" date-disabled="disabled(date, mode)" readonly-time="false"></datetimepicker>
             </div>
           </div>
+        </div>
+        <hr />
 
-          <label>destination:</label>        
-          <div class="row"> 
-            <div class="col-xs-12">
+        <div class="row"> 
+          <div class="col-xs-12 col-md-6">
+            <div class="form-group">
+              <label>destination:</label>   
               <input type="text" ng-model="trip.destination" class="form-control" name="destination" required="" />
               <div ng-show="tripForm.$submitted || tripForm.destination.$touched">
                 <div ng-show="tripForm.destination.$error.required">text field is required!</div>
@@ -111,8 +109,21 @@
             </div>
           </div>
 
-          <div class="row"> 
-            <div class="col-xs-12">
+          <div class="col-xs-12 col-md-6">
+            <div class="form-group">
+              <label>client:</label>
+              <input type="text" ng-model="trip.client" class="form-control" name="client" required="" />
+                <div ng-show="tripForm.$submitted || tripForm.client.$touched">
+                  <div ng-show="tripForm.client.$error.required">text field is required!</div>
+                </div>
+              <br />
+            </div>
+          </div>
+        </div>
+
+        <div class="row"> 
+          <div class="col-xs-12">
+            <div class="form-group">
               <datetimepicker min-date="minDate" show-weeks="showWeeks" hour-step="hourStep" minute-step="minuteStep" ng-model="trip.destination_time" show-meridian="showMeridian" date-format="dd-MMM-yyyy" date-options="dateOptions" date-disabled="disabled(date, mode)" readonly-time="false"></datetimepicker>
             </div>
           </div>
