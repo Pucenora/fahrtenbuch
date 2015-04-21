@@ -98,37 +98,46 @@
         </div>
         <hr />
 
-        <div class="row"> 
-          <div class="col-xs-12 col-md-6">
-            <div class="form-group">
-              <label>destination:</label>   
-              <input type="text" ng-model="trip.destination" class="form-control" name="destination" required="" />
-              <div ng-show="tripForm.$submitted || tripForm.destination.$touched">
-                <div ng-show="tripForm.destination.$error.required">text field is required!</div>
+        <!-- repeat -->
+        <div ng-repeat="stay in stays">
+          <div class="row"> 
+            <div class="col-xs-12 col-md-6">
+              <div class="form-group">
+                <label>destination:</label>   
+                <!-- trip.destination -->
+                <input type="text" ng-model="stay.destination" class="form-control" name="destination" required="" />
+                <div ng-show="tripForm.$submitted || tripForm.destination.$touched">
+                  <div ng-show="tripForm.destination.$error.required">text field is required!</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xs-12 col-md-6">
+              <div class="form-group">
+                <label>client:</label>
+                <!-- trip.client -->
+                <input type="text" ng-model="stay.client" class="form-control" name="client" required="" />
+                  <div ng-show="tripForm.$submitted || tripForm.client.$touched">
+                    <div ng-show="tripForm.client.$error.required">text field is required!</div>
+                  </div>
+                <br />
               </div>
             </div>
           </div>
 
-          <div class="col-xs-12 col-md-6">
-            <div class="form-group">
-              <label>client:</label>
-              <input type="text" ng-model="trip.client" class="form-control" name="client" required="" />
-                <div ng-show="tripForm.$submitted || tripForm.client.$touched">
-                  <div ng-show="tripForm.client.$error.required">text field is required!</div>
-                </div>
-              <br />
+          <div class="row"> 
+            <div class="col-xs-12">
+              <div class="form-group">
+              <!-- trip.destination_time -->
+                <datetimepicker min-date="minDate" show-weeks="showWeeks" hour-step="hourStep" minute-step="minuteStep" ng-model="stay.destination_time" show-meridian="showMeridian" date-format="dd-MMM-yyyy" date-options="dateOptions" date-disabled="disabled(date, mode)" readonly-time="false"></datetimepicker>
+              </div>
             </div>
           </div>
+          <hr />
         </div>
+        <!-- end -->
 
-        <div class="row"> 
-          <div class="col-xs-12">
-            <div class="form-group">
-              <datetimepicker min-date="minDate" show-weeks="showWeeks" hour-step="hourStep" minute-step="minuteStep" ng-model="trip.destination_time" show-meridian="showMeridian" date-format="dd-MMM-yyyy" date-options="dateOptions" date-disabled="disabled(date, mode)" readonly-time="false"></datetimepicker>
-            </div>
-          </div>
-        </div>
-        <hr />
+        <button type="button" class="btn btn-success btn-lg" ng-click="addStay()">Add Stay</button>
 
         <span class="input-group-btn">
           <button type="submit" class="btn btn-success btn-lg" ng-click="addTrip()" ng-disabled="myForm.user.$dirty && myForm.user.$invalid || myForm.email.$dirty && myForm.email.$invalid">Submit</button>

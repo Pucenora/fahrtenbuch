@@ -19,10 +19,14 @@ angular.module('fahrtenbuchApp')
 
 		$scope.hourStep = 1;
   	$scope.minuteStep = 5;
+
 	 	$scope.accounts = [];
 	 	$scope.cars = [];
-	 	$scope.trip = {}; 
 	 	$scope.user = Auth.getCurrentUser();
+	 	$scope.trip = {}; 
+
+	 	$scope.stays = [];
+	 	$scope.stays.push({destination: '', client: '', destination_time: new Date()});
 
 	  $http.get('/api/accounts').success(function(accounts) {
 	    $scope.accounts = accounts;
@@ -45,6 +49,10 @@ angular.module('fahrtenbuchApp')
 		$scope.trip.destination_time = new Date();
 
 		// var Geocoder = new google.maps.Geocoder();
+
+		$scope.addStay = function() {
+			$scope.stays.push({destination: '', client: '', destination_time: new Date()});
+		};
 
 		$scope.addTrip = function() {
 
