@@ -15,7 +15,8 @@
     "font-awesome": ">=4.1.0",
     "lodash": "~2.4.1",
     "angular-socket-io": "~0.6.0",
-    "angular-ui-bootstrap-datetimepicker": "~0.11.2"
+    "angular-ui-bootstrap-datetimepicker": "~0.11.2",
+    "angular-reverse-geocode": "*"
   },
   "devDependencies": {
     "angular-mocks": ">=1.2.*",

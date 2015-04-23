@@ -8,6 +8,7 @@ angular.module('fahrtenbuchApp', [
   'btford.socket-io',
   'ui.bootstrap',
   'ui.bootstrap.datetimepicker',
+  // 'angularReverseGeocode',
 ])
   .config(function ($routeProvider, $locationProvider, $httpProvider) {
     $routeProvider
