@@ -29,14 +29,14 @@ angular.module('fahrtenbuchApp')
 		// init
 		$scope.hourStep = 1;
   	$scope.minuteStep = 5;
-  	$scope.trip.origin_time = new Date();
-		$scope.trip.destination_time = new Date();
 
 	 	$scope.accounts = [];
 	 	$scope.cars = [];
 	 	$scope.user = Auth.getCurrentUser();
 	 	$scope.trip = {}; 
 
+  	$scope.trip.origin_time = new Date();
+		$scope.trip.destination_time = new Date();
 	 	$scope.stays = [];
 	 	$scope.stays.push({destination: '', client: '', destination_time: new Date()});
 
