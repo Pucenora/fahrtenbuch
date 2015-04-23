@@ -7,140 +7,140 @@
     </div>
   </div>
 
-    <button class="btn btn-success btn-lg" ng-click="startWatching()">Start</button>
-    <button class="btn btn-success btn-lg" ng-click="stopWatching()">Stop</button>
-    <i class="glyphicon glyphicon-map-marker btn-lg"></i>
-    <reverse-geocode lat="40.730885" lng="-73.997383" />
-    <hr />
+  <button class="btn btn-success btn-lg" ng-click="startWatching()">Start</button>
+  <button class="btn btn-success btn-lg" ng-click="stopWatching()">Stop</button>
+  <i class="glyphicon glyphicon-map-marker btn-lg"></i>
+  <reverse-geocode lat="40.730885" lng="-73.997383" />
+  <hr />
 
-    <form class="css-form" novalidate name="tripForm">
-      <p class="input-group">
+  <form class="css-form" novalidate name="tripForm">
+    <p class="input-group">
 
-        <div class="row"> 
-          <div class="col-xs-12">
-            <div class="form-group">
-        	    <label>car:</label>
-              <select ng-model="trip.car" class="form-control" ng-options="car.description for car in cars">
-              </select>
-            </div>
+      <div class="row"> 
+        <div class="col-xs-12">
+          <div class="form-group">
+      	    <label>car:</label>
+            <select ng-model="trip.car" class="form-control" ng-options="car.description for car in cars">
+            </select>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="row"> 
+        <div class="col-xs-12 col-md-3">
+          <div class="form-group">
+      	    <label>type:</label>
+            <br />
+            <div class="btn-group" name="type" ng-init="trip.type='noncorporate'" required="" >
+              <label class="btn btn-primary" ng-model="trip.type" value="'noncorporate'" btn-radio="'noncorporate'">private</label>
+              <label class="btn btn-primary" ng-model="trip.type" value="'corporate'" btn-radio="'corporate'">corporate</label>
+          	</div>
           </div>
         </div>
 
+          <!-- if business trip -->
+        <div class="col-xs-12 col-md-9">
+          <div class="form-group">
+            <label>account:</label>
+            <select ng-model="trip.account" class="form-control" ng-options="account.name for account in accounts">
+            </select>
+          </div>
+          <!-- end -->
+        </div> 
+      </div>
+      <hr />
 
-        <div class="row"> 
-          <div class="col-xs-12 col-md-3">
-            <div class="form-group">
-        	    <label>type:</label>
-              <br />
-              <div class="btn-group" name="type" ng-init="trip.type='noncorporate'" required="" >
-                <label class="btn btn-primary" ng-model="trip.type" value="'noncorporate'" btn-radio="'noncorporate'">private</label>
-                <label class="btn btn-primary" ng-model="trip.type" value="'corporate'" btn-radio="'corporate'">corporate</label>
-            	</div>
+      <div class="row"> 
+        <div class="col-xs-6">
+          <div class="form-group">
+            <label>kilometer start:</label>
+            <input type="text" ng-model="trip.kilometer_start" class="form-control" name="kilometer_start" required="" />
+            <div ng-show="tripForm.$submitted || tripForm.kilometer_start.$touched">
+              <div ng-show="tripForm.kilometer_start.$error.required">text field is required!</div>
+            </div>
+            <br />
+          </div>
+        </div>
+
+        <div class="col-xs-6">
+          <div class="form-group">
+            <label>kilometer end:</label>
+            <input type="text" ng-model="trip.kilometer_end" name="kilometer_end" class="form-control" required="" />
+            <div ng-show="tripForm.$submitted || tripForm.kilometer_end.$touched">
+              <div ng-show="tripForm.kilometer_end.$error.required">text field is required!</div>
+            </div>
+            <br />
+          </div>
+        </div>
+      </div>
+
+      <div class="row"> 
+        <div class="col-xs-12">
+          <div class="form-group">
+            <label>origin:</label>  
+            <input type="text" ng-model="trip.origin" class="form-control" name="origin" required="" />
+            <div ng-show="tripForm.$submitted || tripForm.origin.$touched">
+              <div ng-show="tripForm.origin.$error.required">text field is required!</div>
             </div>
           </div>
-
-            <!-- if business trip -->
-          <div class="col-xs-12 col-md-9">
-            <div class="form-group">
-              <label>account:</label>
-              <select ng-model="trip.account" class="form-control" ng-options="account.name for account in accounts">
-              </select>
-            </div>
-            <!-- end -->
-          </div> 
         </div>
-        <hr />
+      </div>
 
+      <div class="row"> 
+        <div class="col-xs-12">
+          <div class="form-group">
+            <datetimepicker min-date="minDate" show-weeks="showWeeks" hour-step="hourStep" minute-step="minuteStep" ng-model="trip.origin_time" show-meridian="showMeridian" date-format="dd-MMM-yyyy" date-options="dateOptions" date-disabled="disabled(date, mode)" readonly-time="false"></datetimepicker>
+          </div>
+        </div>
+      </div>
+      <hr />
+
+      <!-- repeat -->
+      <div ng-repeat="stay in stays">
         <div class="row"> 
-          <div class="col-xs-6">
+          <div class="col-xs-12 col-md-6">
             <div class="form-group">
-              <label>kilometer start:</label>
-              <input type="text" ng-model="trip.kilometer_start" class="form-control" name="kilometer_start" required="" />
-              <div ng-show="tripForm.$submitted || tripForm.kilometer_start.$touched">
-                <div ng-show="tripForm.kilometer_start.$error.required">text field is required!</div>
+              <label>destination:</label>   
+              <!-- trip.destination -->
+              <input type="text" ng-model="stay.destination" class="form-control" name="destination" required="" />
+              <div ng-show="tripForm.$submitted || tripForm.destination.$touched">
+                <div ng-show="tripForm.destination.$error.required">text field is required!</div>
               </div>
-              <br />
             </div>
           </div>
 
-          <div class="col-xs-6">
+          <div class="col-xs-12 col-md-6">
             <div class="form-group">
-              <label>kilometer end:</label>
-              <input type="text" ng-model="trip.kilometer_end" name="kilometer_end" class="form-control" required="" />
-              <div ng-show="tripForm.$submitted || tripForm.kilometer_end.$touched">
-                <div ng-show="tripForm.kilometer_end.$error.required">text field is required!</div>
-              </div>
-              <br />
-            </div>
-          </div>
-        </div>
-
-        <div class="row"> 
-          <div class="col-xs-12">
-            <div class="form-group">
-              <label>origin:</label>  
-              <input type="text" ng-model="trip.origin" class="form-control" name="origin" required="" />
-              <div ng-show="tripForm.$submitted || tripForm.origin.$touched">
-                <div ng-show="tripForm.origin.$error.required">text field is required!</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="row"> 
-          <div class="col-xs-12">
-            <div class="form-group">
-              <datetimepicker min-date="minDate" show-weeks="showWeeks" hour-step="hourStep" minute-step="minuteStep" ng-model="trip.origin_time" show-meridian="showMeridian" date-format="dd-MMM-yyyy" date-options="dateOptions" date-disabled="disabled(date, mode)" readonly-time="false"></datetimepicker>
-            </div>
-          </div>
-        </div>
-        <hr />
-
-        <!-- repeat -->
-        <div ng-repeat="stay in stays">
-          <div class="row"> 
-            <div class="col-xs-12 col-md-6">
-              <div class="form-group">
-                <label>destination:</label>   
-                <!-- trip.destination -->
-                <input type="text" ng-model="stay.destination" class="form-control" name="destination" required="" />
-                <div ng-show="tripForm.$submitted || tripForm.destination.$touched">
-                  <div ng-show="tripForm.destination.$error.required">text field is required!</div>
+              <label>client:</label>
+              <!-- trip.client -->
+              <input type="text" ng-model="stay.client" class="form-control" name="client" required="" />
+                <div ng-show="tripForm.$submitted || tripForm.client.$touched">
+                  <div ng-show="tripForm.client.$error.required">text field is required!</div>
                 </div>
-              </div>
-            </div>
-
-            <div class="col-xs-12 col-md-6">
-              <div class="form-group">
-                <label>client:</label>
-                <!-- trip.client -->
-                <input type="text" ng-model="stay.client" class="form-control" name="client" required="" />
-                  <div ng-show="tripForm.$submitted || tripForm.client.$touched">
-                    <div ng-show="tripForm.client.$error.required">text field is required!</div>
-                  </div>
-                <br />
-              </div>
+              <br />
             </div>
           </div>
-
-          <div class="row"> 
-            <div class="col-xs-12">
-              <div class="form-group">
-              <!-- trip.destination_time -->
-                <datetimepicker min-date="minDate" show-weeks="showWeeks" hour-step="hourStep" minute-step="minuteStep" ng-model="stay.destination_time" show-meridian="showMeridian" date-format="dd-MMM-yyyy" date-options="dateOptions" date-disabled="disabled(date, mode)" readonly-time="false"></datetimepicker>
-              </div>
-            </div>
-          </div>
-          <hr />
         </div>
-        <!-- end -->
 
-        <button type="button" class="btn btn-success btn-lg" ng-click="addStay()">Add Stay</button>
+        <div class="row"> 
+          <div class="col-xs-12">
+            <div class="form-group">
+            <!-- trip.destination_time -->
+              <datetimepicker min-date="minDate" show-weeks="showWeeks" hour-step="hourStep" minute-step="minuteStep" ng-model="stay.destination_time" show-meridian="showMeridian" date-format="dd-MMM-yyyy" date-options="dateOptions" date-disabled="disabled(date, mode)" readonly-time="false"></datetimepicker>
+            </div>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <!-- end -->
 
-        <span class="input-group-btn">
-          <button type="submit" class="btn btn-success btn-lg" ng-click="addTrip()" ng-disabled="myForm.user.$dirty && myForm.user.$invalid || myForm.email.$dirty && myForm.email.$invalid">Submit</button>
-        </span>
+      <button type="button" class="btn btn-success btn-lg" ng-click="addStay()">Add Stay</button>
 
-      </p>
-    </form>
+      <span class="input-group-btn">
+        <button type="submit" class="btn btn-success btn-lg" ng-click="addTrip()" ng-disabled="myForm.user.$dirty && myForm.user.$invalid || myForm.email.$dirty && myForm.email.$invalid">Submit</button>
+      </span>
+
+    </p>
+  </form>
 </div>
