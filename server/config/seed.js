@@ -73,6 +73,7 @@ var newCar1 = new Car({
   description: 'Mercedes A Klasse',
   license_tag: 'A-Z-1234',
   mileage: 81.331,
+  base: 'Augsburg',
 });
 newCar1.save();
 
@@ -80,6 +81,7 @@ var newCar2 = new Car({
   description: 'Mercedes C Klasse',
   license_tag: 'A-Z-4321',
   mileage: 5000,
+    base: 'Augsburg',
 });
 newCar2.save();
 
@@ -88,14 +90,17 @@ Car.find({}).remove(function() {
     description: 'BMW i8',
     license_tag: 'A-BC-42',
     mileage: 2000,
+    base: 'Augsburg',
   }, {
     description: 'BMW 1er',
     license_tag: 'A-BC-123',
     mileage: 3000,
+    base: 'Augsburg',
   }, {
     description: 'BMW 3er',
     license_tag: 'A-BC-321',
     mileage: 4000,
+    base: 'Augsburg',
   }, function() {
       console.log('finished populating cars');
     }
