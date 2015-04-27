@@ -24,7 +24,7 @@ angular.module('fahrtenbuchApp')
 	 * /trip/new
 	 * create new trip
 	**/
-	.controller('CreateTripCtrl', function ($scope, $http, socket, $location, Auth) {
+	.controller('CreateTripCtrl', function ($scope, $http, socket, $location, Auth, Trip) {
 
 		// init
 		$scope.hourStep = 1;
@@ -39,22 +39,31 @@ angular.module('fahrtenbuchApp')
 		$scope.trip.destination_time = new Date();
 	 	$scope.stays = [];
 	 	$scope.stays.push({destination: '', client: '', destination_time: new Date()});
+	 	
+		Trip.getAccounts()
+    .then(function(accounts) {
+    	$scope.accounts = accounts;
+    })
+    .catch(function(err) {
+      $scope.errors.other = err.message;
+    });
 
-	 	// get data
-	  $http.get('/api/accounts').success(function(accounts) {
-	    $scope.accounts = accounts;
-	  });
+		Trip.getCars()
+    .then(function(cars) {
+    	$scope.cars = cars;
+    })
+    .catch(function(err) {
+      $scope.errors.other = err.message;
+    });
 
-	  $http.get('/api/cars').success(function(cars) {
-	    $scope.cars = cars;
-	  });
-
-	  var carURL = '/api/cars/' + $scope.user.default_car;
-
-	  $http.get(carURL).success(function(car) {
-		  $scope.trip.car = $scope.cars[car.__v];
-		  $scope.trip.kilometer_start = car.mileage;
-	  });
+		Trip.getDefaultCar()
+    .then(function(defaultCar) {
+    	$scope.trip.car = $scope.cars[defaultCar.__v];
+    	$scope.trip.kilometer_start = defaultCar.mileage;
+    })
+    .catch(function(err) {
+      $scope.errors.other = err.message;
+    });
 
 	  // @todo
 		// var Geocoder = new google.maps.Geocoder();
@@ -84,6 +93,8 @@ angular.module('fahrtenbuchApp')
 			$scope.trip.user = $scope.user._id;
 			$scope.trip.timestamp = new Date();
 
+			console.log($scope.stays);
+
 			$scope.stays.forEach(function(stay) {
 				$http.post('/api/stays', stay).success(function(data, status, headers, config) {		
   				stayIds.push(data._id);
@@ -96,6 +107,11 @@ angular.module('fahrtenbuchApp')
  					console.log(status);
 			  });
 			});
+			// .then(function(test) {
+			// 	$scope.trip.stays = stayIds;
+			// 	$http.post('/api/trips', $scope.trip);
+			// 	console.log(test);
+			// });
 
 			// redirect
 			$location.path("/trip");
