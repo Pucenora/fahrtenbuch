@@ -8,7 +8,7 @@ angular.module('fahrtenbuchApp')
       /**
        * get accounts
        *
-       * @param  {Array}   accounts   - login info
+       * @param  {Array}   accounts
        * @param  {Function} callback  - optional
        * @return {Promise}
       */
@@ -31,7 +31,7 @@ angular.module('fahrtenbuchApp')
       /**
        * get cars
        *
-       * @param  {Array}   cars       - login info
+       * @param  {Array}   cars
        * @param  {Function} callback  - optional
        * @return {Promise}
       */
@@ -54,7 +54,7 @@ angular.module('fahrtenbuchApp')
       /**
        * get default car
        *
-       * @param  {Object}   car       - login info
+       * @param  {Object}   car
        * @param  {Function} callback  - optional
        * @return {Promise}
       */

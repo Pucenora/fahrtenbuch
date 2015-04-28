@@ -181,15 +181,17 @@ angular.module('fahrtenbuchApp')
 	/**
 	 * show details of a trip
 	**/
-	.controller('DetailTripCtrl', function ($scope, $http, $routeParams, socket, $location) {
+	.controller('DetailTripCtrl', function ($scope, $http, $routeParams, socket, $location, Stay) {
 
 		// init
 		$scope.trip = {};
+		$scope.destinations = "";
 
 		// get trip from server
 		var tripURL = '/api/trips/' + $routeParams.id;
     $http.get(tripURL).success(function(trip) {
       $scope.trip = trip;
+      $scope.destinations = Stay.getDestinationsAsString(trip.stays);
     });
 
     // redirect
