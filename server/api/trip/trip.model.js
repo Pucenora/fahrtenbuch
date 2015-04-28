@@ -14,8 +14,8 @@ var TripSchema = new Schema({
 	kilometer_start: {type: Number, required: true},
 	kilometer_end: {type: Number, required: true},
 
-	origin: {type: String, required: true},
 	origin_time: {type: Date, required: true},
+	destination_time: {type: Date, required: true},
 	stays: [{ type : ObjectId, ref: 'Stay' }],
 
 	timestamp: {type: Date, default: Date.now},

@@ -34,17 +34,23 @@
     	<th>kilometer start:</th>
     	<td>{{trip.kilometer_start}} km</td>
   	</tr>
+
+    <tr>
+      <th>start time:</th>
+      <td>{{trip.origin_time | date:"dd.MM.yyyy 'um' HH:mm 'Uhr'"}}</td>
+      <!-- | date:'medium' -->
+    </tr>
   	    
   	<tr>
     	<th>kilometer end:</th>
     	<td>{{trip.kilometer_end}} km</td>
   	</tr>
 
-  	<tr>
-    	<th>origin:</th>
-    	<td>{{trip.origin}} {{trip.origin_time | date:"dd.MM.yyyy 'um' HH:mm 'Uhr'"}}</td>
-    	<!-- | date:'medium' -->
-  	</tr>
+    <tr>
+      <th>end time:</th>
+      <td>{{trip.destination_time | date:"dd.MM.yyyy 'um' HH:mm 'Uhr'"}}</td>
+      <!-- | date:'medium' -->
+    </tr>
 
   	<tr ng-repeat-start="(key, stay) in trip.stays">
     	<th>destination {{key + 1}}:</th>

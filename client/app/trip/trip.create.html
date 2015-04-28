@@ -52,7 +52,7 @@
       <hr />
 
       <div class="row"> 
-        <div class="col-xs-6">
+        <div class="col-xs-12 col-md-6">
           <div class="form-group">
             <label>kilometer start:</label>
             <input type="text" ng-model="trip.kilometer_start" class="form-control" name="kilometer_start" required="" />
@@ -63,7 +63,15 @@
           </div>
         </div>
 
-        <div class="col-xs-6">
+        <div class="col-xs-12 col-md-6">
+          <div class="form-group">
+            <datetimepicker min-date="minDate" show-weeks="showWeeks" hour-step="hourStep" minute-step="minuteStep" ng-model="trip.origin_time" show-meridian="showMeridian" date-format="dd-MMM-yyyy" date-options="dateOptions" date-disabled="disabled(date, mode)" readonly-time="false"></datetimepicker>
+          </div>
+        </div>
+      </div>
+
+      <div class="row"> 
+        <div class="col-xs-12 col-md-6">
           <div class="form-group">
             <label>kilometer end:</label>
             <input type="text" ng-model="trip.kilometer_end" name="kilometer_end" class="form-control" required="" />
@@ -73,28 +81,14 @@
             <br />
           </div>
         </div>
-      </div>
 
-      <div class="row"> 
-        <div class="col-xs-12">
+        <div class="col-xs-12 col-md-6">
           <div class="form-group">
-            <label>origin:</label>  
-            <input type="text" ng-model="trip.origin" class="form-control" name="origin" required="" />
-            <div ng-show="tripForm.$submitted || tripForm.origin.$touched">
-              <div ng-show="tripForm.origin.$error.required">text field is required!</div>
-            </div>
+            <datetimepicker min-date="minDate" show-weeks="showWeeks" hour-step="hourStep" minute-step="minuteStep" ng-model="trip.destination_time" show-meridian="showMeridian" date-format="dd-MMM-yyyy" date-options="dateOptions" date-disabled="disabled(date, mode)" readonly-time="false"></datetimepicker>
           </div>
         </div>
+        <hr />
       </div>
-
-      <div class="row"> 
-        <div class="col-xs-12">
-          <div class="form-group">
-            <datetimepicker min-date="minDate" show-weeks="showWeeks" hour-step="hourStep" minute-step="minuteStep" ng-model="trip.origin_time" show-meridian="showMeridian" date-format="dd-MMM-yyyy" date-options="dateOptions" date-disabled="disabled(date, mode)" readonly-time="false"></datetimepicker>
-          </div>
-        </div>
-      </div>
-      <hr />
 
       <!-- repeat -->
       <div ng-repeat="stay in stays">
