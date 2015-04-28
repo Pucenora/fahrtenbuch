@@ -258,7 +258,7 @@ var stay17 = new Stay({
 stay17.save();
 
 var stay18 = new Stay({
-  destination: 'Uniklink Tübingen',
+  destination: 'Uniklinik Tübingen',
   client: 'Dr. House',
   destination_time: new Date("January 18, 2011 11:00:00"),
 });
@@ -448,7 +448,7 @@ Trip.find({}).remove(function() {
     kilometer_end: 84429,
     origin_time: new Date("January 18, 2011 08:00:00"),
     destination_time: new Date("January 19, 2011 20:00:00"),
-    stays: [stay17, stay18, stay18, stay20, stay21],
+    stays: [stay17, stay18, stay19, stay20, stay21],
     timestamp: new Date("January 19, 2011 20:00:00"),
   }, {
     user: newUser,
