@@ -14,7 +14,12 @@ var Trip = require('./trip.model');
 
 // Get list of trips
 exports.index = function(req, res) {
-  Trip.find(function (err, trips) {
+  Trip.find()
+  .populate('account')
+  .populate('car')
+  .populate('user')
+  .populate('stays')
+  .exec(function (err, trip) {
     if(err) { return handleError(res, err); }
     return res.json(200, trips);
   });
