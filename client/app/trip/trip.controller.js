@@ -6,27 +6,14 @@ angular.module('fahrtenbuchApp')
 	 * /trip
 	 * trip overview 
 	**/
-	.controller('TripCtrl', function ($scope, $http, socket, $location) {
+	.controller('TripCtrl', function ($scope, $http, socket, $location, Stay) {
 	
 		// get trips
 		$scope.trips = [];
     $http.get('/api/trips').success(function(trips) {
       $scope.trips = trips;
       $scope.trips.forEach(function(trip){
-      	var stays = "";
-      	var count = 1;
-      	var len = trip.stays.length;
-      	if (len === 0) {
-      		stays = "private";
-      	}
-      	trip.stays.forEach(function(stay){
-      		if (count === len) {
-      			stays += stay.destination;
-      		} else {
-       			stays += stay.destination + " / ";  
-       			count++;   			
-      		}
-      	});
+      	var stays = Stay.getDestinationsAsString(trip.stays);
       	trip.stays = stays;
       });
     });
