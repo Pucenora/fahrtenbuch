@@ -92,6 +92,30 @@ angular.module('fahrtenbuchApp')
         });
 
         return deferred.promise;
+      },
+
+      /**
+       * get specific trip
+       *
+       * @param  {String}   id  
+       * @param  {Function} callback  - optional
+       * @return {Promise}
+      */
+      getTrip: function(id, callback) {
+        var cb = callback || angular.noop;
+        var deferred = $q.defer();
+        var tripURL = '/api/trips/' + id;
+
+        $http.get(tripURL)
+        .success(function(trips) {
+          deferred.resolve(trips);
+        })
+        .error(function(err) {
+          deferred.reject(err);
+          return cb(err);
+        });
+
+        return deferred.promise;
       }
     };
   });
