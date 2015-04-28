@@ -14,6 +14,14 @@ angular.module('fahrtenbuchApp')
     .catch(function(err) {
       $scope.errors.other = err.message;
     });
+
+    // $scope.addCar = function() {
+
+    // };
+
+    // $scope.deleteCar = function(car) {
+
+    // };   
   })
 
   .controller('AdminAccountCtrl', function ($scope, Trip) {
@@ -25,6 +33,25 @@ angular.module('fahrtenbuchApp')
     .catch(function(err) {
       $scope.errors.other = err.message;
     });
+
+    // $scope.addAccount = function() {
+
+    // };
+
+    $scope.deleteAccount = function(account) {
+
+      Trip.deleteAccount(account._id)
+      .then(function(accounts) {
+        angular.forEach($scope.accounts, function(a, i) {
+          if (a === account) {
+            $scope.accounts.splice(i, 1);
+          }
+        });
+      })
+      .catch(function(err) {
+        $scope.errors.other = err.message;
+      });
+    };   
   })
 
   .controller('AdminUserCtrl', function ($scope, $http, Auth, User) {
