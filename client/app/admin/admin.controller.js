@@ -2,13 +2,29 @@
 
 angular.module('fahrtenbuchApp')
 
-  .controller('AdminCtrl', function ($scope, $http, Auth, User) {
+  .controller('AdminCtrl', function () {
   })
 
-  .controller('AdminCarCtrl', function ($scope, $http, Auth, User) {
+  .controller('AdminCarCtrl', function ($scope, Trip) {
+
+    Trip.getCars()
+    .then(function(cars) {
+      $scope.cars = cars;
+    })
+    .catch(function(err) {
+      $scope.errors.other = err.message;
+    });
   })
 
-  .controller('AdminAccountCtrl', function ($scope, $http, Auth, User) {
+  .controller('AdminAccountCtrl', function ($scope, Trip) {
+
+    Trip.getAccounts()
+    .then(function(accounts) {
+      $scope.accounts = accounts;
+    })
+    .catch(function(err) {
+      $scope.errors.other = err.message;
+    });
   })
 
   .controller('AdminUserCtrl', function ($scope, $http, Auth, User) {

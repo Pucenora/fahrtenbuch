@@ -2,6 +2,18 @@
 
 <div class="container">
 
-  <h1>Accounts</h1>
+	<h1>Admin: Accounts</h1>
 
+  <div class="row"> 
+    <div class="col-xs-12">
+			<ul class="list-group">
+		    <li class="list-group-item" ng-repeat="account in accounts">
+	        <strong>{{account.name}}</strong>	        
+	        <button type="button" ng-click="removeAccount(car)" class="btn btn-danger btn-sm pull-right"><i class="glyphicon glyphicon-trash"></i></button>
+		    </li>
+		  </ul>
+    </div>
+  </div>
+
+  <p><button type="button" class="btn btn-primary" ng-click="add Account()">Add Account</button></p>
 </div>

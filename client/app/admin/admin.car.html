@@ -2,6 +2,20 @@
 
 <div class="container">
 
-	<h1>Cars</h1>
+	<h1>Admin: Cars</h1>
 
+  <div class="row"> 
+    <div class="col-xs-12">
+			<ul class="list-group">
+		    <li class="list-group-item" ng-repeat="car in cars">
+	        <strong>{{car.description}}: {{car.license_tag}}</strong><br>
+	        <span class="text-muted">{{car.mileage}} km</span><br>
+	        <span class="text-muted">{{car.base}}</span>		        
+	        <button type="button" ng-click="removeCar(car)" class="btn btn-danger btn-sm pull-right"><i class="glyphicon glyphicon-trash"></i></button>
+		    </li>
+		  </ul>
+    </div>
+  </div>
+
+  <p><button type="button" class="btn btn-primary" ng-click="addCar()">Add Car</button></p>
 </div>
