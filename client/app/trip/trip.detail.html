@@ -3,70 +3,55 @@
 <div class="container">
   <div class="row">
     <div class="col-lg-12">
-      <h1 class="page-header">Details: {{trip.origin}}</h1>
+      <h1 class="page-header">Details:</h1>
     </div>
   </div>
 
-  <table class="table table-responsive">
-    <tr>
-    	<th>driver:</th>
-    	<td>{{trip.user.name}}</td>
-  	</tr>
-  	    
-  	<tr>
-    	<th>car:</th>
-    	<td>{{trip.car.license_tag}}: {{trip.car.description}}</td>
-  	</tr>
-  	    
-  	<tr>
-    	<th>type:</th>
-    	<td>{{trip.type}}</td>
-  	</tr>
-  	
-  	<!-- if business trip -->    
-  	<tr>
-    	<th>account:</th>
-    	<td>{{trip.account.name}}</td>
-  	</tr>
-  	<!-- end -->
-  	    
-  	<tr>
-    	<th>kilometer start:</th>
-    	<td>{{trip.kilometer_start}} km</td>
-  	</tr>
+  <div class="row">
+    <div class="col-xs-12 col-md-6">
+      <div class="thumbnail {{trip.type}}">
+        <div class="caption">
+          <h3>Info:</h3>
+          <p>{{trip.user.name}}</p>
+          <p>{{trip.car.license_tag}}: {{trip.car.description}}</p>
+          <p><small>
+            <span>{{trip.type}}</span>
+            <span class="pull-right">added: {{trip.timestamp | date:"dd.MM.yyyy 'um' HH:mm 'Uhr'"}}</span>
+          </small></p>
+        </div>
+      </div>
+    </div>
 
-    <tr>
-      <th>start time:</th>
-      <td>{{trip.origin_time | date:"dd.MM.yyyy 'um' HH:mm 'Uhr'"}}</td>
-      <!-- | date:'medium' -->
-    </tr>
-  	    
-  	<tr>
-    	<th>kilometer end:</th>
-    	<td>{{trip.kilometer_end}} km</td>
-  	</tr>
+    <div class="col-xs-12 col-md-6">
+      <div class="thumbnail">
+        <div class="caption">
+          <h3>Details:</h3>
+          <p>{{trip.kilometer_start}} km <i class="glyphicon glyphicon-arrow-right"></i> {{trip.kilometer_end}} km</p>
+          <p>{{trip.origin_time | date:"dd.MM.yyyy 'um' HH:mm 'Uhr'"}} <i class="glyphicon glyphicon-arrow-right"></i> {{trip.destination_time | date:"dd.MM.yyyy 'um' HH:mm 'Uhr'"}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
 
-    <tr>
-      <th>end time:</th>
-      <td>{{trip.destination_time | date:"dd.MM.yyyy 'um' HH:mm 'Uhr'"}}</td>
-      <!-- | date:'medium' -->
-    </tr>
+  <div class="row" ng-repeat="(key, stay) in trip.stays">
+    <div class="col-xs-12">
+      <div class="thumbnail">
+        <div class="caption">
+          <h3>{{stay.destination}} {{stay.destination_time | date:"dd.MM.yyyy 'um' HH:mm 'Uhr'"}}</h3>
+        </div>
+      </div>
+    </div>
+  </div>
 
-  	<tr ng-repeat-start="(key, stay) in trip.stays">
-    	<th>destination {{key + 1}}:</th>
-    	<td>{{stay.destination}} {{stay.destination_time | date:"dd.MM.yyyy 'um' HH:mm 'Uhr'"}}</td>
-  	</tr>
+<!--   <tr ng-repeat-start="(key, stay) in trip.stays">
+    <th>destination {{key + 1}}:</th>
+    <td>{{stay.destination}} {{stay.destination_time | date:"dd.MM.yyyy 'um' HH:mm 'Uhr'"}}</td>
+  </tr>
 
-  	<tr ng-repeat-end>
-    	<th>client {{key + 1}}:</th>
-    	<td>{{stay.client}}</td>
-  	</tr>
-
-  	<tr>
-    	<th>timestamp:</th>
-    	<td>{{trip.timestamp}}</td>
-  	</tr>
-	</table>
+  <tr ng-repeat-end>
+    <th>client {{key + 1}}:</th>
+    <td>{{stay.client}}</td>
+  </tr> -->
 
 	<button class="btn btn-success btn-lg" ng-click="returnToOverview()">Return</button>
 </div>

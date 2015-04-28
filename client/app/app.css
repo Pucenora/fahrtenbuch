@@ -37,3 +37,15 @@
     color: #000;
     padding: 0.2em 0;
 }
+
+/**
+ * trip
+**/
+
+.corporate {
+    background-color: #8181F7;
+}
+
+.noncorporate {
+    background-color: #FACC2E;
+}
