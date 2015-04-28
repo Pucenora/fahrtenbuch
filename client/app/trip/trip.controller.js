@@ -93,6 +93,14 @@ angular.module('fahrtenbuchApp')
 		};
 
 		/**
+		 * remove a stay to the form
+		**/
+		$scope.removeStay = function(stay) {
+		  var index = $scope.stays.indexOf(stay);
+  		$scope.stays.splice(index, 1);  
+		};
+
+		/**
 		 * post trip to server
 		**/
 		$scope.addTrip = function() {

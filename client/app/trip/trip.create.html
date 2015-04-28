@@ -128,6 +128,8 @@
             <div class="form-group">
             <!-- trip.destination_time -->
               <datetimepicker min-date="minDate" show-weeks="showWeeks" hour-step="hourStep" minute-step="minuteStep" ng-model="stay.destination_time" show-meridian="showMeridian" date-format="dd-MMM-yyyy" date-options="dateOptions" date-disabled="disabled(date, mode)" readonly-time="false"></datetimepicker>
+
+              <button type="button" class="btn btn-success btn-lg" ng-click="removeStay(stay)"><i class="glyphicon glyphicon-minus"></i></button>
             </div>
           </div>
         </div>
@@ -135,11 +137,10 @@
       </div>
       <!-- end -->
 
-      <button type="button" class="btn btn-success btn-lg" ng-click="addStay()">Add Stay</button>
+      <button type="button" class="btn btn-success btn-lg" ng-click="addStay()"><i class="glyphicon glyphicon-plus"></i></button>
 
-      <span class="input-group-btn">
-        <button type="submit" class="btn btn-success btn-lg" ng-click="addTrip()" ng-disabled="myForm.user.$dirty && myForm.user.$invalid || myForm.email.$dirty && myForm.email.$invalid">Submit</button>
-      </span>
+      <button type="submit" class="btn btn-success btn-lg" ng-click="addTrip()" ng-disabled="myForm.user.$dirty && myForm.user.$invalid || myForm.email.$dirty && myForm.email.$invalid">Submit</button>
+
 
     </p>
   </form>
