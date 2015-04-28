@@ -12,6 +12,23 @@ angular.module('fahrtenbuchApp')
 		$scope.trips = [];
     $http.get('/api/trips').success(function(trips) {
       $scope.trips = trips;
+      $scope.trips.forEach(function(trip){
+      	var stays = "";
+      	var count = 1;
+      	var len = trip.stays.length;
+      	if (len === 0) {
+      		stays = "private";
+      	}
+      	trip.stays.forEach(function(stay){
+      		if (count === len) {
+      			stays += stay.destination;
+      		} else {
+       			stays += stay.destination + " / ";  
+       			count++;   			
+      		}
+      	});
+      	trip.stays = stays;
+      });
     });
 
     // redirect
