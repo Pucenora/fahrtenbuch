@@ -8,11 +8,10 @@ angular.module('fahrtenbuchApp')
       /**
        * get accounts
        *
-       * @param  {Array}   accounts
        * @param  {Function} callback  - optional
        * @return {Promise}
       */
-      getAccounts: function(accounts, callback) {
+      getAccounts: function(callback) {
         var cb = callback || angular.noop;
         var deferred = $q.defer();
 
@@ -31,11 +30,10 @@ angular.module('fahrtenbuchApp')
       /**
        * get cars
        *
-       * @param  {Array}   cars
        * @param  {Function} callback  - optional
        * @return {Promise}
       */
-      getCars: function(cars, callback) {
+      getCars: function(callback) {
         var cb = callback || angular.noop;
         var deferred = $q.defer();
 
@@ -54,11 +52,10 @@ angular.module('fahrtenbuchApp')
       /**
        * get default car
        *
-       * @param  {Object}   car
        * @param  {Function} callback  - optional
        * @return {Promise}
       */
-      getDefaultCar: function(cars, callback) {
+      getDefaultCar: function(callback) {
         var cb = callback || angular.noop;
         var deferred = $q.defer();
         var defaultCarURL = '/api/cars/' + Auth.getCurrentUser().default_car;
@@ -66,6 +63,28 @@ angular.module('fahrtenbuchApp')
         $http.get(defaultCarURL)
         .success(function(defaultCar) {
           deferred.resolve(defaultCar);
+        })
+        .error(function(err) {
+          deferred.reject(err);
+          return cb(err);
+        });
+
+        return deferred.promise;
+      },
+
+      /**
+       * get trips
+       *
+       * @param  {Function} callback  - optional
+       * @return {Promise}
+      */
+      getTrips: function(callback) {
+        var cb = callback || angular.noop;
+        var deferred = $q.defer();
+
+        $http.get('/api/trips/')
+        .success(function(trips) {
+          deferred.resolve(trips);
         })
         .error(function(err) {
           deferred.reject(err);
