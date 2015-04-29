@@ -4,10 +4,10 @@ var mongoose = require('mongoose'),
   Schema = mongoose.Schema;
 
 var CarSchema = new Schema({
-	description: String,
-	license_tag: String,
-	mileage: Number,
-	base: String,
+	description: { type: String, required: true },
+	license_tag: { type: String, required: true },
+	mileage: { type: Number, required: true },
+	base: { type: String, required: true },
 });
 
 module.exports = mongoose.model('Car', CarSchema);

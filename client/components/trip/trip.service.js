@@ -119,19 +119,91 @@ angular.module('fahrtenbuchApp')
       },
 
       /**
-       * get default car
+       * get car
        *
+       * @param  {String}   id
        * @param  {Function} callback  - optional
        * @return {Promise}
       */
-      getDefaultCar: function(callback) {
+      getCar: function(id, callback) {
         var cb = callback || angular.noop;
         var deferred = $q.defer();
-        var defaultCarURL = '/api/cars/' + Auth.getCurrentUser().default_car;
+        var carURL = '/api/cars/' + id;
 
-        $http.get(defaultCarURL)
-        .success(function(defaultCar) {
-          deferred.resolve(defaultCar);
+        $http.get(carURL)
+        .success(function(car) {
+          deferred.resolve(car);
+        })
+        .error(function(err) {
+          deferred.reject(err);
+          return cb(err);
+        });
+
+        return deferred.promise;
+      },
+
+      /**
+       * delete car
+       *
+       * @param  {String}   id
+       * @param  {Function} callback  - optional
+       * @return {Promise}
+      */
+      deleteCar: function(id, callback) {
+        var cb = callback || angular.noop;
+        var deferred = $q.defer();
+        var carURL = '/api/cars/' + id;        
+
+        $http.delete(carURL)
+        .success(function(info) {
+          deferred.resolve(info);
+        })
+        .error(function(err) {
+          deferred.reject(err);
+          return cb(err);
+        });
+
+        return deferred.promise;
+      },
+
+      /**
+       * patch car
+       *
+       * @param  {Object}   car
+       * @param  {Function} callback  - optional
+       * @return {Promise}
+      */
+      patchCar: function(car, callback) {
+        var cb = callback || angular.noop;
+        var deferred = $q.defer();
+        var carURL = '/api/cars/' + car._id;
+
+        $http.patch(carURL, car)
+        .success(function(car) {
+          deferred.resolve(car);
+        })
+        .error(function(err) {
+          deferred.reject(err);
+          return cb(err);
+        });
+
+        return deferred.promise;
+      },
+
+      /**
+       * add car
+       *
+       * @param  {Object} car
+       * @param  {Function} callback  - optional
+       * @return {Promise}
+      */
+      postCar: function(car, callback) {
+        var cb = callback || angular.noop;
+        var deferred = $q.defer();     
+
+        $http.post('api/cars/', car)
+        .success(function(car) {
+          deferred.resolve(car);
         })
         .error(function(err) {
           deferred.reject(err);

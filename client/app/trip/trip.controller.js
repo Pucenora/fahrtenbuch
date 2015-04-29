@@ -65,7 +65,7 @@ angular.module('fahrtenbuchApp')
       $scope.errors.other = err.message;
     });
 
-		Trip.getDefaultCar()
+		Trip.getCar(Auth.getCurrentUser().default_car)
     .then(function(defaultCar) {
     	$scope.trip.car = $scope.cars[defaultCar.__v];
     	$scope.trip.kilometer_start = defaultCar.mileage;

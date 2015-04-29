@@ -1,0 +1,56 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div class="container">
+
+	<h1>{{modus}} Car</h1>
+
+	<form class="css-form" novalidate name="form">
+    <p class="input-group">
+
+      <div class="row"> 
+    		<div class="col-xs-12 col-md-6">
+		      <label>Description:</label>
+		      <input type="text" ng-model="car.description" class="form-control" name="description" required="" />
+		      <div ng-show="form.$submitted || form.description.$touched">
+		        <div class="label label-danger" ng-show="form.description.$error.required">text field is required!</div>
+		      </div>
+	      </div>
+      </div>
+
+		  <div class="row">
+  			<div class="col-xs-12 col-md-6">
+		      <label>License Tag:</label>
+		      <input type="text" ng-model="car.license_tag" class="form-control" name="license_tag" required="" />
+		      <div ng-show="form.$submitted || form.license_tag.$touched">
+		        <div class="label label-danger" ng-show="form.license_tag.$error.required">text field is required!</div>
+		      </div>
+	      </div>
+      </div>
+
+		  <div class="row"> 
+  			<div class="col-xs-12 col-md-6">
+		      <label>Mileage:</label>
+		      <input type="text" ng-model="car.mileage" class="form-control" name="mileage" required="" />
+		      <div ng-show="form.$submitted || form.mileage.$touched">
+		        <div class="label label-danger" ng-show="form.mileage.$error.required">text field is required!</div>
+		      </div>
+	      </div>
+      </div>
+
+		  <div class="row">
+  			<div class="col-xs-12 col-md-6">
+		      <label>Base:</label>
+		      <input type="text" ng-model="car.base" class="form-control" name="base" required="" />
+		      <div ng-show="form.$submitted || form.base.$touched">
+		        <div class="label label-danger" ng-show="form.base.$error.required">text field is required!</div>
+		      </div>
+	      </div>
+      </div>
+      <br />
+    </p>
+	</form>
+
+  <button type="submit" class="btn btn-success btn-lg" ng-click="createCar()">Submit</button>	
+  <p class="help-block"><span class="label label-danger">{{ errors.other }}</span></p>
+</div>
+
