@@ -24,7 +24,9 @@ angular.module('fahrtenbuchApp')
     // };   
   })
 
-  .controller('AdminAccountCtrl', function ($scope, Trip) {
+  .controller('AdminAccountCtrl', function ($scope, $route, Trip) {
+
+    $scope.account = {};
 
     Trip.getAccounts()
     .then(function(accounts) {
@@ -34,9 +36,16 @@ angular.module('fahrtenbuchApp')
       $scope.errors.other = err.message;
     });
 
-    // $scope.addAccount = function() {
+    $scope.addAccount = function(account) {
 
-    // };
+      Trip.postAccount(account)
+      .then(function(account) {
+        $route.reload();
+      })
+      .catch(function(err) {
+        $scope.errors.other = err.message;
+      });
+    };
 
     $scope.deleteAccount = function(account) {
 

@@ -41,8 +41,30 @@ angular.module('fahrtenbuchApp')
 
         $http.delete(accountURL)
         .success(function(info) {
-          console.log(info);
           deferred.resolve(info);
+        })
+        .error(function(err) {
+          deferred.reject(err);
+          return cb(err);
+        });
+
+        return deferred.promise;
+      },
+
+      /**
+       * add account
+       *
+       * @param  {Object} account
+       * @param  {Function} callback  - optional
+       * @return {Promise}
+      */
+      postAccount: function(account, callback) {
+        var cb = callback || angular.noop;
+        var deferred = $q.defer();     
+
+        $http.post('api/accounts/', account)
+        .success(function(account) {
+          deferred.resolve(account);
         })
         .error(function(err) {
           deferred.reject(err);

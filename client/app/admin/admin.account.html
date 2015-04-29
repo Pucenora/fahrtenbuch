@@ -15,5 +15,15 @@
     </div>
   </div>
 
-  <p><button type="button" class="btn btn-primary" ng-click="addAccount()">Add Account</button></p>
+  <form class="css-form" novalidate name="form">
+    <p class="input-group">
+      <label>Name:</label>
+      <input type="text" ng-model="account.name" class="form-control" name="name" required="" />
+      <div ng-show="form.$submitted || form.name.$touched">
+        <div class="label label-danger" ng-show="form.name.$error.required">text field is required!</div>
+      </div>
+  		<button type="submit" class="btn btn-primary" ng-click="addAccount(account)">Add Account</button>
+      <p class="help-block"><span class="label label-danger">{{ errors.other }}</span></p>
+		</p>
+	</form>
 </div>
