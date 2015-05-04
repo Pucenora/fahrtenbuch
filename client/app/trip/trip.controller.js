@@ -78,6 +78,14 @@ angular.module('fahrtenbuchApp')
 		// var Geocoder = new google.maps.Geocoder();
 
 		/**
+		 * sync kilometer start to car
+		**/
+		$scope.sync = function() {
+			// console.log("clicked");
+			$scope.trip.kilometer_start = $scope.trip.car.mileage;
+		};
+
+		/**
 		 * add a stay to the form
 		**/
 		$scope.addStay = function() {

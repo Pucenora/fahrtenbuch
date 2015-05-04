@@ -20,7 +20,7 @@
         <div class="col-xs-12">
           <div class="form-group">
       	    <label>car:</label>
-            <select ng-model="trip.car" class="form-control" ng-options="car.description for car in cars">
+            <select ng-model="trip.car" ng-click="sync()" class="form-control" ng-options="car.description for car in cars">
             </select>
           </div>
         </div>
