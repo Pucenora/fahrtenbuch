@@ -72,7 +72,7 @@ Account.find({}).remove(function() {
 var newCar1 = new Car({
   description: 'Mercedes A Klasse',
   license_tag: 'A-Z-1234',
-  mileage: 81.331,
+  mileage: 87.824,
   base: 'Augsburg',
 });
 newCar1.save();
