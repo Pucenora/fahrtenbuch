@@ -100,84 +100,48 @@ angular.module('fahrtenbuchApp')
 			if(form.$valid) {
 
 				var promises = [];
-				$scope.stayIds = [];
 
 				$scope.stays.forEach(function(stay) {
-
 					var promise = Trip.postStay(stay)
-					// Trip.postStay(stay)
-					// .then(function(stayPromise) {
-					// 	// console.log(stayPromise._id);
-					// 	$scope.stayIds.push(stayPromise._id);
-					// 	console.log($scope.stayIds);
-					// 	promises.push(stayPromise);
-					// })
 				  .catch(function(err) {
 				    $scope.errors.other = err.message;
 				  });
 					promises.push(promise);
 				});
 
-		   // var promises = [];
-   		//  angular.forEach(questions , function(question) {
-     //    var promise = $http({
-     //        url   : 'upload/question',
-     //        method: 'POST',
-     //        data  : question
-     //    });
+				$q.all(promises).
+				then(function(stays) {
 
-     //    promises.push(promise);
+					var stayIds = [];
+					stays.forEach(function(stay) {
+						stayIds.push(stay._id);
+					});
+		    	var car = $scope.trip.car;
 
-    // });
+		    	$scope.trip.car = $scope.trip.car._id;
+					$scope.trip.stays = stayIds;
+		    	$scope.trip.account = $scope.trip.account._id;
+		    	$scope.trip.user = $scope.user._id;
 
-    // return $q.all(promises);
+					Trip.postTrip($scope.trip)
+			    .then(function() {
 
-				$q.all(promises)
-				.then(function(data) {
-					console.log(promises);
-					console.log(data);
-					console.log($scope.stayIds);
-					console.log("worked!");
+			    	car.mileage = $scope.trip.kilometer_end;
+			    	
+						Trip.patchCar(car)
+				    .then(function() {
+				    	$location.path("/trip");
+				    })
+				    .catch(function(err) {
+				      $scope.errors.other = err.message;
+				    });
+			    })
+			    .catch(function(err) {
+			      $scope.errors.other = err.message;
+			    });
 				});
-
 			}
 		};
-
-				// // init
-				// var stayIds = [];
-				// var len = $scope.stays.length;
-				// var counter = 0;
-
-				// // add object ids to trip and post trip
-				// if($scope.trip.account) {
-				// 	$scope.trip.account = $scope.trip.account._id;
-				// }
-				// $scope.trip.car = $scope.trip.car._id;
-				// $scope.trip.user = $scope.user._id;
-				// $scope.trip.timestamp = new Date();
-
-				// // console.log($scope.stays);
-
-				// $scope.stays.forEach(function(stay) {
-				// 	$http.post('/api/stays', stay).success(function(data, status, headers, config) {		
-	  	// 			stayIds.push(data._id);
-	  	// 			counter += 1;
-	  	// 			if (counter === len) {
-	  	// 				$scope.trip.stays = stayIds;
-				// 			$http.post('/api/trips', $scope.trip);	
-	  	// 			}
-	 		// 		}).error(function(data, status, headers, config) {
-	 		// 			// console.log(status);
-				//   });
-				// });
-				// // .then(function(test) {
-				// // 	$scope.trip.stays = stayIds;
-				// // 	$http.post('/api/trips', $scope.trip);
-				// // 	console.log(test);
-				// // });
-
-				// // redirect
-				// $location.path("/trip");
 
 		/**
 		 * @todo
@@ -186,7 +150,7 @@ angular.module('fahrtenbuchApp')
 		$scope.showPosition = function(position) {
 	    console.log("Latitude: " + position.coords.latitude);
 	    console.log("Longitude: " + position.coords.longitude);
-		}
+		};
 
 		/**
 		 * @todo
@@ -201,7 +165,7 @@ angular.module('fahrtenbuchApp')
 	    } else {
 	        console.log("Geolocation is not supported by this browser.");
 	    }
-		}
+		};
 
 		/**
 		 * @todo
@@ -212,7 +176,7 @@ angular.module('fahrtenbuchApp')
 			var latLngObject = navigator.geolocation.getCurrentPosition($scope.showPosition);
 			// console.log(Geocoder.geocode( { 'latLng': latLngObject }, callback));
       // navigator.geolocation.clearWatch();
-		}
+		};
 	})
 
 	/**
