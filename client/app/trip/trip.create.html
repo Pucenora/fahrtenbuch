@@ -135,7 +135,7 @@
 
       <button type="button" class="btn btn-success btn-lg" ng-click="addStay()"><i class="glyphicon glyphicon-plus"></i></button>
 
-      <button type="submit" class="btn btn-success btn-lg" ng-click="addTrip()" ng-disabled="form.user.$dirty && form.user.$invalid || form.email.$dirty && form.email.$invalid">Submit</button>
+      <button type="submit" class="btn btn-success btn-lg" ng-click="addTrip(form)" ng-disabled="form.user.$dirty && form.user.$invalid || form.email.$dirty && form.email.$invalid">Submit</button>
 
     </p>
   </form>

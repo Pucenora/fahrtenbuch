@@ -6,7 +6,7 @@ angular.module('fahrtenbuchApp')
 	 * /trip
 	 * trip overview 
 	**/
-	.controller('TripCtrl', function ($scope, $http, socket, $location, Stay, Trip) {
+	.controller('TripCtrl', function ($scope, $http, $location, Stay, Trip) {
 	
 		// get trips
 		$scope.trips = [];
@@ -33,7 +33,7 @@ angular.module('fahrtenbuchApp')
 	 * /trip/new
 	 * create new trip
 	**/
-	.controller('CreateTripCtrl', function ($scope, $http, socket, $location, Auth, Trip) {
+	.controller('CreateTripCtrl', function ($scope, $http, $q, $location, Auth, Trip) {
 
 		// init
 		$scope.hourStep = 1;
@@ -95,44 +95,89 @@ angular.module('fahrtenbuchApp')
 		/**
 		 * post trip to server
 		**/
-		$scope.addTrip = function() {
+		$scope.addTrip = function(form) {
 
-			// init
-			var stayIds = [];
-			var len = $scope.stays.length;
-			var counter = 0;
+			if(form.$valid) {
 
-			// add object ids to trip and post trip
-			if($scope.trip.account) {
-				$scope.trip.account = $scope.trip.account._id;
+				var promises = [];
+				$scope.stayIds = [];
+
+				$scope.stays.forEach(function(stay) {
+
+					var promise = Trip.postStay(stay)
+					// Trip.postStay(stay)
+					// .then(function(stayPromise) {
+					// 	// console.log(stayPromise._id);
+					// 	$scope.stayIds.push(stayPromise._id);
+					// 	console.log($scope.stayIds);
+					// 	promises.push(stayPromise);
+					// })
+				  .catch(function(err) {
+				    $scope.errors.other = err.message;
+				  });
+					promises.push(promise);
+				});
+
+		   // var promises = [];
+   		//  angular.forEach(questions , function(question) {
+     //    var promise = $http({
+     //        url   : 'upload/question',
+     //        method: 'POST',
+     //        data  : question
+     //    });
+
+     //    promises.push(promise);
+
+    // });
+
+    // return $q.all(promises);
+
+				$q.all(promises)
+				.then(function(data) {
+					console.log(promises);
+					console.log(data);
+					console.log($scope.stayIds);
+					console.log("worked!");
+				});
+
 			}
-			$scope.trip.car = $scope.trip.car._id;
-			$scope.trip.user = $scope.user._id;
-			$scope.trip.timestamp = new Date();
-
-			console.log($scope.stays);
-
-			$scope.stays.forEach(function(stay) {
-				$http.post('/api/stays', stay).success(function(data, status, headers, config) {		
-  				stayIds.push(data._id);
-  				counter += 1;
-  				if (counter === len) {
-  					$scope.trip.stays = stayIds;
-						$http.post('/api/trips', $scope.trip);	
-  				}
- 				}).error(function(data, status, headers, config) {
- 					console.log(status);
-			  });
-			});
-			// .then(function(test) {
-			// 	$scope.trip.stays = stayIds;
-			// 	$http.post('/api/trips', $scope.trip);
-			// 	console.log(test);
-			// });
-
-			// redirect
-			$location.path("/trip");
 		};
+
+				// // init
+				// var stayIds = [];
+				// var len = $scope.stays.length;
+				// var counter = 0;
+
+				// // add object ids to trip and post trip
+				// if($scope.trip.account) {
+				// 	$scope.trip.account = $scope.trip.account._id;
+				// }
+				// $scope.trip.car = $scope.trip.car._id;
+				// $scope.trip.user = $scope.user._id;
+				// $scope.trip.timestamp = new Date();
+
+				// // console.log($scope.stays);
+
+				// $scope.stays.forEach(function(stay) {
+				// 	$http.post('/api/stays', stay).success(function(data, status, headers, config) {		
+	  	// 			stayIds.push(data._id);
+	  	// 			counter += 1;
+	  	// 			if (counter === len) {
+	  	// 				$scope.trip.stays = stayIds;
+				// 			$http.post('/api/trips', $scope.trip);	
+	  	// 			}
+	 		// 		}).error(function(data, status, headers, config) {
+	 		// 			// console.log(status);
+				//   });
+				// });
+				// // .then(function(test) {
+				// // 	$scope.trip.stays = stayIds;
+				// // 	$http.post('/api/trips', $scope.trip);
+				// // 	console.log(test);
+				// // });
+
+				// // redirect
+				// $location.path("/trip");
 
 		/**
 		 * @todo
