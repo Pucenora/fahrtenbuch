@@ -258,5 +258,51 @@ angular.module('fahrtenbuchApp')
 
         return deferred.promise;
       }
+    },
+
+    /**
+     * post trip
+     *
+     * @param  {Object}   trip
+     * @param  {Function} callback  - optional
+     * @return {Promise}
+    */
+    postTrip: function(trip, callback) {
+      var cb = callback || angular.noop;
+      var deferred = $q.defer();
+
+      $http.post('api/trips', trip)
+      .success(function(trip) {
+        deferred.resolve(trip);
+      })
+      .error(function(err) {
+        deferred.reject(err);
+        return cb(err);
+      });
+
+      return deferred.promise;
+    }
+
+    /**
+     * post stay
+     *
+     * @param  {Object}   stay
+     * @param  {Function} callback  - optional
+     * @return {Promise}
+    */
+    postStay: function(stay, callback) {
+      var cb = callback || angular.noop;
+      var deferred = $q.defer();
+
+      $http.post('api/stays', stay)
+      .success(function(stay) {
+        deferred.resolve(stay);
+      })
+      .error(function(err) {
+        deferred.reject(err);
+        return cb(err);
+      });
+
+      return deferred.promise;
     };
   });
