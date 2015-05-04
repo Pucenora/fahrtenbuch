@@ -17,15 +17,16 @@ angular.module('fahrtenbuchApp')
       $scope.errors.other = err.message;
     });
 
-    $scope.addAccount = function(account) {
-
-      Account.postAccount(account)
-      .then(function(account) {
-        $route.reload();
-      })
-      .catch(function(err) {
-        $scope.errors.other = err.message;
-      });
+    $scope.addAccount = function(form, account) {
+      if(form.$valid) {
+        Account.postAccount(account)
+        .then(function(account) {
+          $route.reload();
+        })
+        .catch(function(err) {
+          $scope.errors.other = err.message;
+        });
+      }
     };
 
     $scope.deleteAccount = function(account) {
@@ -110,14 +111,16 @@ angular.module('fahrtenbuchApp')
       $scope.errors.other = err.message;
     });
 
-    $scope.createCar = function() {
-      Car.patchCar($scope.car)
-      .then(function() {
-        $location.path("/admin/car");
-      })
-      .catch(function(err) {
-        $scope.errors.other = err.message;
-      });
+    $scope.createCar = function(form) {
+      if(form.$valid) {
+        Car.patchCar($scope.car)
+        .then(function() {
+          $location.path("/admin/car");
+        })
+        .catch(function(err) {
+          $scope.errors.other = err.message;
+        });
+      }
     }
   })
 
@@ -125,13 +128,15 @@ angular.module('fahrtenbuchApp')
     $scope.modus = "Add";
     $scope.car = {};
 
-    $scope.createCar = function() {
-      Car.postCar($scope.car)
-      .then(function() {
-        $location.path("/admin/car");
-      })
-      .catch(function(err) {
-        $scope.errors.other = err.message;
-      });
+    $scope.createCar = function(form) {
+      if(form.$valid) {
+        Car.postCar($scope.car)
+        .then(function() {
+          $location.path("/admin/car");
+        })
+        .catch(function(err) {
+          $scope.errors.other = err.message;
+        });
+      }
     }
   });
