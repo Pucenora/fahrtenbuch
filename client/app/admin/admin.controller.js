@@ -5,11 +5,11 @@ angular.module('fahrtenbuchApp')
   .controller('AdminCtrl', function () {
   })
 
-  .controller('AdminAccountCtrl', function ($scope, $route, Trip) {
+  .controller('AdminAccountCtrl', function ($scope, $route, Account) {
 
     $scope.account = {};
 
-    Trip.getAccounts()
+    Account.getAccounts()
     .then(function(accounts) {
       $scope.accounts = accounts;
     })
@@ -19,7 +19,7 @@ angular.module('fahrtenbuchApp')
 
     $scope.addAccount = function(account) {
 
-      Trip.postAccount(account)
+      Account.postAccount(account)
       .then(function(account) {
         $route.reload();
       })
@@ -30,7 +30,7 @@ angular.module('fahrtenbuchApp')
 
     $scope.deleteAccount = function(account) {
 
-      Trip.deleteAccount(account._id)
+      Account.deleteAccount(account._id)
       .then(function() {
         angular.forEach($scope.accounts, function(a, i) {
           if (a === account) {
@@ -59,11 +59,11 @@ angular.module('fahrtenbuchApp')
     };
   })
 
-  .controller('AdminCarCtrl', function ($scope, $location, Trip) {
+  .controller('AdminCarCtrl', function ($scope, $location, Car) {
 
     $scope.car = {};
 
-    Trip.getCars()
+    Car.getCars()
     .then(function(cars) {
       $scope.cars = cars;
     })
@@ -82,7 +82,7 @@ angular.module('fahrtenbuchApp')
 
     $scope.deleteCar = function(car) {
 
-      Trip.deleteCar(car._id)
+      Car.deleteCar(car._id)
       .then(function() {
         angular.forEach($scope.cars, function(c, i) {
           if (c === car) {
@@ -97,12 +97,12 @@ angular.module('fahrtenbuchApp')
     };   
   })
 
-  .controller('AdminCarEditCtrl', function ($scope, $location, $routeParams, Trip) {
+  .controller('AdminCarEditCtrl', function ($scope, $location, $routeParams, Car) {
     
     $scope.modus = "Edit";
     $scope.car = {};
 
-    Trip.getCar($routeParams.id)
+    Car.getCar($routeParams.id)
     .then(function(car) {
       $scope.car = car;
     })
@@ -111,7 +111,7 @@ angular.module('fahrtenbuchApp')
     });
 
     $scope.createCar = function() {
-      Trip.patchCar($scope.car)
+      Car.patchCar($scope.car)
       .then(function() {
         $location.path("/admin/car");
       })
@@ -121,12 +121,12 @@ angular.module('fahrtenbuchApp')
     }
   })
 
-  .controller('AdminCarAddCtrl', function ($scope, $location, Trip) {
+  .controller('AdminCarAddCtrl', function ($scope, $location, Car) {
     $scope.modus = "Add";
     $scope.car = {};
 
     $scope.createCar = function() {
-      Trip.postCar($scope.car)
+      Car.postCar($scope.car)
       .then(function() {
         $location.path("/admin/car");
       })

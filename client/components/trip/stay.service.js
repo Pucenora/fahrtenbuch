@@ -30,6 +30,29 @@ angular.module('fahrtenbuchApp')
 		  	});
 
 		  	return destinations;
-      } 
+      },
+
+      /**
+       * post stay
+       *
+       * @param  {Object}   stay
+       * @param  {Function} callback  - optional
+       * @return {Promise}
+      */
+      postStay: function(stay, callback) {
+        var cb = callback || angular.noop;
+        var deferred = $q.defer();
+
+        $http.post('api/stays', stay)
+        .success(function(stay) {
+          deferred.resolve(stay);
+        })
+        .error(function(err) {
+          deferred.reject(err);
+          return cb(err);
+        });
+
+        return deferred.promise;
+      }
     };
   });

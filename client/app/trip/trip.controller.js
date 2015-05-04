@@ -6,7 +6,7 @@ angular.module('fahrtenbuchApp')
 	 * /trip
 	 * trip overview 
 	**/
-	.controller('TripCtrl', function ($scope, $http, $location, Stay, Trip) {
+	.controller('TripCtrl', function ($scope, $location, Stay, Trip) {
 	
 		// get trips
 		$scope.trips = [];
@@ -33,7 +33,7 @@ angular.module('fahrtenbuchApp')
 	 * /trip/new
 	 * create new trip
 	**/
-	.controller('CreateTripCtrl', function ($scope, $http, $q, $location, Auth, Trip) {
+	.controller('CreateTripCtrl', function ($scope, $q, $location, Auth, Account, Car, Stay, Trip) {
 
 		// init
 		$scope.hourStep = 1;
@@ -49,7 +49,7 @@ angular.module('fahrtenbuchApp')
 	 	$scope.stays = [];
 	 	$scope.stays.push({destination: '', client: '', destination_time: new Date()});
 	 	
-		Trip.getAccounts()
+		Account.getAccounts()
     .then(function(accounts) {
     	$scope.accounts = accounts;
     })
@@ -57,7 +57,7 @@ angular.module('fahrtenbuchApp')
       $scope.errors.other = err.message;
     });
 
-		Trip.getCars()
+		Car.getCars()
     .then(function(cars) {
     	$scope.cars = cars;
     })
@@ -65,7 +65,7 @@ angular.module('fahrtenbuchApp')
       $scope.errors.other = err.message;
     });
 
-		Trip.getCar(Auth.getCurrentUser().default_car)
+		Car.getCar(Auth.getCurrentUser().default_car)
     .then(function(defaultCar) {
     	$scope.trip.car = $scope.cars[defaultCar.__v];
     	$scope.trip.kilometer_start = defaultCar.mileage;
@@ -110,7 +110,7 @@ angular.module('fahrtenbuchApp')
 				var promises = [];
 
 				$scope.stays.forEach(function(stay) {
-					var promise = Trip.postStay(stay)
+					var promise = Stay.postStay(stay)
 				  .catch(function(err) {
 				    $scope.errors.other = err.message;
 				  });
@@ -136,7 +136,7 @@ angular.module('fahrtenbuchApp')
 
 			    	car.mileage = $scope.trip.kilometer_end;
 			    	
-						Trip.patchCar(car)
+						Car.patchCar(car)
 				    .then(function() {
 				    	$location.path("/trip");
 				    })
