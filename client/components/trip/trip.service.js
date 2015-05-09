@@ -15,7 +15,7 @@ angular.module('fahrtenbuchApp')
         var cb = callback || angular.noop;
         var deferred = $q.defer();
 
-        $http.get('/api/trips/')
+        $http.get('/api/trips')
         .success(function(trips) {
           deferred.resolve(trips);
         })
@@ -62,7 +62,7 @@ angular.module('fahrtenbuchApp')
         var cb = callback || angular.noop;
         var deferred = $q.defer();
 
-        $http.post('api/trips', trip)
+        $http.post('/api/trips', trip)
         .success(function(trip) {
           deferred.resolve(trip);
         })
