@@ -15,8 +15,7 @@ angular.module('fahrtenbuchApp')
     .then(function(trips) {
     	$scope.trips = trips;
       $scope.trips.forEach(function(trip){
-      	var stays = Stay.getDestinationsAsString(trip.stays);
-      	trip.stays = stays;
+      	trip.stays  = Stay.getDestinationsAsString(trip.stays);
       });
     })
     .catch(function(err) {

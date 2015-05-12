@@ -5,8 +5,8 @@ describe("Trip", function () {
     var $httpBackend, trip;
 
     beforeEach(inject(function (_$httpBackend_, Trip) {
-        trip = Trip;
-        $httpBackend = _$httpBackend_;
+      trip = Trip;
+      $httpBackend = _$httpBackend_;
     }));
 
     /**
@@ -18,11 +18,11 @@ describe("Trip", function () {
 
     it("getTrips should return array of trips", function () {
 
-        $httpBackend.whenGET("/api/trips").respond([{}]);
-    		$httpBackend.expectGET("/api/trips");
+      $httpBackend.whenGET("/api/trips").respond([{}]);
+  		$httpBackend.expectGET("/api/trips");
 
-        trip.getTrips();
-        $httpBackend.flush();
+      trip.getTrips();
+      $httpBackend.flush();
     });
 
     /**
@@ -46,15 +46,15 @@ describe("Trip", function () {
      * post trip
     **/
     it("postTrip should be defined", function () {
-        expect(trip.postTrip).toBeDefined();
+      expect(trip.postTrip).toBeDefined();
     });
 
     it("postTrip should post a trip", function () {
 
-        $httpBackend.whenPOST("/api/trips").respond(201);
-    		$httpBackend.expectPOST("/api/trips");
+      $httpBackend.whenPOST("/api/trips").respond(201);
+  		$httpBackend.expectPOST("/api/trips");
 
-        trip.postTrip();
-        $httpBackend.flush();
+      trip.postTrip();
+      $httpBackend.flush();
     });
 });
