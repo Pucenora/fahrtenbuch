@@ -20,11 +20,12 @@ describe('Controller: TripCtrl', function () {
 
     $httpBackend.expectGET('/api/trips').respond([{stays: [{destination: "test"}]}]);
     $httpBackend.flush();
+
     expect(scope.trips).toEqual([{stays: "test"}]);
 	}));
 });
 
-// CreateTripCtrl
+// @todo CreateTripCtrl
 
 describe('Controller: DetailTripCtrl', function () {
 
@@ -44,7 +45,7 @@ describe('Controller: DetailTripCtrl', function () {
     testTrip = {_id: 12345678, stays: [{destination: "test"}]};
   }));
 
-  it('should get trips', inject(function() {
+  it('should get trip with destinations', inject(function() {
 
     $httpBackend.expectGET('/api/trips/' + testTrip._id).respond(testTrip);
     $httpBackend.flush();

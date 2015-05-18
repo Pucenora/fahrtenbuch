@@ -62,7 +62,7 @@ angular.module('fahrtenbuchApp')
         var cb = callback || angular.noop;
         var deferred = $q.defer();     
 
-        $http.post('api/accounts', account)
+        $http.post('/api/accounts', account)
         .success(function(account) {
           deferred.resolve(account);
         })

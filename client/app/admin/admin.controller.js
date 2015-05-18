@@ -7,7 +7,7 @@ angular.module('fahrtenbuchApp')
 
   .controller('AdminAccountCtrl', function ($scope, $route, Account) {
 
-    $scope.account = {};
+    $scope.accounts = {};
 
     Account.getAccounts()
     .then(function(accounts) {
