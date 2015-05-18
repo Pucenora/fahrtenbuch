@@ -4,51 +4,47 @@ describe('Controller: AdminAccountCtrl', function () {
 
   // load the controller's module
   beforeEach(module('fahrtenbuchApp'));
-  var AdminAccountCtrl, scope, $httpBackend, AccountServiceMock, test;
+  var AdminAccountCtrl, scope, $location, fakeFactory, q, deferred;
 
-  // Initialize the controller and a mock scope
-  beforeEach(inject(function (_$httpBackend_, $controller, $rootScope, Account, $q) {
-    
-    $httpBackend = _$httpBackend_;
-    scope = $rootScope.$new();
-    AccountServiceMock = {
-      getAccounts: function() {
-      	test = "Success!!!";
-        var deferred = $q.defer();
+  beforeEach(function () {
+    fakeFactory = {
+      getAccounts: function () {
+        deferred = q.defer();
+        // Place the fake return object here
         deferred.resolve([{test: "test"}]);
         return deferred.promise;
-    	}
-  	};
+      }
+    };
+    spyOn(fakeFactory, 'getAccounts').andCallThrough();
+	});
 
+  // Initialize the controller and a mock scope
+  beforeEach(inject(function ($controller, $rootScope, _$location_, $q, Account) {
+
+    scope = $rootScope.$new();
+    q = $q;
+    $location = _$location_;
     AdminAccountCtrl = $controller('AdminAccountCtrl', {
       $scope: scope,
-      AccountServiceMock: Account
+      Account: fakeFactory
     });
-
-    // spyOn(Account, "getAccounts").andCallFake(function() {
-    //   var deferred = $q.defer();
-    //   deferred.resolve([{test: "test"}]);
-    //   return deferred.promise;
-    // });
+    $location.path('/admin/account');
   }));
 
-  it('can do remote call', inject(function(Account) {
-    // Account.getAccounts()
-    //   .then(function() {
-    //     console.log('Success');
-    // 	});
+	it('Ensure that the method was invoked', function () {
+	  // scope.$apply();
+	  // $location.path('admin/account');
+	  expect($location.path()).toBe('/admin/account');
+	  scope.$apply();
+	  expect(fakeFactory.getAccounts).toHaveBeenCalled();
+	  expect(scope.accounts).toBeDefined();
+	  expect(scope.accounts).toBe([{test: "test"}]);
+	});
 
-  	
-  	// expect(scope.accounts).toEqual([{test: "test"}]);
-  	expect(test).toEqual("Success!!!");
-  }));
-
-	// it('should get accounts', inject(function() {
-
- //    $httpBackend.expectGET('/api/accounts').respond([{test: "test"}]);
- //    $httpBackend.flush();
- //    expect(scope.accounts).toEqual([{test: "test"}]);
-	// }));
+	// it('can do remote call', inject(function() {
+	//   	scope.$apply();
+	//     expect(scope.accounts).toBeDefined();
+	//   }));
 });
 
 // describe('Controller: AdminUserCtrl', function () {
