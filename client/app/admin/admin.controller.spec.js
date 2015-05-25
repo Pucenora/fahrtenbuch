@@ -100,8 +100,8 @@ describe('Controller: AdminAccountCtrl', function () {
 //   }));
 // });
 
-// AdminCarCtrl
-// AdminCarAddCtrl
+// @todo AdminCarCtrl
+// @todo AdminCarAddCtrl
 
 
 
