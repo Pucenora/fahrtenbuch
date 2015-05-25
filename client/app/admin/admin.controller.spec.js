@@ -4,48 +4,73 @@ describe('Controller: AdminAccountCtrl', function () {
 
   // load the controller's module
   beforeEach(module('fahrtenbuchApp'));
-  var AdminAccountCtrl, scope, $location, fakeFactory, q, deferred;
-
-  beforeEach(function () {
-    fakeFactory = {
-      getAccounts: function () {
-        deferred = q.defer();
-        // Place the fake return object here
-        deferred.resolve([{test: "test"}]);
-        return deferred.promise;
-      }
-    };
-    spyOn(fakeFactory, 'getAccounts').andCallThrough();
-	});
+  var AdminAccountCtrl, $scope, $location, $httpBackend, fakeResponse;
 
   // Initialize the controller and a mock scope
-  beforeEach(inject(function ($controller, $rootScope, _$location_, $q, Account) {
+  beforeEach(inject(function ($controller, $rootScope, _$location_, _$httpBackend_) {
 
-    scope = $rootScope.$new();
-    q = $q;
+    $scope = $rootScope.$new();
     $location = _$location_;
+    $httpBackend = _$httpBackend_;
+    fakeResponse = '';
+
     AdminAccountCtrl = $controller('AdminAccountCtrl', {
-      $scope: scope,
-      Account: fakeFactory
+      $scope: $scope
     });
+
     $location.path('/admin/account');
   }));
 
 	it('Ensure that the method was invoked', function () {
-	  // scope.$apply();
-	  // $location.path('admin/account');
+  	$httpBackend.expectGET('/api/accounts').respond([{test: "test"}]);
+  	$httpBackend.when('GET', 'app/admin/admin.account.html').respond(fakeResponse);
+    $httpBackend.flush();
+
 	  expect($location.path()).toBe('/admin/account');
-	  scope.$apply();
-	  expect(fakeFactory.getAccounts).toHaveBeenCalled();
-	  expect(scope.accounts).toBeDefined();
-	  expect(scope.accounts).toBe([{test: "test"}]);
+	  expect($scope.accounts).toBeDefined();
+	  expect($scope.accounts).toEqual([{test: "test"}]);
 	});
 
-	// it('can do remote call', inject(function() {
-	//   	scope.$apply();
-	//     expect(scope.accounts).toBeDefined();
-	//   }));
+	// it('Ensure that the method was invoked', function () {
+ //  	// $httpBackend.expectGET('/api/accounts').respond([{test: "test"}]);
+ //  	// $httpBackend.when('GET', 'app/admin/admin.account.html').respond(fakeResponse);
+ //   //  $httpBackend.flush();
+
+	//   expect($location.path()).toBe('/admin/account');
+
+ //   	// var valid = scope.addAccount();
+ //    // expect(valid).toBeFalsy();
+
+ //  	$httpBackend.expectGET('/api/accounts').respond([{_id: 1}, {_id: 2}, {_id: 3}]);
+ //  	$httpBackend.when('GET', 'app/admin/admin.account.html').respond(fakeResponse);
+ //  	$httpBackend.when('DELETE', '/api/accounts/1').respond(fakeResponse);
+ //    $httpBackend.flush();
+
+ //    console.log($scope.accounts);
+    	
+ //    $scope.deleteAccount($scope.accounts[0]);
+
+ //    $scope.$watch();
+ //    $scope.$apply();
+ //    console.log($scope.accounts);
+
+    // var account = scope.accounts[0];
+    // console.log(account);
+
+    // angular.forEach(scope.accounts, function(a, i) {
+    // 	console.log(a);
+    //   if (a === account) {
+    //   	console.log("hi");
+    //     scope.accounts.splice(i, 1);
+    //   }
+    // });
+    // console.log(scope.accounts);
+
+//     expect($scope.accounts).toEqual([{_id: 2}, {_id: 3}]);
+// 	});
 });
+
+
 
 // describe('Controller: AdminUserCtrl', function () {
 
