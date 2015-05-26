@@ -4,6 +4,10 @@ describe('Controller: AdminAccountCtrl', function () {
 
   // load the controller's module
   beforeEach(module('fahrtenbuchApp'));
+ 	// beforeEach(function() {
+	//   module('fahrtenbuchApp');
+	//   module('templates');
+	// });
   var AdminAccountCtrl, $scope, $location, $httpBackend, fakeResponse;
 
   // Initialize the controller and a mock scope
@@ -21,7 +25,7 @@ describe('Controller: AdminAccountCtrl', function () {
     $location.path('/admin/account');
   }));
 
-	it('Ensure that the method was invoked', function () {
+	it('call AdminAccountCtrl', function () {
   	$httpBackend.expectGET('/api/accounts').respond([{test: "test"}]);
   	$httpBackend.when('GET', 'app/admin/admin.account.html').respond(fakeResponse);
     $httpBackend.flush();
@@ -31,46 +35,36 @@ describe('Controller: AdminAccountCtrl', function () {
 	  expect($scope.accounts).toEqual([{test: "test"}]);
 	});
 
-	// it('Ensure that the method was invoked', function () {
- //  	// $httpBackend.expectGET('/api/accounts').respond([{test: "test"}]);
- //  	// $httpBackend.when('GET', 'app/admin/admin.account.html').respond(fakeResponse);
- //   //  $httpBackend.flush();
+	it('test add function', function () {
+	  expect($location.path()).toBe('/admin/account');
 
-	//   expect($location.path()).toBe('/admin/account');
+	  var account = {name: "test"};
+  	$httpBackend.expectGET('/api/accounts').respond([{_id: 1}, {_id: 2}, {_id: 3}]);
+  	$httpBackend.when('GET', 'app/admin/admin.account.html').respond(fakeResponse);
+  	// $httpBackend.when('POST', '/api/accounts').respond(fakeResponse);
+    $httpBackend.flush();
 
- //   	// var valid = scope.addAccount();
- //    // expect(valid).toBeFalsy();
+		$scope.$digest();
+    expect($scope.form.$valid).toBeTruthy();
+    $scope.addAccount($scope.form, account);
 
- //  	$httpBackend.expectGET('/api/accounts').respond([{_id: 1}, {_id: 2}, {_id: 3}]);
- //  	$httpBackend.when('GET', 'app/admin/admin.account.html').respond(fakeResponse);
- //  	$httpBackend.when('DELETE', '/api/accounts/1').respond(fakeResponse);
- //    $httpBackend.flush();
+    // expect($scope.accounts).toEqual([{_id: 2}, {_id: 3}]);
+	});
 
- //    console.log($scope.accounts);
-    	
- //    $scope.deleteAccount($scope.accounts[0]);
+	it('test delete function', function () {
+	  expect($location.path()).toBe('/admin/account');
 
- //    $scope.$watch();
- //    $scope.$apply();
- //    console.log($scope.accounts);
+  	$httpBackend.expectGET('/api/accounts').respond([{_id: 1}, {_id: 2}, {_id: 3}]);
+  	$httpBackend.when('GET', 'app/admin/admin.account.html').respond(fakeResponse);
+  	$httpBackend.when('DELETE', '/api/accounts/1').respond(fakeResponse);
+    $httpBackend.flush();
 
-    // var account = scope.accounts[0];
-    // console.log(account);
+    $scope.deleteAccount($scope.accounts[0]);
+    $httpBackend.flush();
 
-    // angular.forEach(scope.accounts, function(a, i) {
-    // 	console.log(a);
-    //   if (a === account) {
-    //   	console.log("hi");
-    //     scope.accounts.splice(i, 1);
-    //   }
-    // });
-    // console.log(scope.accounts);
-
-//     expect($scope.accounts).toEqual([{_id: 2}, {_id: 3}]);
-// 	});
+    expect($scope.accounts).toEqual([{_id: 2}, {_id: 3}]);
+	});
 });
-
-
 
 // describe('Controller: AdminUserCtrl', function () {
 
