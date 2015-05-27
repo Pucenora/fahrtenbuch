@@ -41,6 +41,7 @@ angular.module('fahrtenbuchApp')
 	 	$scope.accounts = [];
 	 	$scope.cars = [];
 	 	$scope.user = Auth.getCurrentUser();
+	 	$scope.defaultCar = $scope.user.default_car;
 	 	$scope.trip = {}; 
 
   	$scope.trip.origin_time = new Date();
@@ -64,7 +65,7 @@ angular.module('fahrtenbuchApp')
       $scope.errors.other = err.message;
     });
 
-		Car.getCar(Auth.getCurrentUser().default_car)
+		Car.getCar($scope.defaultCar)
     .then(function(defaultCar) {
     	$scope.trip.car = $scope.cars[defaultCar.__v];
     	$scope.trip.kilometer_start = defaultCar.mileage;
@@ -102,52 +103,49 @@ angular.module('fahrtenbuchApp')
 		/**
 		 * post trip to server
 		**/
-		$scope.addTrip = function(form) {
+		$scope.addTrip = function() {
 
-			if(form.$valid) {
+			var promises = [];
 
-				var promises = [];
+			$scope.stays.forEach(function(stay) {
+				var promise = Stay.postStay(stay)
+			  .catch(function(err) {
+			    $scope.errors.other = err.message;
+			  });
+				promises.push(promise);
+			});
 
-				$scope.stays.forEach(function(stay) {
-					var promise = Stay.postStay(stay)
-				  .catch(function(err) {
-				    $scope.errors.other = err.message;
-				  });
-					promises.push(promise);
+			$q.all(promises).
+			then(function(stays) {
+
+				var stayIds = [];
+				stays.forEach(function(stay) {
+					stayIds.push(stay._id);
 				});
+	    	var car = $scope.trip.car;
 
-				$q.all(promises).
-				then(function(stays) {
+	    	$scope.trip.car = $scope.trip.car._id;
+				$scope.trip.stays = stayIds;
+	    	$scope.trip.account = $scope.trip.account._id;
+	    	$scope.trip.user = $scope.user._id;
 
-					var stayIds = [];
-					stays.forEach(function(stay) {
-						stayIds.push(stay._id);
-					});
-		    	var car = $scope.trip.car;
+				Trip.postTrip($scope.trip)
+		    .then(function() {
 
-		    	$scope.trip.car = $scope.trip.car._id;
-					$scope.trip.stays = stayIds;
-		    	$scope.trip.account = $scope.trip.account._id;
-		    	$scope.trip.user = $scope.user._id;
-
-					Trip.postTrip($scope.trip)
+		    	car.mileage = $scope.trip.kilometer_end;
+		    	
+					Car.patchCar(car)
 			    .then(function() {
-
-			    	car.mileage = $scope.trip.kilometer_end;
-			    	
-						Car.patchCar(car)
-				    .then(function() {
-				    	$location.path("/trip");
-				    })
-				    .catch(function(err) {
-				      $scope.errors.other = err.message;
-				    });
+			    	$location.path("/trip");
 			    })
 			    .catch(function(err) {
 			      $scope.errors.other = err.message;
 			    });
-				});
-			}
+		    })
+		    .catch(function(err) {
+		      $scope.errors.other = err.message;
+		    });
+			});
 		};
 
 		/**

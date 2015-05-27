@@ -10,7 +10,7 @@ var Stay = require('./stay.model');
 
 // Get list of stays
 exports.index = function(req, res) {
-  stay.find(function (err, stays) {
+  Stay.find(function (err, stays) {
     if(err) { return handleError(res, err); }
     return res.json(200, stays);
   });
