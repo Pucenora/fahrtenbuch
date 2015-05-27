@@ -24,8 +24,8 @@ angular.module('fahrtenbuchApp')
 
     // redirect
 		$scope.addTrip = function() {
-			$location.path("/trip/new");
-		}	
+			$location.path('/trip/new');
+		};	
 	})	
 
 	/**
@@ -136,7 +136,7 @@ angular.module('fahrtenbuchApp')
 		    	
 					Car.patchCar(car)
 			    .then(function() {
-			    	$location.path("/trip");
+			    	$location.path('/trip');
 			    })
 			    .catch(function(err) {
 			      $scope.errors.other = err.message;
@@ -153,8 +153,8 @@ angular.module('fahrtenbuchApp')
 		 * log lat und lng
 		**/
 		$scope.showPosition = function(position) {
-	    console.log("Latitude: " + position.coords.latitude);
-	    console.log("Longitude: " + position.coords.longitude);
+	    console.log('Latitude: ' + position.coords.latitude);
+	    console.log('Longitude: ' + position.coords.longitude);
 		};
 
 		/**
@@ -165,10 +165,10 @@ angular.module('fahrtenbuchApp')
 	    if (navigator.geolocation) {
 	    		console.log(new Date());
 	        // navigator.geolocation.watchPosition($scope.showPosition);
-	        var latLngObject = navigator.geolocation.getCurrentPosition($scope.showPosition);
+	        // var latLngObject = navigator.geolocation.getCurrentPosition($scope.showPosition);
 	        // console.log(Geocoder.geocode( { 'latLng': latLngObject }, callback));
 	    } else {
-	        console.log("Geolocation is not supported by this browser.");
+	        console.log('Geolocation is not supported by this browser.');
 	    }
 		};
 
@@ -178,7 +178,7 @@ angular.module('fahrtenbuchApp')
 		**/
 		$scope.stopWatching = function() {
 			console.log(new Date());
-			var latLngObject = navigator.geolocation.getCurrentPosition($scope.showPosition);
+			// var latLngObject = navigator.geolocation.getCurrentPosition($scope.showPosition);
 			// console.log(Geocoder.geocode( { 'latLng': latLngObject }, callback));
       // navigator.geolocation.clearWatch();
 		};
@@ -191,7 +191,7 @@ angular.module('fahrtenbuchApp')
 
 		// init
 		$scope.trip = {};
-		$scope.destinations = "";
+		$scope.destinations = '';
 
 		// get trip from server
 		Trip.getTrip($routeParams.id)
@@ -205,7 +205,7 @@ angular.module('fahrtenbuchApp')
 
     // redirect
     $scope.returnToOverview = function() {
-			$location.path("/trip");
+			$location.path('/trip');
 		};
 	})
 ;

@@ -26,5 +26,5 @@ angular.module('fahrtenbuchApp')
       .when('/admin/car/:id', {
         templateUrl: 'app/admin/admin.car.create.html',
         controller: 'AdminCarEditCtrl'
-      })
+      });
   });

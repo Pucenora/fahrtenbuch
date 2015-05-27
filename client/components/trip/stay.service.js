@@ -12,19 +12,19 @@ angular.module('fahrtenbuchApp')
        * @return {String}	 	destinations
       */
       getDestinationsAsString: function(stays) {
-		  	var destinations = "";
+		  	var destinations = '';
 		  	var count = 1;
 		  	var len = stays.length;
 
 		  	if (len === 0) {
-		  		destinations = "private";
+		  		destinations = 'private';
 		  	}
 
 		  	stays.forEach(function(stay){
 		  		if (count === len) {
 		  			destinations += stay.destination;
 		  		} else {
-		   			destinations += stay.destination + " / ";  
+		   			destinations += stay.destination + ' / ';  
 		   			count++;   			
 		  		}
 		  	});

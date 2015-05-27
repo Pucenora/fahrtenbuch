@@ -19,7 +19,7 @@ angular.module('fahrtenbuchApp')
 
     $scope.addAccount = function(account) {
       Account.postAccount(account)
-      .then(function(account) {
+      .then(function() {
         $route.reload();
       })
       .catch(function(err) {
@@ -71,11 +71,11 @@ angular.module('fahrtenbuchApp')
     });
 
     $scope.addCar = function() {
-      $location.path("/admin/car/new");
+      $location.path('/admin/car/new');
     };
 
     $scope.editCar = function(car) {
-      var carURL = "/admin/car/" + car._id;
+      var carURL = '/admin/car/' + car._id;
       $location.path(carURL);
     };
 
@@ -97,7 +97,7 @@ angular.module('fahrtenbuchApp')
 
   .controller('AdminCarEditCtrl', function ($scope, $location, $routeParams, Car) {
     
-    $scope.modus = "Edit";
+    $scope.modus = 'Edit';
     $scope.car = {};
 
     Car.getCar($routeParams.id)
@@ -111,25 +111,25 @@ angular.module('fahrtenbuchApp')
     $scope.createCar = function() {
       Car.patchCar($scope.car)
       .then(function() {
-        $location.path("/admin/car");
+        $location.path('/admin/car');
       })
       .catch(function(err) {
         $scope.errors.other = err.message;
       });
-    }
+    };
   })
 
   .controller('AdminCarAddCtrl', function ($scope, $location, Car) {
-    $scope.modus = "Add";
+    $scope.modus = 'Add';
     $scope.car = {};
 
     $scope.createCar = function() {
       Car.postCar($scope.car)
       .then(function() {
-        $location.path("/admin/car");
+        $location.path('/admin/car');
       })
       .catch(function(err) {
         $scope.errors.other = err.message;
       });
-    }
+    };
   });
