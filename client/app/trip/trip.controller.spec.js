@@ -71,7 +71,7 @@ describe('Controller: TripCtrl', function () {
 
     $httpBackend.expectGET('/api/accounts').respond([{stays: [{destination: 'test'}]}]);
     $httpBackend.expectGET('/api/cars').respond([{stays: [{destination: 'test'}]}]);
-    // !!!
+    // @todo
     $httpBackend.expectGET('/api/cars/undefined').respond([{stays: [{destination: 'test'}]}]);
     $httpBackend.flush();
 
