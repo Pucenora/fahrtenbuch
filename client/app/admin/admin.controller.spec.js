@@ -33,7 +33,7 @@ describe('Controller: AdminAccountCtrl', function () {
 	});
 
 	it('test addAccount function', function () {
-    $scope.addAccount({ name: "test" });
+    $scope.addAccount({ name: 'test' });
   	$httpBackend.expectPOST('/api/accounts').respond(fakeResponse);    
     $httpBackend.flush();
 	});

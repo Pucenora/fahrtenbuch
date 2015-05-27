@@ -19,10 +19,10 @@ describe('Controller: TripCtrl', function () {
   }));
 
 	it('call TripCtrl', inject(function() {
-    $httpBackend.expectGET('/api/trips').respond([{stays: [{destination: "test"}]}]);
+    $httpBackend.expectGET('/api/trips').respond([{stays: [{destination: 'test'}]}]);
     $httpBackend.flush();
 
-    expect($scope.trips).toEqual([{stays: "test"}]);
+    expect($scope.trips).toEqual([{stays: 'test'}]);
 	}));
 
   it('test addTrip function', inject(function() {
@@ -37,14 +37,13 @@ describe('Controller: TripCtrl', function () {
  describe('Controller: CreateTripCtrl', function () {
 
   beforeEach(module('fahrtenbuchApp'));
-  var CreateTripCtrl, $scope, $httpBackend, $location, Auth, stayWithOneElements, stayWithTwoElements;
+  var CreateTripCtrl, $scope, $httpBackend, $location, stayWithOneElements, stayWithTwoElements;
 
-  beforeEach(inject(function (_$httpBackend_, $controller, $rootScope, _$location_, Auth) {
+  beforeEach(inject(function (_$httpBackend_, $controller, $rootScope, _$location_) {
     
     $httpBackend = _$httpBackend_;
     $scope = $rootScope.$new();
     $location = _$location_;
-    Auth = Auth;
 
     CreateTripCtrl = $controller('CreateTripCtrl', {
       $scope: $scope
@@ -70,10 +69,10 @@ describe('Controller: TripCtrl', function () {
 
   it('call CreateTripCtrl', inject(function() {
 
-    $httpBackend.expectGET('/api/accounts').respond([{stays: [{destination: "test"}]}]);
-    $httpBackend.expectGET('/api/cars').respond([{stays: [{destination: "test"}]}]);
+    $httpBackend.expectGET('/api/accounts').respond([{stays: [{destination: 'test'}]}]);
+    $httpBackend.expectGET('/api/cars').respond([{stays: [{destination: 'test'}]}]);
     // !!!
-    $httpBackend.expectGET('/api/cars/undefined').respond([{stays: [{destination: "test"}]}]);
+    $httpBackend.expectGET('/api/cars/undefined').respond([{stays: [{destination: 'test'}]}]);
     $httpBackend.flush();
 
     // console.log($scope.accounts);
@@ -138,7 +137,7 @@ describe('Controller: DetailTripCtrl', function () {
       $scope: $scope,
       $routeParams: {id: 1}
     });
-    testTrip = {_id: 1, stays: [{destination: "test"}]};
+    testTrip = {_id: 1, stays: [{destination: 'test'}]};
   }));
 
   it('should get trip with destinations', inject(function() {
@@ -146,8 +145,8 @@ describe('Controller: DetailTripCtrl', function () {
     $httpBackend.expectGET('/api/trips/' + testTrip._id).respond(testTrip);
     $httpBackend.flush();
 
-    expect($scope.trip).toEqual({_id: 1, stays: [{destination: "test"}]});
-    expect($scope.destinations).toEqual("test");
+    expect($scope.trip).toEqual({_id: 1, stays: [{destination: 'test'}]});
+    expect($scope.destinations).toEqual('test');
   }));
 
   it('test returnToOverview function', inject(function() {
