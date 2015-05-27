@@ -17,8 +17,7 @@ angular.module('fahrtenbuchApp')
       $scope.errors.other = err.message;
     });
 
-    $scope.addAccount = function(form, account) {
-      if(form.$valid) {
+    $scope.addAccount = function(account) {
         Account.postAccount(account)
         .then(function(account) {
           $route.reload();
@@ -26,7 +25,7 @@ angular.module('fahrtenbuchApp')
         .catch(function(err) {
           $scope.errors.other = err.message;
         });
-      }
+      // }
     };
 
     $scope.deleteAccount = function(account) {

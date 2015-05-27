@@ -4,10 +4,6 @@ describe('Controller: AdminAccountCtrl', function () {
 
   // load the controller's module
   beforeEach(module('fahrtenbuchApp'));
- 	// beforeEach(function() {
-	//   module('fahrtenbuchApp');
-	//   module('templates');
-	// });
   var AdminAccountCtrl, $scope, $location, $httpBackend, fakeResponse;
 
   // Initialize the controller and a mock scope
@@ -23,43 +19,27 @@ describe('Controller: AdminAccountCtrl', function () {
     });
 
     $location.path('/admin/account');
+    expect($location.path()).toBe('/admin/account');
+
+  	$httpBackend.expectGET('/api/accounts').respond([{_id: 1}, {_id: 2}, {_id: 3}]);
+  	$httpBackend.when('GET', 'app/admin/admin.account.html').respond(fakeResponse);
+    $httpBackend.flush();
   }));
 
 	it('call AdminAccountCtrl', function () {
-  	$httpBackend.expectGET('/api/accounts').respond([{test: "test"}]);
-  	$httpBackend.when('GET', 'app/admin/admin.account.html').respond(fakeResponse);
-    $httpBackend.flush();
-
-	  expect($location.path()).toBe('/admin/account');
 	  expect($scope.accounts).toBeDefined();
-	  expect($scope.accounts).toEqual([{test: "test"}]);
+	  expect($scope.accounts).toEqual([{_id: 1}, {_id: 2}, {_id: 3}]);
 	});
 
 	it('test add function', function () {
-	  expect($location.path()).toBe('/admin/account');
-
-	  var account = {name: "test"};
-  	$httpBackend.expectGET('/api/accounts').respond([{_id: 1}, {_id: 2}, {_id: 3}]);
-  	$httpBackend.when('GET', 'app/admin/admin.account.html').respond(fakeResponse);
-  	// $httpBackend.when('POST', '/api/accounts').respond(fakeResponse);
+    $scope.addAccount({ name: "test" });
+  	$httpBackend.expectPOST('/api/accounts').respond(fakeResponse);    
     $httpBackend.flush();
-
-		$scope.$digest();
-    expect($scope.form.$valid).toBeTruthy();
-    $scope.addAccount($scope.form, account);
-
-    // expect($scope.accounts).toEqual([{_id: 2}, {_id: 3}]);
 	});
 
 	it('test delete function', function () {
-	  expect($location.path()).toBe('/admin/account');
-
-  	$httpBackend.expectGET('/api/accounts').respond([{_id: 1}, {_id: 2}, {_id: 3}]);
-  	$httpBackend.when('GET', 'app/admin/admin.account.html').respond(fakeResponse);
-  	$httpBackend.when('DELETE', '/api/accounts/1').respond(fakeResponse);
-    $httpBackend.flush();
-
     $scope.deleteAccount($scope.accounts[0]);
+    $httpBackend.expectDELETE('/api/accounts/1').respond(fakeResponse);
     $httpBackend.flush();
 
     expect($scope.accounts).toEqual([{_id: 2}, {_id: 3}]);
