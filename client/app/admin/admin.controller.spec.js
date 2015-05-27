@@ -46,34 +46,45 @@ describe('Controller: AdminAccountCtrl', function () {
 	});
 });
 
-// describe('Controller: AdminUserCtrl', function () {
+describe('Controller: AdminUserCtrl', function () {
 
-//   // load the controller's module
-//   beforeEach(module('fahrtenbuchApp'));
-//   var AdminUserCtrl, scope, $httpBackend, testTrip;
+  // load the controller's module
+  beforeEach(module('fahrtenbuchApp'));
+  var AdminUserCtrl, $scope, $location, $httpBackend, fakeResponse;
 
-//   // Initialize the controller and a mock scope
-//   beforeEach(inject(function (_$httpBackend_, $controller, $rootScope, $routeParams) {
-    
-//     $httpBackend = _$httpBackend_;
-//     scope = $rootScope.$new();
-//     AdminUserCtrl = $controller('AdminUserCtrl', {
-//       $scope: scope,
-//       $routeParams: {id: 12345678}
-//     });
-//     testTrip = {_id: 12345678, stays: [{destination: "test"}]};
-//   }));
+  // Initialize the controller and a mock scope
+  beforeEach(inject(function ($controller, $rootScope, _$location_, _$httpBackend_) {
 
-//   it('should get trips', inject(function() {
+    $scope = $rootScope.$new();
+    $location = _$location_;
+    $httpBackend = _$httpBackend_;
+    fakeResponse = '';
 
-//     $httpBackend.expectGET('/api/trips/' + testTrip._id).respond(testTrip);
+    AdminUserCtrl = $controller('AdminUserCtrl', {
+      $scope: $scope
+    });
+
+    $location.path('/admin/user');
+    expect($location.path()).toBe('/admin/user');
+
+  	$httpBackend.expectGET('/api/users').respond([{_id: 1}, {_id: 2}, {_id: 3}]);
+  	$httpBackend.when('GET', 'app/admin/admin.user.html').respond(fakeResponse);
+    $httpBackend.flush();
+  }));
+
+// 	it('call AdminUserCtrl', function () {
+// 	  expect($scope.users).toBeDefined();
+// 	  expect($scope.users).toEqual([{_id: 1}, {_id: 2}, {_id: 3}]);
+// 	});
+
+// 	it('test delete function', function () {
+//     $scope.delete($scope.users[0]);
+//     $httpBackend.expectDELETE('/api/users/1').respond(fakeResponse);
 //     $httpBackend.flush();
 
-//     expect(scope.trip).toEqual({_id: 12345678, stays: [{destination: "test"}]});
-//     expect(scope.destinations).toEqual("test");
-//   }));
-// });
-
+//     expect($scope.users).toEqual([{_id: 2}, {_id: 3}]);
+// 	});
+});
 
 // @todo AdminCarCtrl
 // @todo AdminCarAddCtrl
