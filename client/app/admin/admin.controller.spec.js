@@ -1,5 +1,8 @@
 'use strict';
 
+/**
+ * Test AdminAccountCtrl
+ */
 describe('Controller: AdminAccountCtrl', function () {
 
   beforeEach(module('fahrtenbuchApp'));
@@ -29,13 +32,13 @@ describe('Controller: AdminAccountCtrl', function () {
 	  expect($scope.accounts).toEqual([{_id: 1}, {_id: 2}, {_id: 3}]);
 	});
 
-	it('test add function', function () {
+	it('test addAccount function', function () {
     $scope.addAccount({ name: "test" });
   	$httpBackend.expectPOST('/api/accounts').respond(fakeResponse);    
     $httpBackend.flush();
 	});
 
-	it('test delete function', function () {
+	it('test deleteAccount function', function () {
     $scope.deleteAccount($scope.accounts[0]);
     $httpBackend.expectDELETE('/api/accounts/1').respond(fakeResponse);
     $httpBackend.flush();
@@ -44,6 +47,9 @@ describe('Controller: AdminAccountCtrl', function () {
 	});
 });
 
+/**
+ * Test AdminUserCtrl
+ */
 describe('Controller: AdminUserCtrl', function () {
 
   beforeEach(module('fahrtenbuchApp'));
@@ -82,6 +88,9 @@ describe('Controller: AdminUserCtrl', function () {
 	});
 });
 
+/**
+ * Test AdminCarCtrl
+ */
 describe('Controller: AdminCarCtrl', function () {
 
   beforeEach(module('fahrtenbuchApp'));
@@ -111,17 +120,17 @@ describe('Controller: AdminCarCtrl', function () {
 	  expect(angular.equals($scope.cars, [{_id: 1}, {_id: 2}, {_id: 3}])).toBe(true);
 	});
 
-	it('test function addCar', function () {
+	it('test addCar function', function () {
 	  $scope.addCar();
 	  expect($location.path()).toBe('/admin/car/new');
 	});
 
-	it('test function editCar', function () {
+	it('test editCar function', function () {
 	  $scope.editCar({_id: 1});
 	  expect($location.path()).toBe('/admin/car/1');
 	});
 
-	it('test delete function', function () {
+	it('test deleteCar function', function () {
     $scope.deleteCar($scope.cars[0]);
     $httpBackend.expectDELETE('/api/cars/1').respond(fakeResponse);
     $httpBackend.flush();
@@ -130,6 +139,9 @@ describe('Controller: AdminCarCtrl', function () {
 	});
 });
 
+/**
+ * Test AdminCarAddCtrl
+ */
 describe('Controller: AdminCarAddCtrl', function () {
 
   beforeEach(module('fahrtenbuchApp'));
@@ -158,9 +170,3 @@ describe('Controller: AdminCarAddCtrl', function () {
     expect($location.path()).toBe('/admin/car');
 	});
 });
-
-
-
-
-
-
