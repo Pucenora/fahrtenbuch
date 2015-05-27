@@ -41,13 +41,13 @@ angular.module('fahrtenbuchApp')
 	 	$scope.accounts = [];
 	 	$scope.cars = [];
 	 	$scope.user = Auth.getCurrentUser();
-	 	$scope.defaultCar = $scope.user.default_car;
+	 	$scope.defaultCar = $scope.user.defaultCar;
 	 	$scope.trip = {}; 
 
-  	$scope.trip.origin_time = new Date();
-		$scope.trip.destination_time = new Date();
+  	$scope.trip.originTime = new Date();
+		$scope.trip.destinationTime = new Date();
 	 	$scope.stays = [];
-	 	$scope.stays.push({destination: '', client: '', destination_time: new Date()});
+	 	$scope.stays.push({destination: '', client: '', destinationTime: new Date()});
 	 	
 		Account.getAccounts()
     .then(function(accounts) {
@@ -68,7 +68,7 @@ angular.module('fahrtenbuchApp')
 		Car.getCar($scope.defaultCar)
     .then(function(defaultCar) {
     	$scope.trip.car = $scope.cars[defaultCar.__v];
-    	$scope.trip.kilometer_start = defaultCar.mileage;
+    	$scope.trip.kilometerStart = defaultCar.mileage;
     })
     .catch(function(err) {
       $scope.errors.other = err.message;
@@ -82,14 +82,14 @@ angular.module('fahrtenbuchApp')
 		**/
 		$scope.sync = function() {
 			// console.log("clicked");
-			$scope.trip.kilometer_start = $scope.trip.car.mileage;
+			$scope.trip.kilometerStart = $scope.trip.car.mileage;
 		};
 
 		/**
 		 * add a stay to the form
 		**/
 		$scope.addStay = function() {
-			$scope.stays.push({destination: '', client: '', destination_time: new Date()});
+			$scope.stays.push({destination: '', client: '', destinationTime: new Date()});
 		};
 
 		/**
@@ -132,7 +132,7 @@ angular.module('fahrtenbuchApp')
 				Trip.postTrip($scope.trip)
 		    .then(function() {
 
-		    	car.mileage = $scope.trip.kilometer_end;
+		    	car.mileage = $scope.trip.kilometerEnd;
 		    	
 					Car.patchCar(car)
 			    .then(function() {

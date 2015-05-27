@@ -5,7 +5,7 @@ var mongoose = require('mongoose'),
 
 var CarSchema = new Schema({
 	description: { type: String, required: true },
-	license_tag: { type: String, required: true },
+	licenseTag: { type: String, required: true },
 	mileage: { type: Number, required: true },
 	base: { type: String, required: true },
 });

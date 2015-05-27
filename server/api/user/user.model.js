@@ -8,7 +8,7 @@ var ObjectId = Schema.ObjectId;
 var UserSchema = new Schema({
   name: String,
   email: { type: String, lowercase: true },
-  default_car: { type: ObjectId, ref: 'Car' },
+  defaultCar: { type: ObjectId, ref: 'Car' },
   role: {
     type: String,
     default: 'user'

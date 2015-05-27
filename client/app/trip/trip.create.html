@@ -53,9 +53,9 @@
         <div class="col-xs-12 col-md-6">
           <div class="form-group">
             <label>kilometer start:</label>
-            <input type="text" ng-model="trip.kilometer_start" class="form-control" name="kilometer_start" required="" />
-            <div ng-show="form.$submitted || form.kilometer_start.$touched">
-              <div class="label label-danger" ng-show="form.kilometer_start.$error.required">text field is required!</div>
+            <input type="text" ng-model="trip.kilometerStart" class="form-control" name="kilometerStart" required="" />
+            <div ng-show="form.$submitted || form.kilometerStart.$touched">
+              <div class="label label-danger" ng-show="form.kilometerStart.$error.required">text field is required!</div>
             </div>
             <br />
           </div>
@@ -63,7 +63,7 @@
 
         <div class="col-xs-12 col-md-6">
           <div class="form-group">
-            <datetimepicker min-date="minDate" show-weeks="showWeeks" hour-step="hourStep" minute-step="minuteStep" ng-model="trip.origin_time" show-meridian="showMeridian" date-format="dd-MMM-yyyy" date-options="dateOptions" date-disabled="disabled(date, mode)" readonly-time="false"></datetimepicker>
+            <datetimepicker min-date="minDate" show-weeks="showWeeks" hour-step="hourStep" minute-step="minuteStep" ng-model="trip.originTime" show-meridian="showMeridian" date-format="dd-MMM-yyyy" date-options="dateOptions" date-disabled="disabled(date, mode)" readonly-time="false"></datetimepicker>
           </div>
         </div>
       </div>
@@ -72,9 +72,9 @@
         <div class="col-xs-12 col-md-6">
           <div class="form-group">
             <label>kilometer end:</label>
-            <input type="text" ng-model="trip.kilometer_end" name="kilometer_end" class="form-control" required="" />
-            <div ng-show="form.$submitted || form.kilometer_end.$touched">
-              <div class="label label-danger" ng-show="form.kilometer_end.$error.required">text field is required!</div>
+            <input type="text" ng-model="trip.kilometerEnd" name="kilometerEnd" class="form-control" required="" />
+            <div ng-show="form.$submitted || form.kilometerEnd.$touched">
+              <div class="label label-danger" ng-show="form.kilometerEnd.$error.required">text field is required!</div>
             </div>
             <br />
           </div>
@@ -82,7 +82,7 @@
 
         <div class="col-xs-12 col-md-6">
           <div class="form-group">
-            <datetimepicker min-date="minDate" show-weeks="showWeeks" hour-step="hourStep" minute-step="minuteStep" ng-model="trip.destination_time" show-meridian="showMeridian" date-format="dd-MMM-yyyy" date-options="dateOptions" date-disabled="disabled(date, mode)" readonly-time="false"></datetimepicker>
+            <datetimepicker min-date="minDate" show-weeks="showWeeks" hour-step="hourStep" minute-step="minuteStep" ng-model="trip.destinationTime" show-meridian="showMeridian" date-format="dd-MMM-yyyy" date-options="dateOptions" date-disabled="disabled(date, mode)" readonly-time="false"></datetimepicker>
           </div>
         </div>
         <hr />
@@ -119,8 +119,8 @@
           <div class="row"> 
             <div class="col-xs-12">
               <div class="form-group">
-              <!-- trip.destination_time -->
-                <datetimepicker min-date="minDate" show-weeks="showWeeks" hour-step="hourStep" minute-step="minuteStep" ng-model="stay.destination_time" show-meridian="showMeridian" date-format="dd-MMM-yyyy" date-options="dateOptions" date-disabled="disabled(date, mode)" readonly-time="false"></datetimepicker>
+              <!-- trip.destinationTime -->
+                <datetimepicker min-date="minDate" show-weeks="showWeeks" hour-step="hourStep" minute-step="minuteStep" ng-model="stay.destinationTime" show-meridian="showMeridian" date-format="dd-MMM-yyyy" date-options="dateOptions" date-disabled="disabled(date, mode)" readonly-time="false"></datetimepicker>
 
                 <button type="button" class="btn btn-success btn-lg" ng-click="removeStay(stay)"><i class="glyphicon glyphicon-minus"></i></button>
               </div>

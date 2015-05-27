@@ -11,11 +11,11 @@ var TripSchema = new Schema({
 	type: { type: String, enum: ['corporate', 'noncorporate'], required: true },
 	account: { type: ObjectId, ref: 'Account' },
 	
-	kilometer_start: {type: Number, required: true},
-	kilometer_end: {type: Number, required: true},
+	kilometerStart: {type: Number, required: true},
+	kilometerEnd: {type: Number, required: true},
 
-	origin_time: {type: Date, required: true},
-	destination_time: {type: Date, required: true},
+	originTime: {type: Date, required: true},
+	destinationTime: {type: Date, required: true},
 	stays: [{ type : ObjectId, ref: 'Stay' }],
 
 	timestamp: {type: Date, default: Date.now},

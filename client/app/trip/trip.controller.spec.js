@@ -53,17 +53,17 @@ describe('Controller: TripCtrl', function () {
     stayWithOneElements = [{
       destination: '',
       client: '',
-      destination_time: new Date()
+      destinationTime: new Date()
     }];
 
     stayWithTwoElements = [{
       destination: '',
       client: '',
-      destination_time: new Date()
+      destinationTime: new Date()
     }, {
       destination: '',
       client: '',
-      destination_time: new Date()
+      destinationTime: new Date()
     }];
 
   }));
@@ -79,14 +79,14 @@ describe('Controller: TripCtrl', function () {
     // console.log($scope.accounts);
     // console.log($scope.cars);
     // console.log($scope.trip.car);
-    // console.log($scope.trip.kilometer_start);
+    // console.log($scope.trip.kilometerStart);
   }));
 
   it('test sync function', inject(function() {
     $scope.trip.car = {mileage: 42};
     $scope.sync();
 
-    expect($scope.trip.kilometer_start).toBe(42);
+    expect($scope.trip.kilometerStart).toBe(42);
   }));
   
   it('test addStay function', inject(function() {

@@ -6,7 +6,7 @@ var mongoose = require('mongoose'),
 var StayShema = new Schema({
 	destination: String,
 	client: String,
-	destination_time: Date,
+	destinationTime: Date,
 });
 
 module.exports = mongoose.model('Stay', StayShema);
