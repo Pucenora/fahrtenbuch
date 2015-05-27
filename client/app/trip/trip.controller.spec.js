@@ -75,6 +75,7 @@ describe('Controller: TripCtrl', function () {
     $httpBackend.expectGET('/api/cars/undefined').respond([{stays: [{destination: 'test'}]}]);
     $httpBackend.flush();
 
+    // @todo
     // console.log($scope.accounts);
     // console.log($scope.cars);
     // console.log($scope.trip.car);
@@ -103,7 +104,8 @@ describe('Controller: TripCtrl', function () {
     // expect($scope.stays).toEqual(stayWithOneElements);
     expect(angular.equals($scope.stays, stayWithOneElements)).toBe(true);
   }));
-  
+ 
+  // @todo 
   // it('test addTrip function', inject(function() {
 
   //   $httpBackend.expectGET('/api/accounts').respond([{stays: [{destination: "test"}]}]);
