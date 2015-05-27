@@ -2,11 +2,9 @@
 
 describe('Controller: AdminAccountCtrl', function () {
 
-  // load the controller's module
   beforeEach(module('fahrtenbuchApp'));
   var AdminAccountCtrl, $scope, $location, $httpBackend, fakeResponse;
 
-  // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope, _$location_, _$httpBackend_) {
 
     $scope = $rootScope.$new();
@@ -48,11 +46,9 @@ describe('Controller: AdminAccountCtrl', function () {
 
 describe('Controller: AdminUserCtrl', function () {
 
-  // load the controller's module
   beforeEach(module('fahrtenbuchApp'));
   var AdminUserCtrl, $scope, $location, $httpBackend, fakeResponse;
 
-  // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope, _$location_, _$httpBackend_) {
 
     $scope = $rootScope.$new();
@@ -72,23 +68,97 @@ describe('Controller: AdminUserCtrl', function () {
     $httpBackend.flush();
   }));
 
-// 	it('call AdminUserCtrl', function () {
-// 	  expect($scope.users).toBeDefined();
-// 	  expect($scope.users).toEqual([{_id: 1}, {_id: 2}, {_id: 3}]);
-// 	});
+	it('call AdminUserCtrl', function () {
+	  expect($scope.users).toBeDefined();
+	  expect(angular.equals($scope.users, [{_id: 1}, {_id: 2}, {_id: 3}])).toBe(true);
+	});
 
-// 	it('test delete function', function () {
-//     $scope.delete($scope.users[0]);
-//     $httpBackend.expectDELETE('/api/users/1').respond(fakeResponse);
-//     $httpBackend.flush();
+	it('test delete function', function () {
+    $scope.delete($scope.users[0]);
+    $httpBackend.expectDELETE('/api/users/1').respond(fakeResponse);
+    $httpBackend.flush();
 
-//     expect($scope.users).toEqual([{_id: 2}, {_id: 3}]);
-// 	});
+    expect(angular.equals($scope.users, [{_id: 2}, {_id: 3}])).toBe(true);
+	});
 });
 
-//
-// @todo AdminCarCtrl
-// @todo AdminCarAddCtrl
+describe('Controller: AdminCarCtrl', function () {
+
+  beforeEach(module('fahrtenbuchApp'));
+  var AdminCarCtrl, $scope, $location, $httpBackend, fakeResponse;
+
+  beforeEach(inject(function ($controller, $rootScope, _$location_, _$httpBackend_) {
+
+    $scope = $rootScope.$new();
+    $location = _$location_;
+    $httpBackend = _$httpBackend_;
+    fakeResponse = '';
+
+    AdminCarCtrl = $controller('AdminCarCtrl', {
+      $scope: $scope
+    });
+
+    $location.path('/admin/car');
+    expect($location.path()).toBe('/admin/car');
+
+  	$httpBackend.expectGET('/api/cars').respond([{_id: 1}, {_id: 2}, {_id: 3}]);
+  	$httpBackend.when('GET', 'app/admin/admin.car.html').respond(fakeResponse);
+    $httpBackend.flush();
+  }));
+
+	it('call AdminCarCtrl', function () {
+	  expect($scope.cars).toBeDefined();
+	  expect(angular.equals($scope.cars, [{_id: 1}, {_id: 2}, {_id: 3}])).toBe(true);
+	});
+
+	it('test function addCar', function () {
+	  $scope.addCar();
+	  expect($location.path()).toBe('/admin/car/new');
+	});
+
+	it('test function editCar', function () {
+	  $scope.editCar({_id: 1});
+	  expect($location.path()).toBe('/admin/car/1');
+	});
+
+	it('test delete function', function () {
+    $scope.deleteCar($scope.cars[0]);
+    $httpBackend.expectDELETE('/api/cars/1').respond(fakeResponse);
+    $httpBackend.flush();
+
+    expect(angular.equals($scope.cars, [{_id: 2}, {_id: 3}])).toBe(true);
+	});
+});
+
+describe('Controller: AdminCarAddCtrl', function () {
+
+  beforeEach(module('fahrtenbuchApp'));
+  var AdminCarAddCtrl, $scope, $location, $httpBackend, fakeResponse;
+
+  beforeEach(inject(function ($controller, $rootScope, _$location_, _$httpBackend_) {
+
+    $scope = $rootScope.$new();
+    $location = _$location_;
+    $httpBackend = _$httpBackend_;
+    fakeResponse = '';
+
+    AdminCarAddCtrl = $controller('AdminCarAddCtrl', {
+      $scope: $scope,
+    });
+
+  	$httpBackend.when('GET', 'app/admin/admin.car.html').respond(fakeResponse);
+  }));
+
+	it('test createCar function', function () {
+		$scope.car = {_id: 1};
+    $scope.createCar();
+    $httpBackend.expectPOST('/api/cars').respond(fakeResponse);
+    $httpBackend.flush();
+
+    expect($location.path()).toBe('/admin/car');
+	});
+});
+
 
 
 
