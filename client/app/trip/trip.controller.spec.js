@@ -119,6 +119,7 @@ describe('Controller: TripCtrl', function () {
   //   $httpBackend.expectPOST('/api/stays').respond([{stays: [{destination: "test"}]}]);
   //   $httpBackend.flush();
   // }));
+
 });
 
 /**
