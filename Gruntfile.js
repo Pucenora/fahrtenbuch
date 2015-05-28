@@ -536,7 +536,7 @@ module.exports = function (grunt) {
       'wiredep',
       'autoprefixer',
       'express:dev',
-      'wait',
+      // 'wait',
       'open',
       'watch'
     ]);
