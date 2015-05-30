@@ -54,93 +54,93 @@ module.exports = function (grunt) {
         url: 'http://localhost:<%= express.options.port %>'
       }
     },
-    // watch: {
-    //   injectJS: {
-    //     files: [
-    //       '<%= yeoman.client %>/{app,components}/**/*.js',
-    //       '!<%= yeoman.client %>/{app,components}/**/*.spec.js',
-    //       '!<%= yeoman.client %>/{app,components}/**/*.mock.js',
-    //       '!<%= yeoman.client %>/app/app.js'],
-    //     tasks: ['injector:scripts']
-    //   },
-    //   injectCss: {
-    //     files: [
-    //       '<%= yeoman.client %>/{app,components}/**/*.css'
-    //     ],
-    //     tasks: ['injector:css']
-    //   },
-    //   mochaTest: {
-    //     files: ['server/**/*.spec.js'],
-    //     tasks: ['env:test', 'mochaTest']
-    //   },
-    //   jsTest: {
-    //     files: [
-    //       '<%= yeoman.client %>/{app,components}/**/*.spec.js',
-    //       '<%= yeoman.client %>/{app,components}/**/*.mock.js'
-    //     ],
-    //     tasks: ['newer:jshint:all', 'karma']
-    //   },
-    //   gruntfile: {
-    //     files: ['Gruntfile.js']
-    //   },
-    //   livereload: {
-    //     files: [
-    //       '{.tmp,<%= yeoman.client %>}/{app,components}/**/*.css',
-    //       '{.tmp,<%= yeoman.client %>}/{app,components}/**/*.html',
-    //       '{.tmp,<%= yeoman.client %>}/{app,components}/**/*.js',
-    //       '!{.tmp,<%= yeoman.client %>}{app,components}/**/*.spec.js',
-    //       '!{.tmp,<%= yeoman.client %>}/{app,components}/**/*.mock.js',
-    //       '<%= yeoman.client %>/assets/images/{,*//*}*.{png,jpg,jpeg,gif,webp,svg}'
-    //     ],
-    //     options: {
-    //       livereload: true
-    //     }
-    //   },
-    //   express: {
-    //     files: [
-    //       'server/**/*.{js,json}'
-    //     ],
-    //     tasks: ['express:dev', 'wait'],
-    //     options: {
-    //       livereload: true,
-    //       nospawn: true //Without this option specified express won't be reloaded
-    //     }
-    //   }
-    // },
+    watch: {
+      injectJS: {
+        files: [
+          '<%= yeoman.client %>/{app,components}/**/*.js',
+          '!<%= yeoman.client %>/{app,components}/**/*.spec.js',
+          '!<%= yeoman.client %>/{app,components}/**/*.mock.js',
+          '!<%= yeoman.client %>/app/app.js'],
+        tasks: ['injector:scripts']
+      },
+      injectCss: {
+        files: [
+          '<%= yeoman.client %>/{app,components}/**/*.css'
+        ],
+        tasks: ['injector:css']
+      },
+      mochaTest: {
+        files: ['server/**/*.spec.js'],
+        tasks: ['env:test', 'mochaTest']
+      },
+      jsTest: {
+        files: [
+          '<%= yeoman.client %>/{app,components}/**/*.spec.js',
+          '<%= yeoman.client %>/{app,components}/**/*.mock.js'
+        ],
+        tasks: ['newer:jshint:all', 'karma']
+      },
+      gruntfile: {
+        files: ['Gruntfile.js']
+      },
+      livereload: {
+        files: [
+          '{.tmp,<%= yeoman.client %>}/{app,components}/**/*.css',
+          '{.tmp,<%= yeoman.client %>}/{app,components}/**/*.html',
+          '{.tmp,<%= yeoman.client %>}/{app,components}/**/*.js',
+          '!{.tmp,<%= yeoman.client %>}{app,components}/**/*.spec.js',
+          '!{.tmp,<%= yeoman.client %>}/{app,components}/**/*.mock.js',
+          '<%= yeoman.client %>/assets/images/{,*//*}*.{png,jpg,jpeg,gif,webp,svg}'
+        ],
+        options: {
+          livereload: true
+        }
+      },
+      express: {
+        files: [
+          'server/**/*.{js,json}'
+        ],
+        tasks: ['express:dev', 'wait'],
+        options: {
+          livereload: true,
+          nospawn: true //Without this option specified express won't be reloaded
+        }
+      }
+    },
 
-    // // Make sure code styles are up to par and there are no obvious mistakes
-    // jshint: {
-    //   options: {
-    //     jshintrc: '<%= yeoman.client %>/.jshintrc',
-    //     reporter: require('jshint-stylish')
-    //   },
-    //   server: {
-    //     options: {
-    //       jshintrc: 'server/.jshintrc'
-    //     },
-    //     src: [
-    //       'server/**/*.js',
-    //       '!server/**/*.spec.js'
-    //     ]
-    //   },
-    //   serverTest: {
-    //     options: {
-    //       jshintrc: 'server/.jshintrc-spec'
-    //     },
-    //     src: ['server/**/*.spec.js']
-    //   },
-    //   all: [
-    //     '<%= yeoman.client %>/{app,components}/**/*.js',
-    //     '!<%= yeoman.client %>/{app,components}/**/*.spec.js',
-    //     '!<%= yeoman.client %>/{app,components}/**/*.mock.js'
-    //   ],
-    //   test: {
-    //     src: [
-    //       '<%= yeoman.client %>/{app,components}/**/*.spec.js',
-    //       '<%= yeoman.client %>/{app,components}/**/*.mock.js'
-    //     ]
-    //   }
-    // },
+    // Make sure code styles are up to par and there are no obvious mistakes
+    jshint: {
+      options: {
+        jshintrc: '<%= yeoman.client %>/.jshintrc',
+        reporter: require('jshint-stylish')
+      },
+      server: {
+        options: {
+          jshintrc: 'server/.jshintrc'
+        },
+        src: [
+          'server/**/*.js',
+          '!server/**/*.spec.js'
+        ]
+      },
+      serverTest: {
+        options: {
+          jshintrc: 'server/.jshintrc-spec'
+        },
+        src: ['server/**/*.spec.js']
+      },
+      all: [
+        '<%= yeoman.client %>/{app,components}/**/*.js',
+        '!<%= yeoman.client %>/{app,components}/**/*.spec.js',
+        '!<%= yeoman.client %>/{app,components}/**/*.mock.js'
+      ],
+      test: {
+        src: [
+          '<%= yeoman.client %>/{app,components}/**/*.spec.js',
+          '<%= yeoman.client %>/{app,components}/**/*.mock.js'
+        ]
+      }
+    },
 
     // Empties folders to start fresh
     clean: {
@@ -175,38 +175,38 @@ module.exports = function (grunt) {
     },
 
     // Debugging with node inspector
-    // 'node-inspector': {
-    //   custom: {
-    //     options: {
-    //       'web-host': 'localhost'
-    //     }
-    //   }
-    // },
+    'node-inspector': {
+      custom: {
+        options: {
+          'web-host': 'localhost'
+        }
+      }
+    },
 
     // Use nodemon to run server in debug mode with an initial breakpoint
-    // nodemon: {
-    //   debug: {
-    //     script: 'server/app.js',
-    //     options: {
-    //       nodeArgs: ['--debug-brk'],
-    //       env: {
-    //         PORT: process.env.PORT || 9000
-    //       },
-    //       callback: function (nodemon) {
-    //         nodemon.on('log', function (event) {
-    //           console.log(event.colour);
-    //         });
+    nodemon: {
+      debug: {
+        script: 'server/app.js',
+        options: {
+          nodeArgs: ['--debug-brk'],
+          env: {
+            PORT: process.env.PORT || 9000
+          },
+          callback: function (nodemon) {
+            nodemon.on('log', function (event) {
+              console.log(event.colour);
+            });
 
-    //         // opens browser on initial server start
-    //         nodemon.on('config:update', function () {
-    //           setTimeout(function () {
-    //             require('open')('http://localhost:8080/debug?port=5858');
-    //           }, 500);
-    //         });
-    //       }
-    //     }
-    //   }
-    // },
+            // opens browser on initial server start
+            nodemon.on('config:update', function () {
+              setTimeout(function () {
+                require('open')('http://localhost:8080/debug?port=5858');
+              }, 500);
+            });
+          }
+        }
+      }
+    },
 
     // Automatically inject Bower components into the app
     wiredep: {
@@ -400,7 +400,7 @@ module.exports = function (grunt) {
       debug: {
         tasks: [
           'nodemon',
-          // 'node-inspector'
+          'node-inspector'
         ],
         options: {
           logConcurrentOutput: true
@@ -420,25 +420,25 @@ module.exports = function (grunt) {
       }
     },
 
-    // mochaTest: {
-    //   options: {
-    //     reporter: 'spec'
-    //   },
-    //   src: ['server/**/*.spec.js']
-    // },
+    mochaTest: {
+      options: {
+        reporter: 'spec'
+      },
+      src: ['server/**/*.spec.js']
+    },
 
-    // protractor: {
-    //   options: {
-    //     configFile: 'protractor.conf.js'
-    //   },
-    //   chrome: {
-    //     options: {
-    //       args: {
-    //         browser: 'chrome'
-    //       }
-    //     }
-    //   }
-    // },
+    protractor: {
+      options: {
+        configFile: 'protractor.conf.js'
+      },
+      chrome: {
+        options: {
+          args: {
+            browser: 'chrome'
+          }
+        }
+      }
+    },
 
     env: {
       test: {
@@ -496,20 +496,20 @@ module.exports = function (grunt) {
   });
 
   // Used for delaying livereload until after server has restarted
-  // grunt.registerTask('wait', function () {
-  //   grunt.log.ok('Waiting for server reload...');
+  grunt.registerTask('wait', function () {
+    grunt.log.ok('Waiting for server reload...');
 
-  //   var done = this.async();
+    var done = this.async();
 
-  //   setTimeout(function () {
-  //     grunt.log.writeln('Done waiting!');
-  //     done();
-  //   }, 1500);
-  // });
+    setTimeout(function () {
+      grunt.log.writeln('Done waiting!');
+      done();
+    }, 1500);
+  });
 
-  // grunt.registerTask('express-keepalive', 'Keep grunt running', function() {
-  //   this.async();
-  // });
+  grunt.registerTask('express-keepalive', 'Keep grunt running', function() {
+    this.async();
+  });
 
   grunt.registerTask('serve', function (target) {
     if (target === 'dist') {
@@ -536,7 +536,7 @@ module.exports = function (grunt) {
       'wiredep',
       'autoprefixer',
       'express:dev',
-      // 'wait',
+      'wait',
       'open',
       // 'watch'
     ]);
