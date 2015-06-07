@@ -5,6 +5,7 @@ angular.module('fahrtenbuchApp', [
   'ngResource',
   'ngSanitize',
   'ngRoute',
+  'ngStorage',
   'btford.socket-io',
   'ui.bootstrap',
   'ui.bootstrap.datetimepicker',

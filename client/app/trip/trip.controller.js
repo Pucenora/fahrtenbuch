@@ -1,8 +1,6 @@
 'use strict';
 
-angular.module('fahrtenbuchApp', [
-  'ngStorage'
-])
+angular.module('fahrtenbuchApp')
 
 	/**
 	 * /trip
@@ -51,11 +49,6 @@ angular.module('fahrtenbuchApp', [
 	 	$scope.stays = [];
 	 	$scope.stays.push({destination: '', client: '', destinationTime: new Date()});
 
-	 	$scope.$watch('trip', function() {
-    	console.log($localStorage);
-    	console.log($scope.trip);
-		});
-	 	
 		Account.getAccounts()
     .then(function(accounts) {
     	$scope.accounts = accounts;
@@ -80,6 +73,19 @@ angular.module('fahrtenbuchApp', [
     .catch(function(err) {
       $scope.errors.other = err.message;
     });
+
+    if ($localStorage.trip !== null && $localStorage.trip !== undefined && $localStorage.stays !== undefined && localStorage.stays !== null) {
+		  $scope.trip = $localStorage.trip;
+		  $scope.stays = $localStorage.stays;
+		};
+
+	 	$scope.$watchCollection('trip', function() {
+	 		$localStorage.trip = $scope.trip;
+		});
+
+ 		$scope.$watchCollection('stays', function() {
+	 		$localStorage.stays = $scope.stays;
+		});
 
 	  // @todo
 		// var Geocoder = new google.maps.Geocoder();
@@ -143,6 +149,8 @@ angular.module('fahrtenbuchApp', [
 		    	
 					Car.patchCar(car)
 			    .then(function() {
+			    	$localStorage.trip = null;
+			    	$localStorage.stays = null;
 			    	$location.path('/trip');
 			    })
 			    .catch(function(err) {
