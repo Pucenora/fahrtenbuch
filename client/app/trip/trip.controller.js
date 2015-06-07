@@ -37,6 +37,7 @@ angular.module('fahrtenbuchApp')
 		// init
 		$scope.hourStep = 1;
   	$scope.minuteStep = 5;
+    $scope.errors = {};
 
 	 	$scope.accounts = [];
 	 	$scope.cars = [];
@@ -87,9 +88,6 @@ angular.module('fahrtenbuchApp')
 	 		$localStorage.stays = $scope.stays;
 		});
 
-	  // @todo
-		// var Geocoder = new google.maps.Geocoder();
-
 		/**
 		 * sync kilometer start to car
 		**/
@@ -117,6 +115,48 @@ angular.module('fahrtenbuchApp')
 		$scope.removeStay = function(stay) {
 		  var index = $scope.stays.indexOf(stay);
   		$scope.stays.splice(index, 1);  
+		};
+
+		/**
+		 * get Position and Geocode
+		**/
+		function success(pos) {
+		  var crd = pos.coords;
+
+		  console.log('Your current position is:');
+		  console.log('Latitude : ' + crd.latitude);
+		  console.log('Longitude: ' + crd.longitude);
+		  console.log('More or less ' + crd.accuracy + ' meters.');
+
+		  //
+		  if (crd.accuracy > 10) {
+		  	$scope.errors.other = "Warning result is inaccurate";
+		  }
+
+			var Geocoder = new google.maps.Geocoder();
+			var latlng = new google.maps.LatLng(crd.latitude, crd.longitude);
+		  Geocoder.geocode({'latLng': latlng}, function(results, status) {
+		  	if (status == google.maps.GeocoderStatus.OK) {
+		  		console.log(results[0].formatted_address);
+		  		$scope.stays[0].destination = results[0].formatted_address;
+		  	} else {
+		  		console.log("Geocoding your location failed");
+		  	}
+		  });
+		};
+
+		function error(err) {
+		  console.warn('ERROR(' + err.code + '): ' + err.message);
+		};
+
+		$scope.getPosition = function() {
+		  var options = {
+			  enableHighAccuracy: true,
+			  timeout: 5000,
+			  maximumAge: 0
+			};
+
+			navigator.geolocation.getCurrentPosition(success, error, options);
 		};
 
 		/**
@@ -171,41 +211,6 @@ angular.module('fahrtenbuchApp')
 		      $scope.errors.other = err.message;
 		    });
 			});
-		};
-
-		/**
-		 * @todo
-		 * log lat und lng
-		**/
-		$scope.showPosition = function(position) {
-	    console.log('Latitude: ' + position.coords.latitude);
-	    console.log('Longitude: ' + position.coords.longitude);
-		};
-
-		/**
-		 * @todo
-		 * start getting location
-		**/
-		$scope.startWatching = function() {
-	    if (navigator.geolocation) {
-	    		console.log(new Date());
-	        // navigator.geolocation.watchPosition($scope.showPosition);
-	        // var latLngObject = navigator.geolocation.getCurrentPosition($scope.showPosition);
-	        // console.log(Geocoder.geocode( { 'latLng': latLngObject }, callback));
-	    } else {
-	        console.log('Geolocation is not supported by this browser.');
-	    }
-		};
-
-		/**
-		 * @todo
-		 * stop getting location
-		**/
-		$scope.stopWatching = function() {
-			console.log(new Date());
-			// var latLngObject = navigator.geolocation.getCurrentPosition($scope.showPosition);
-			// console.log(Geocoder.geocode( { 'latLng': latLngObject }, callback));
-      // navigator.geolocation.clearWatch();
 		};
 	})
 

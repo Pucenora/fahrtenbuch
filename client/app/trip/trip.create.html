@@ -6,12 +6,7 @@
       <h1 class="page-header">New Trip:</h1>
     </div>
   </div>
-
-  <button class="btn btn-success btn-lg" ng-click="startWatching()">Start</button>
-  <button class="btn btn-success btn-lg" ng-click="stopWatching()">Stop</button>
-  <i class="glyphicon glyphicon-map-marker btn-lg"></i>
-  <reverse-geocode lat="40.730885" lng="-73.997383" />
-  <hr />
+  <p class="help-block">{{ errors.other }}</p>
 
   <form class="css-form" novalidate name="form">
     <p class="input-group">
@@ -94,8 +89,8 @@
           <div class="row"> 
             <div class="col-xs-12 col-md-6">
               <div class="form-group">
-                <label>destination:</label>   
-                <!-- trip.destination -->
+                <label>destination:</label>
+                <button class="btn btn-primary" ng-click="getPosition()"><i class="glyphicon glyphicon-map-marker"></i></button> 
                 <input type="text" ng-model="stay.destination" class="form-control" name="destination" required="" />
                 <div ng-show="stayForm.$submitted || stayForm.destination.$touched">
                   <div class="label label-danger" ng-show="stayForm.destination.$error.required">text field is required!</div>
@@ -106,7 +101,6 @@
             <div class="col-xs-12 col-md-6">
               <div class="form-group">
                 <label>client:</label>
-                <!-- trip.client -->
                 <input type="text" ng-model="stay.client" class="form-control" name="client" required="" />
                   <div ng-show="stayForm.$submitted || stayForm.client.$touched">
                     <div class="label label-danger" ng-show="stayForm.client.$error.required">text field is required!</div>

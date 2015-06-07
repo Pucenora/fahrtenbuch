@@ -16,8 +16,7 @@
     "lodash": "~2.4.1",
     "angular-socket-io": "~0.6.0",
     "angular-ui-bootstrap-datetimepicker": "~0.11.2",
-    "angular-reverse-geocode": "*",
-    "angular-google-maps": "~2.0.19",
+    "angular-google-maps": "~2.1.2",
     "ngstorage": "~0.3.4"
   },
   "devDependencies": {
@@ -26,6 +25,8 @@
   },
   "resolutions": {
     "angular-bootstrap": "~0.11.0",
-    "angular": ">=1.2.0"
+    "angular": ">=1.2.0",
+    "lodash": "~2.4.1",
+    "angular-google-maps": "~2.0.19"
   }
 }
