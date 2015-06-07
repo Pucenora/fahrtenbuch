@@ -32,10 +32,10 @@
           <div class="form-group">
       	    <label>type:</label>
             <br />
-            <div class="btn-group" name="type" ng-init="trip.type='noncorporate'" required="" >
-              <label class="btn btn-primary" ng-model="trip.type" value="'noncorporate'" btn-radio="'noncorporate'">private</label>
-              <label class="btn btn-primary" ng-model="trip.type" value="'corporate'" btn-radio="'corporate'">corporate</label>
-          	</div>
+            <div class="btn-group" name="type" ng-init="trip.type='corporate'" required="" >
+              <label class="btn btn-primary" ng-model="trip.type" value="'corporate'" btn-radio="'corporate'" ng-click="addStay()">corporate</label>
+              <label class="btn btn-primary" ng-model="trip.type" value="'noncorporate'" btn-radio="'noncorporate'" ng-click="sync2()">private</label>
+            </div>
           </div>
         </div>
 

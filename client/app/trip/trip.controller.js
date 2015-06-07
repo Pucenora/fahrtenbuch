@@ -94,8 +94,14 @@ angular.module('fahrtenbuchApp')
 		 * sync kilometer start to car
 		**/
 		$scope.sync = function() {
-			// console.log("clicked");
 			$scope.trip.kilometerStart = $scope.trip.car.mileage;
+		};
+
+		/**
+		 * sync form when private .... 
+		**/
+		$scope.sync2 = function() {
+			$scope.stays = [];
 		};
 
 		/**
@@ -120,13 +126,17 @@ angular.module('fahrtenbuchApp')
 
 			var promises = [];
 
-			$scope.stays.forEach(function(stay) {
-				var promise = Stay.postStay(stay)
-			  .catch(function(err) {
-			    $scope.errors.other = err.message;
-			  });
-				promises.push(promise);
-			});
+			if ($scope.stays !== null) {
+				$scope.stays.forEach(function(stay) {
+					var promise = Stay.postStay(stay)
+				  .catch(function(err) {
+				    $scope.errors.other = err.message;
+				  });
+					promises.push(promise);
+				});
+			} else {
+				var promise = 'OK';
+			}
 
 			$q.all(promises)
 			.then(function(stays) {
