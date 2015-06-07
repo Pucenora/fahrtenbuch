@@ -538,7 +538,7 @@ module.exports = function (grunt) {
       'express:dev',
       'wait',
       'open',
-      // 'watch'
+      'watch'
     ]);
   });
 

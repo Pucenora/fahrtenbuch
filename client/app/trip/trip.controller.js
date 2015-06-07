@@ -1,6 +1,8 @@
 'use strict';
 
-angular.module('fahrtenbuchApp')
+angular.module('fahrtenbuchApp', [
+  'ngStorage'
+])
 
 	/**
 	 * /trip
@@ -32,7 +34,7 @@ angular.module('fahrtenbuchApp')
 	 * /trip/new
 	 * create new trip
 	**/
-	.controller('CreateTripCtrl', function ($scope, $q, $location, Auth, Account, Car, Stay, Trip) {
+	.controller('CreateTripCtrl', function ($scope, $q, $location, $localStorage, Auth, Account, Car, Stay, Trip) {
 
 		// init
 		$scope.hourStep = 1;
@@ -48,6 +50,11 @@ angular.module('fahrtenbuchApp')
 		$scope.trip.destinationTime = new Date();
 	 	$scope.stays = [];
 	 	$scope.stays.push({destination: '', client: '', destinationTime: new Date()});
+
+	 	$scope.$watch('trip', function() {
+    	console.log($localStorage);
+    	console.log($scope.trip);
+		});
 	 	
 		Account.getAccounts()
     .then(function(accounts) {
@@ -115,8 +122,8 @@ angular.module('fahrtenbuchApp')
 				promises.push(promise);
 			});
 
-			$q.all(promises).
-			then(function(stays) {
+			$q.all(promises)
+			.then(function(stays) {
 
 				var stayIds = [];
 				stays.forEach(function(stay) {
