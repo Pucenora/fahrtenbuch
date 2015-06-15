@@ -43,7 +43,7 @@ angular.module('fahrtenbuchApp')
     };   
   })
 
-  .controller('AdminUserCtrl', function ($scope, $http, Auth, User) {
+  .controller('AdminUserCtrl', function ($scope, $http, User) {
 
     // Use the User $resource to fetch all users
     $scope.users = User.query();

@@ -1,8 +1,6 @@
 'use strict';
 
 angular.module('fahrtenbuchApp', [
-  'fahrtenbuchApp.directives', 
-  'fahrtenbuchApp.services',
   'ngCookies',
   'ngResource',
   'ngSanitize',
