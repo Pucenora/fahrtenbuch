@@ -98,7 +98,7 @@ angular.module('fahrtenbuchApp')
 		};
 
 		/**
-		 * sync form when private .... 
+		 * sync form when private
 		**/
 		$scope.sync2 = function() {
 			$scope.stays = [];
