@@ -1,4 +1,5 @@
 'use strict';
+/* global google */
 
 angular.module('fahrtenbuchApp')
 
@@ -38,6 +39,7 @@ angular.module('fahrtenbuchApp')
 		$scope.hourStep = 1;
   	$scope.minuteStep = 5;
     $scope.errors = {};
+    $scope.$storage = $localStorage;
 
 	 	$scope.accounts = [];
 	 	$scope.cars = [];
@@ -75,17 +77,17 @@ angular.module('fahrtenbuchApp')
       $scope.errors.other = err.message;
     });
 
-    if ($localStorage.trip !== null && $localStorage.trip !== undefined && $localStorage.stays !== undefined && localStorage.stays !== null) {
-		  $scope.trip = $localStorage.trip;
-		  $scope.stays = $localStorage.stays;
-		};
+    if ($scope.$storage.trip !== null && $scope.$storage.trip !== undefined && $scope.$storage.stays !== undefined && $scope.$storage.stays !== null) {
+		  $scope.trip = $scope.$storage.trip;
+		  $scope.stays = $scope.$storage.stays;
+		}
 
 	 	$scope.$watchCollection('trip', function() {
-	 		$localStorage.trip = $scope.trip;
+	 		$scope.$storage.trip = $scope.trip;
 		});
 
  		$scope.$watchCollection('stays', function() {
-	 		$localStorage.stays = $scope.stays;
+	 		$scope.$storage.stays = $scope.stays;
 		});
 
 		/**
@@ -130,24 +132,24 @@ angular.module('fahrtenbuchApp')
 
 		  //
 		  if (crd.accuracy > 10) {
-		  	$scope.errors.other = "Warning result is inaccurate";
+		  	$scope.errors.other = 'Warning result is inaccurate';
 		  }
 
 			var Geocoder = new google.maps.Geocoder();
 			var latlng = new google.maps.LatLng(crd.latitude, crd.longitude);
 		  Geocoder.geocode({'latLng': latlng}, function(results, status) {
-		  	if (status == google.maps.GeocoderStatus.OK) {
-		  		console.log(results[0].formatted_address);
-		  		$scope.stays[0].destination = results[0].formatted_address;
+		  	if (status === google.maps.GeocoderStatus.OK) {
+		  		console.log(results[0].formattedAddress);
+		  		$scope.stays[0].destination = results[0].formattedAddress;
 		  	} else {
-		  		console.log("Geocoding your location failed");
+		  		console.log('Geocoding your location failed');
 		  	}
 		  });
-		};
+		}
 
 		function error(err) {
 		  console.warn('ERROR(' + err.code + '): ' + err.message);
-		};
+		}
 
 		$scope.getPosition = function() {
 		  var options = {
@@ -174,8 +176,6 @@ angular.module('fahrtenbuchApp')
 				  });
 					promises.push(promise);
 				});
-			} else {
-				var promise = 'OK';
 			}
 
 			$q.all(promises)
@@ -199,8 +199,8 @@ angular.module('fahrtenbuchApp')
 		    	
 					Car.patchCar(car)
 			    .then(function() {
-			    	$localStorage.trip = null;
-			    	$localStorage.stays = null;
+			    	$scope.$storage.trip = null;
+			    	$scope.$storage.stays = null;
 			    	$location.path('/trip');
 			    })
 			    .catch(function(err) {
