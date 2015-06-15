@@ -9,6 +9,7 @@ angular.module('fahrtenbuchApp', [
   'btford.socket-io',
   'ui.bootstrap',
   'ui.bootstrap.datetimepicker',
+  'productServices',
   // 'uiGmapgoogle-maps'
 ])
   .config(function ($routeProvider, $locationProvider, $httpProvider) {
