@@ -8,7 +8,7 @@ describe('Controller: AdminAccountCtrl', function () {
   beforeEach(module('fahrtenbuchApp'));
   var AdminAccountCtrl, $scope, $location, $httpBackend, fakeResponse;
 
-  beforeEach(inject(function ($controller, $rootScope, _$location_, _$httpBackend_, Auth) {
+  beforeEach(inject(function ($controller, $rootScope, _$location_, _$httpBackend_) {
 
     $scope = $rootScope.$new();
     $location = _$location_;
@@ -55,7 +55,7 @@ describe('Controller: AdminUserCtrl', function () {
   beforeEach(module('fahrtenbuchApp'));
   var AdminUserCtrl, $scope, $location, $httpBackend, fakeResponse;
 
-  beforeEach(inject(function ($controller, $rootScope, _$location_, _$httpBackend_, Auth) {
+  beforeEach(inject(function ($controller, $rootScope, _$location_, _$httpBackend_) {
 
     $scope = $rootScope.$new();
     $location = _$location_;
@@ -96,7 +96,7 @@ describe('Controller: AdminCarCtrl', function () {
   beforeEach(module('fahrtenbuchApp'));
   var AdminCarCtrl, $scope, $location, $httpBackend, fakeResponse;
 
-  beforeEach(inject(function ($controller, $rootScope, _$location_, _$httpBackend_, Auth) {
+  beforeEach(inject(function ($controller, $rootScope, _$location_, _$httpBackend_) {
 
     $scope = $rootScope.$new();
     $location = _$location_;
@@ -147,7 +147,7 @@ describe('Controller: AdminCarAddCtrl', function () {
   beforeEach(module('fahrtenbuchApp'));
   var AdminCarAddCtrl, $scope, $location, $httpBackend, fakeResponse;
 
-  beforeEach(inject(function ($controller, $rootScope, _$location_, _$httpBackend_, Auth) {
+  beforeEach(inject(function ($controller, $rootScope, _$location_, _$httpBackend_) {
 
     $scope = $rootScope.$new();
     $location = _$location_;

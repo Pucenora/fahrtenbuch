@@ -8,7 +8,7 @@ describe('Controller: TripCtrl', function () {
   beforeEach(module('fahrtenbuchApp'));
   var TripCtrl, $scope, $httpBackend, $location;
 
-  beforeEach(inject(function (_$httpBackend_, $controller, $rootScope, _$location_, Auth) {
+  beforeEach(inject(function (_$httpBackend_, $controller, $rootScope, _$location_) {
     
     $httpBackend = _$httpBackend_;
     $location = _$location_;
@@ -40,7 +40,7 @@ describe('Controller: TripCtrl', function () {
   var CreateTripCtrl, $scope, $httpBackend, $location;
   var stayWithOneElements, stayWithTwoElements, fakeResponse, cars, car, accounts;
 
-  beforeEach(inject(function (_$httpBackend_, $controller, $rootScope, _$location_, Auth) {
+  beforeEach(inject(function (_$httpBackend_, $controller, $rootScope, _$location_) {
     
     $httpBackend = _$httpBackend_;
     $scope = $rootScope.$new();
@@ -143,7 +143,7 @@ describe('Controller: DetailTripCtrl', function () {
   beforeEach(module('fahrtenbuchApp'));
   var DetailTripCtrl, $scope, $httpBackend, $location, testTrip;
 
-  beforeEach(inject(function (_$httpBackend_, $controller, $rootScope, $routeParams, _$location_, Auth) {
+  beforeEach(inject(function (_$httpBackend_, $controller, $rootScope, $routeParams, _$location_) {
     
     $httpBackend = _$httpBackend_;
     $scope = $rootScope.$new();
