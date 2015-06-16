@@ -33,7 +33,7 @@ angular.module('fahrtenbuchApp')
 	 * /trip/new
 	 * create new trip
 	**/
-	.controller('CreateTripCtrl', function ($scope, $q, $location, $localStorage, Auth, Account, Car, Stay, Trip) {
+	.controller('CreateTripCtrl', function ($scope, $q, $location, $localStorage, Account, Car, Stay, Trip) { // Auth
 
 		// init
 		$scope.hourStep = 1;
@@ -43,7 +43,9 @@ angular.module('fahrtenbuchApp')
 
 	 	$scope.accounts = [];
 	 	$scope.cars = [];
-	 	$scope.user = Auth.getCurrentUser();
+		// $scope.user = Auth.getCurrentUser();
+		$scope.user = 'Test';
+
 	 	$scope.defaultCar = $scope.user.defaultCar;
 	 	$scope.trip = {}; 
 

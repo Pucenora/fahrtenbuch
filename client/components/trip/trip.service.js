@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('fahrtenbuchApp')
-  .factory('Trip', function Trip($location, $rootScope, $http, Auth, $cookieStore, $q) {
+  .factory('Trip', function Trip($http, $q) {
 
     return {
 
