@@ -94,7 +94,7 @@ module.exports = function (grunt) {
         ],
         options: {
           livereload: {
-            port: 9000
+            port: 443
           }
         }
       },
@@ -105,7 +105,7 @@ module.exports = function (grunt) {
         tasks: ['express:dev', 'wait'],
         options: {
           livereload: {
-            port: 9000
+            port: '<%%= livereload.options.livereload.port %>'
           },
           nospawn: true //Without this option specified express won't be reloaded
         }
