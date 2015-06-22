@@ -122,7 +122,7 @@ angular.module('fahrtenbuchApp')
 		};
 
 		/**
-		 * get Position and Geocode
+		 * get Position and Geocode!
 		**/
 		function success(pos) {
 		  var crd = pos.coords;
