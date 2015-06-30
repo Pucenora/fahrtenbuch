@@ -162,6 +162,52 @@ angular.module('fahrtenbuchApp')
 		};
 
 		/**
+ 		 *
+ 		*/
+
+
+		function worked (position) {
+
+	    var latitude = position.coords.latitude;
+	    var longitude = position.coords.longitude;
+	    var accuracy = position.coords.accuracy;
+
+		  var coords = new google.maps.LatLng(latitude, longitude);
+	    var mapOptions = {
+        zoom: 20,
+        center: coords,
+        streetViewControl: false,
+        mapTypeControl: false,
+        navigationControlOptions: {
+            style: google.maps.NavigationControlStyle.SMALL
+        },
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
+
+      var map = new google.maps.Map(document.getElementById("mapContainer"), mapOptions);
+      var marker = new google.maps.Marker({
+        position: coords,
+        map: map,
+        title: "TEST"
+      });
+      
+    }
+
+ 		if (navigator.geolocation) {
+
+			var options = {
+			  enableHighAccuracy: true,
+			  timeout: 5000,
+			  maximumAge: 0
+			};
+
+			navigator.geolocation.getCurrentPosition(worked, error, options);
+		
+		} else {
+	    alert("Geolocation API is not supported in your browser.");
+		}
+
+		/**
 		 * post trip to server
 		**/
 		$scope.addTrip = function() {
