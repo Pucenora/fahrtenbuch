@@ -165,6 +165,50 @@ angular.module('fahrtenbuchApp')
  		 *
  		*/
 
+		var directionsDisplay;
+		var directionsService = new google.maps.DirectionsService();
+		var map;
+		var marker;
+
+		function initialize() {
+		  directionsDisplay = new google.maps.DirectionsRenderer();
+		  var home = new google.maps.LatLng(48.327294599999995, 10.727326099999999);
+		  var mapOptions = {
+		    zoom: 6,
+		    center: home
+		  }
+		  map = new google.maps.Map(document.getElementById('mapContainer'), mapOptions);
+		  directionsDisplay.setMap(map);
+		}
+
+		function calcRoute() {
+		  // var start = new google.maps.LatLng(48.3272946, 10.7273261);
+		  var start = "Gessertshausen";
+		  // var end = new google.maps.LatLng(48.370590, 10.89285);
+		  var end = "Allianzarena";
+		  var waypts = [];
+
+      waypts.push({
+      	// location: new google.maps.LatLng(48.218800, 11.624707),
+      	location: "Augsburg",
+        stopover: true
+      });
+
+      var request = {
+	      origin: start,
+	      destination: end,
+	      waypoints: waypts,
+	      optimizeWaypoints: true,
+	      travelMode: google.maps.TravelMode.DRIVING
+  		};
+
+		  directionsService.route(request, function(response, status) {
+		    if (status == google.maps.DirectionsStatus.OK) {
+		      directionsDisplay.setDirections(response);
+		      var route = response.routes[0];
+		    }
+		  });
+	  }
 
 		function worked (position) {
 
@@ -184,24 +228,27 @@ angular.module('fahrtenbuchApp')
         mapTypeId: google.maps.MapTypeId.ROADMAP
       };
 
-      var map = new google.maps.Map(document.getElementById("mapContainer"), mapOptions);
-      var marker = new google.maps.Marker({
+      map = new google.maps.Map(document.getElementById("mapContainer"), mapOptions);
+      marker = new google.maps.Marker({
         position: coords,
         map: map,
         title: "TEST"
       });
-      
     }
 
  		if (navigator.geolocation) {
 
-			var options = {
-			  enableHighAccuracy: true,
-			  timeout: 5000,
-			  maximumAge: 0
-			};
+			// var options = {
+			//   enableHighAccuracy: true,
+			//   timeout: 5000,
+			//   maximumAge: 0
+			// };
 
-			navigator.geolocation.getCurrentPosition(worked, error, options);
+			// navigator.geolocation.getCurrentPosition(worked, error, options);
+
+			initialize();
+			google.maps.event.addDomListener(window, 'load', initialize);
+			calcRoute();
 		
 		} else {
 	    alert("Geolocation API is not supported in your browser.");
