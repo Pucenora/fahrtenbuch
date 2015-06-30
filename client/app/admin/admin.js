@@ -11,6 +11,10 @@ angular.module('fahrtenbuchApp')
         templateUrl: 'app/admin/admin.user.html',
         controller: 'AdminUserCtrl'
       })
+      .when('/admin/user/:id', {
+        templateUrl: 'app/admin/admin.user.edit.html',
+        controller: 'AdminUserEditCtrl'
+      })
       .when('/admin/account', {
         templateUrl: 'app/admin/admin.account.html',
         controller: 'AdminAccountCtrl'

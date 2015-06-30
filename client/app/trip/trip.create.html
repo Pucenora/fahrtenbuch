@@ -6,7 +6,8 @@
       <h1 class="page-header">New Trip:</h1>
     </div>
   </div>
-  <p class="help-block">{{ errors.other }}</p>
+
+  <div class="label label-danger">{{ errors.other }}</div>
 
   <form class="css-form" novalidate name="form">
     <p class="input-group">
@@ -124,8 +125,6 @@
         <hr />
       </div>
       <!-- end -->
-
-      <p class="help-block"><span class="label label-danger">{{ errors.other }}</span></p>
 
       <button type="button" class="btn btn-success btn-lg" ng-click="addStay()"><i class="glyphicon glyphicon-plus"></i></button>
 

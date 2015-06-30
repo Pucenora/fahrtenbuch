@@ -8,8 +8,11 @@
 		  <ul class="list-group">
 		    <li class="list-group-item" ng-repeat="user in users">
 	        <strong>{{user.name}}</strong><br>
-	        <span class="text-muted">{{user.email}}</span>
-	        <button type="button" ng-click="delete(user)" class="btn btn-danger btn-sm pull-right"><i class="glyphicon glyphicon-trash"></i></button>
+	        <span class="text-muted">{{user.email}}</span><br>
+	        <span class="text-muted">{{user.defaultCar}}</span><br>
+	        <span class="text-muted">{{user.role}}</span>
+	        <button type="button" ng-click="deleteUser(user)" class="btn btn-danger btn-sm pull-right"><i class="glyphicon glyphicon-trash"></i></button>
+	        <button type="button" ng-click="editUser(user)" class="btn btn-primary btn-sm pull-right"><i class="glyphicon glyphicon-cog"></i></button>
 		    </li>
 		  </ul>
 	  </div>

@@ -43,12 +43,27 @@ angular.module('fahrtenbuchApp')
     };   
   })
 
-  .controller('AdminUserCtrl', function ($scope, $http, User, Auth) {
+  .controller('AdminUserCtrl', function ($scope, $http, User, Car) {
 
     // Use the User $resource to fetch all users
-    $scope.users = User.query();
+    $scope.users = [];
 
-    $scope.delete = function(user) {
+    User.query().$promise
+    .then(function(users) {
+      angular.forEach(users, function(user, i) {
+        Car.getCar(user.defaultCar)
+        .then(function(car) {
+          // console.log(car.description);
+          user.defaultCar = car.description;
+        })
+        .catch(function(err) {
+          $scope.errors.other = err.message;
+        });
+      });
+      $scope.users = users;
+    });
+
+    $scope.deleteUser = function(user) {
       User.remove({ id: user._id });
       angular.forEach($scope.users, function(u, i) {
         if (u === user) {
@@ -56,6 +71,39 @@ angular.module('fahrtenbuchApp')
         }
       });
     };
+
+    $scope.editUser = function(user) {
+      var userURL = '/admin/user/' + user._id;
+      $location.path(userURL);
+    };
+  })
+
+  .controller('AdminUserEditCtrl', function ($scope, $location, $routeParams, User, Car) {
+
+    $scope.user = {};
+    $scope.cars = [];
+
+    User.get($routeParams.id)
+    .then(function(user) {
+      $scope.user = user;
+    });
+
+    Car.getCars()
+    .then(function(cars) {
+      $scope.cars = cars;
+    }).catch(function(err) {
+      $scope.errors.other = err.message;
+    });
+
+    // $scope.editUser = function() {
+    //   User.patchUser($scope.user)
+    //   .then(function() {
+    //     $location.path('/admin/user');
+    //   })
+    //   .catch(function(err) {
+    //     $scope.errors.other = err.message;
+    //   });
+    // };
   })
 
   .controller('AdminCarCtrl', function ($scope, $location, Car) {

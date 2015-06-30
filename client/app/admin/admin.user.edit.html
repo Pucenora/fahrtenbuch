@@ -1,0 +1,25 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div class="container">
+
+	<h1>{{modus}} {{user.name}}</h1>
+
+	<form class="css-form" novalidate name="form">
+    <p class="input-group">
+
+      <div class="row"> 
+    		<div class="col-xs-12 col-md-6">
+		      <label>Default Car:</label>
+          <select ng-model="user.defaultCar" class="form-control" ng-options="car.description for car in cars">
+          </select>
+	      </div>
+      </div>
+
+      <br />
+    </p>
+	</form>
+
+  <button type="submit" class="btn btn-success btn-lg" ng-click="createUser()">Submit</button>	
+  <p class="help-block"><span class="label label-danger">{{ errors.other }}</span></p>
+</div>
+

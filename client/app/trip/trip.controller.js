@@ -33,7 +33,7 @@ angular.module('fahrtenbuchApp')
 	 * /trip/new
 	 * create new trip
 	**/
-	.controller('CreateTripCtrl', function ($scope, $q, $location, $localStorage, Account, Car, Stay, Trip) { // Auth
+	.controller('CreateTripCtrl', function ($scope, $q, $location, $localStorage, Account, Car, Stay, Trip, Auth) {
 
 		// init
 		$scope.hourStep = 1;
@@ -43,8 +43,7 @@ angular.module('fahrtenbuchApp')
 
 	 	$scope.accounts = [];
 	 	$scope.cars = [];
-		// $scope.user = Auth.getCurrentUser();
-		$scope.user = 'Test';
+		$scope.user = Auth.getCurrentUser();
 
 	 	$scope.defaultCar = $scope.user.defaultCar;
 	 	$scope.trip = {}; 
@@ -132,7 +131,6 @@ angular.module('fahrtenbuchApp')
 		  console.log('Longitude: ' + crd.longitude);
 		  console.log('More or less ' + crd.accuracy + ' meters.');
 
-		  //
 		  if (crd.accuracy > 10) {
 		  	$scope.errors.other = 'Warning result is inaccurate';
 		  }
