@@ -33,7 +33,7 @@ angular.module('fahrtenbuchApp')
 	 * /trip/new
 	 * create new trip
 	**/
-	.controller('CreateTripCtrl', function ($scope, $q, $location, $localStorage, Account, Car, Stay, Trip, Auth) {
+	.controller('CreateTripCtrl', function ($scope, $q, $location, $localStorage, Account, Car, Stay, Trip, Auth, Directions) {
 
 		// init
 		$scope.hourStep = 1;
@@ -91,6 +91,43 @@ angular.module('fahrtenbuchApp')
 	 		$scope.$storage.stays = $scope.stays;
 		});
 
+		// @todo
+		var base = new google.maps.LatLng(48.327250, 10.72637);
+		var theater = new google.maps.LatLng(48.370590, 10.89285);
+		var allianzarena = new google.maps.LatLng(48.218800, 11.624707);
+		// var waypoints = [base, theater, allianzarena];
+
+		var waypoints = [];
+		waypoints.push(base);
+		waypoints.push(allianzarena);
+
+	  var mapOptions = {
+	    zoom: 20,
+	    center: base,
+	    streetViewControl: false,
+	    mapTypeControl: false,
+	    scrollwhell: false,
+	    navigationControlOptions: {
+        style: google.maps.NavigationControlStyle.SMALL
+	    },
+	    mapTypeId: google.maps.MapTypeId.ROADMAP
+	  };
+
+	  var map = new google.maps.Map(document.getElementById("mapContainer"), mapOptions);
+	  // var marker = new google.maps.Marker({
+	  //   position: base,
+	  //   map: map,
+	  //   title: "TEST"
+	  // });
+
+		Directions.getRoute(Directions, waypoints, map)
+    .then(function(results) {
+    	console.log(results);
+    })
+    .catch(function(err) {
+      $scope.errors.other = err.message;
+    });
+
 		/**
 		 * sync kilometer start to car
 		**/
@@ -119,140 +156,6 @@ angular.module('fahrtenbuchApp')
 		  var index = $scope.stays.indexOf(stay);
   		$scope.stays.splice(index, 1);  
 		};
-
-		/**
-		 * get Position and Geocode!
-		**/
-		function success(pos) {
-		  var crd = pos.coords;
-
-		  console.log('Your current position is:');
-		  console.log('Latitude : ' + crd.latitude);
-		  console.log('Longitude: ' + crd.longitude);
-		  console.log('More or less ' + crd.accuracy + ' meters.');
-
-		  if (crd.accuracy > 10) {
-		  	$scope.errors.other = 'Warning result is inaccurate';
-		  }
-
-			var Geocoder = new google.maps.Geocoder();
-			var latlng = new google.maps.LatLng(crd.latitude, crd.longitude);
-		  Geocoder.geocode({'latLng': latlng}, function(results, status) {
-		  	if (status === google.maps.GeocoderStatus.OK) {
-		  		console.log(results[0].formattedAddress);
-		  		$scope.stays[0].destination = results[0].formattedAddress;
-		  	} else {
-		  		console.log('Geocoding your location failed');
-		  	}
-		  });
-		}
-
-		function error(err) {
-		  console.warn('ERROR(' + err.code + '): ' + err.message);
-		}
-
-		$scope.getPosition = function() {
-		  var options = {
-			  enableHighAccuracy: true,
-			  timeout: 5000,
-			  maximumAge: 0
-			};
-
-			navigator.geolocation.getCurrentPosition(success, error, options);
-		};
-
-		/**
- 		 *
- 		*/
-
-		var directionsDisplay;
-		var directionsService = new google.maps.DirectionsService();
-		var map;
-		var marker;
-
-		function initialize() {
-		  directionsDisplay = new google.maps.DirectionsRenderer();
-		  var home = new google.maps.LatLng(48.327294599999995, 10.727326099999999);
-		  var mapOptions = {
-		    zoom: 6,
-		    center: home
-		  }
-		  map = new google.maps.Map(document.getElementById('mapContainer'), mapOptions);
-		  directionsDisplay.setMap(map);
-		}
-
-		function calcRoute() {
-		  // var start = new google.maps.LatLng(48.3272946, 10.7273261);
-		  var start = "Gessertshausen";
-		  // var end = new google.maps.LatLng(48.370590, 10.89285);
-		  var end = "Allianzarena";
-		  var waypts = [];
-
-      waypts.push({
-      	// location: new google.maps.LatLng(48.218800, 11.624707),
-      	location: "Augsburg",
-        stopover: true
-      });
-
-      var request = {
-	      origin: start,
-	      destination: end,
-	      waypoints: waypts,
-	      optimizeWaypoints: true,
-	      travelMode: google.maps.TravelMode.DRIVING
-  		};
-
-		  directionsService.route(request, function(response, status) {
-		    if (status == google.maps.DirectionsStatus.OK) {
-		      directionsDisplay.setDirections(response);
-		      var route = response.routes[0];
-		    }
-		  });
-	  }
-
-		function worked (position) {
-
-	    var latitude = position.coords.latitude;
-	    var longitude = position.coords.longitude;
-	    var accuracy = position.coords.accuracy;
-
-		  var coords = new google.maps.LatLng(latitude, longitude);
-	    var mapOptions = {
-        zoom: 20,
-        center: coords,
-        streetViewControl: false,
-        mapTypeControl: false,
-        navigationControlOptions: {
-            style: google.maps.NavigationControlStyle.SMALL
-        },
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-      };
-
-      map = new google.maps.Map(document.getElementById("mapContainer"), mapOptions);
-      marker = new google.maps.Marker({
-        position: coords,
-        map: map,
-        title: "TEST"
-      });
-    }
-
- 		if (navigator.geolocation) {
-
-			// var options = {
-			//   enableHighAccuracy: true,
-			//   timeout: 5000,
-			//   maximumAge: 0
-			// };
-
-			// navigator.geolocation.getCurrentPosition(worked, error, options);
-
-			initialize();
-			google.maps.event.addDomListener(window, 'load', initialize);
-			calcRoute();
-		
-		} else {
-	    alert("Geolocation API is not supported in your browser.");
-		}
 
 		/**
 		 * post trip to server
