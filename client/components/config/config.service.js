@@ -6,7 +6,7 @@ angular.module('fahrtenbuchApp')
   .factory('config', function config() {
     return {
       defaultLocalizationAccuracy : 10,
-      desktopLocalizationAccuracy : 10000,
+      desktopLocalizationAccuracy : 100000,
       defaultLocalizationOptions : {
 			  enableHighAccuracy: true,
 			  timeout: 5000,

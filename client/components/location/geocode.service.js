@@ -25,8 +25,9 @@ angular.module('fahrtenbuchApp')
         }
 
         var Geocoder = new google.maps.Geocoder();
+        var latlng = new google.maps.LatLng(coordinates.latitude, coordinates.longitude);
 
-        Geocoder.geocode({'latLng': coordinates}, function(results, status) {
+        Geocoder.geocode({'latLng': latlng}, function(results, status) {
 
           if (status === google.maps.GeocoderStatus.OK) {
             if (results[0].formatted_address === undefined) {

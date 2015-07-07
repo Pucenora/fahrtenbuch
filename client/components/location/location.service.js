@@ -45,7 +45,7 @@ angular.module('fahrtenbuchApp')
             return cb(err);
           }
 
-          deferred.resolve(position);
+          deferred.resolve(coordinates);
 
         }, function () {
           var err = new Error('getCurrentPosition timed out!');

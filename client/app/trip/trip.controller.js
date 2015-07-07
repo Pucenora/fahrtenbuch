@@ -33,7 +33,7 @@ angular.module('fahrtenbuchApp')
 	 * /trip/new
 	 * create new trip
 	**/
-	.controller('CreateTripCtrl', function ($scope, $q, $location, $localStorage, Account, Car, Stay, Trip, Auth, Location) {
+	.controller('CreateTripCtrl', function ($scope, $q, $location, $localStorage, Account, Car, Stay, Trip, Auth, Location, Geocode) {
 
 		// init
 		$scope.hourStep = 1;
@@ -91,7 +91,32 @@ angular.module('fahrtenbuchApp')
 	 		$scope.$storage.stays = $scope.stays;
 		});
 
-		// @todo localization
+		$scope.getPosition = function(stay) {
+			Location.getCurrentPosition()
+	    .then(function(position) {
+	    	console.log(position);
+	    	Geocode.reverseGeocode(null, position)
+		    .then(function(locationName) {
+		    	console.log(locationName);
+		    	stay.destination = locationName;
+		    	console.log($scope.stays);
+		    })
+		    .catch(function(err) {
+	      	$scope.errors.other = err.message;
+	    	});
+	    })
+	    .catch(function(err) {
+	      $scope.errors.other = err.message;
+	    });
+		};
+
+		$scope.startWatchPosition = function() {
+			
+		};
+
+		$scope.stopWatchPosition = function() {
+			
+		};
 
 		/**
 		 * sync kilometer start to car
