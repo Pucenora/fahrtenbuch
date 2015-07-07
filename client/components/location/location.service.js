@@ -3,17 +3,21 @@
 /* global navigator */
 
 angular.module('fahrtenbuchApp')
-  .factory('Location', function Location($q) {
+  .factory('Location', function Location($q, $rootScope, config) {
 
     return {
 
       /**
-       * get current location
+       * get current position
        *
-       * @param   {Function}  callback  - optional  
-       * @return  {Object}    options   - optional
+       * @param   {Function}  callback  - optional
+       * @param   {Object}    options
+       * @return  {Object}    position
       */
       getCurrentPosition: function(callback, options) {
+
+        var cb = callback || angular.noop;
+        var deferred = $q.defer();
 
         if (google === undefined) {
           var err = new Error('No Connection to Google!');
@@ -28,21 +32,14 @@ angular.module('fahrtenbuchApp')
         }
 
         if (!options) {
-        	options = {
-  				  enableHighAccuracy: true,
-  				  timeout: 1000,
-  				  maximumAge: 0
-  				};
+          options = config.defaultLocalizationOptions;
         }
-
-        var cb = callback || angular.noop;
-        var deferred = $q.defer();
 
         navigator.geolocation.getCurrentPosition(function (position) {
           
           var coordinates = position.coords;
 
-          if (coordinates.accuracy > 100000) {
+          if (coordinates.accuracy > config.desktopLocalizationAccuracy) {
             var err = new Error('Warning! Result is inaccurate!');
             deferred.reject(err);
             return cb(err);
@@ -51,7 +48,7 @@ angular.module('fahrtenbuchApp')
           deferred.resolve(position);
 
         }, function () {
-          var err = new Error('getCurrentPosition timed out!')
+          var err = new Error('getCurrentPosition timed out!');
           deferred.reject(err);
           return cb(err);
 
@@ -59,6 +56,66 @@ angular.module('fahrtenbuchApp')
 
         return deferred.promise;
 
-      }
+      },
+
+      /**
+       * watch position
+       *
+       * @param   {Object}    options
+      */
+      watchPosition: function(options) {
+
+        $rootScope.positions = [];
+
+        if (google === undefined) {
+          var err = new Error('No Connection to Google!');
+          deferred.reject(err);
+          return cb(err);
+        }
+
+        if (navigator.geolocation.watchPosition === undefined) {
+          throw new Error('Googe service watchPosition can not be loaded!');
+        }
+
+        if (!options) {
+          options = config.defaultLocalizationOptions;
+        }
+
+        navigator.geolocation.watchPosition(function (position) {  
+          console.log(position);
+          $rootScope.positions.push(position);
+        }, function () {
+          throw new Error('watchPosition failed!');
+        }, options);
+      },
+
+      /**
+       * stop watchPosition
+       *
+       * @param   {Function}  callback  - optional
+       * @return  {Array}    positions
+      */
+      clearWatch: function(callback) {
+
+        var cb = callback || angular.noop;
+        var deferred = $q.defer();
+
+        if (google === undefined) {
+          var err = new Error('No Connection to Google!');
+          deferred.reject(err);
+          return cb(err);
+        }
+
+        if (navigator.geolocation.clearWatch === undefined) {
+          var err = new Error('Googe service getCurrentPosition can not be loaded!');
+          deferred.reject(err);
+          return cb(err);
+        }
+
+        navigator.geolocation.clearWatch(Location.watchPosition);
+
+        deferred.resolve($rootScope.positions);
+        return deferred.promise;
+      }  
     };
   });

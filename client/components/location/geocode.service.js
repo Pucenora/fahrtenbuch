@@ -15,14 +15,15 @@ angular.module('fahrtenbuchApp')
       */
       reverseGeocode: function(callback, coordinates) {
 
+        var cb = callback || angular.noop;
+        var deferred = $q.defer();
+
         if (google === undefined) {
           var err = new Error('No Connection to Google!');
           deferred.reject(err);
           return cb(err);
         }
-   
-        var cb = callback || angular.noop;
-        var deferred = $q.defer();
+
         var Geocoder = new google.maps.Geocoder();
 
         Geocoder.geocode({'latLng': coordinates}, function(results, status) {
@@ -54,15 +55,15 @@ angular.module('fahrtenbuchApp')
        * @return  {Object}    coordinates
       */
       geocode: function(callback, address) {
+   
+        var cb = callback || angular.noop;
+        var deferred = $q.defer();
 
         if (google === undefined) {
           var err = new Error('No Connection to Google!');
           deferred.reject(err);
           return cb(err);
         }
-   
-        var cb = callback || angular.noop;
-        var deferred = $q.defer();
 
         var Geocoder = new google.maps.Geocoder();
 
@@ -78,7 +79,6 @@ angular.module('fahrtenbuchApp')
         });
 
         return deferred.promise;
-      
       }
     };
   });

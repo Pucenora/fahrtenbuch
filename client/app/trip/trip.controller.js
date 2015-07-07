@@ -33,7 +33,7 @@ angular.module('fahrtenbuchApp')
 	 * /trip/new
 	 * create new trip
 	**/
-	.controller('CreateTripCtrl', function ($scope, $q, $location, $localStorage, Account, Car, Stay, Trip, Auth, Directions) {
+	.controller('CreateTripCtrl', function ($scope, $q, $location, $localStorage, Account, Car, Stay, Trip, Auth, Location) {
 
 		// init
 		$scope.hourStep = 1;
@@ -91,42 +91,7 @@ angular.module('fahrtenbuchApp')
 	 		$scope.$storage.stays = $scope.stays;
 		});
 
-		// @todo
-		var base = new google.maps.LatLng(48.327250, 10.72637);
-		var theater = new google.maps.LatLng(48.370590, 10.89285);
-		var allianzarena = new google.maps.LatLng(48.218800, 11.624707);
-		// var waypoints = [base, theater, allianzarena];
-
-		var waypoints = [];
-		waypoints.push(base);
-		waypoints.push(allianzarena);
-
-	  var mapOptions = {
-	    zoom: 20,
-	    center: base,
-	    streetViewControl: false,
-	    mapTypeControl: false,
-	    scrollwhell: false,
-	    navigationControlOptions: {
-        style: google.maps.NavigationControlStyle.SMALL
-	    },
-	    mapTypeId: google.maps.MapTypeId.ROADMAP
-	  };
-
-	  var map = new google.maps.Map(document.getElementById("mapContainer"), mapOptions);
-	  // var marker = new google.maps.Marker({
-	  //   position: base,
-	  //   map: map,
-	  //   title: "TEST"
-	  // });
-
-		Directions.getRoute(Directions, waypoints, map)
-    .then(function(results) {
-    	console.log(results);
-    })
-    .catch(function(err) {
-      $scope.errors.other = err.message;
-    });
+		// @todo localization
 
 		/**
 		 * sync kilometer start to car
