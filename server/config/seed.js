@@ -88,6 +88,9 @@ var newUser = new User({
   name: 'Test User',
   email: 'test@test.com',
   defaultCar: newCar1,
+  baseName: 'Rathaus Augsburg',
+  baseLat: 48.368765,
+  baseLong: 10.898706,
   password: 'test'
 });
 newUser.save();
@@ -99,6 +102,9 @@ User.find({}).remove(function() {
     name: 'Admin',
     email: 'admin@admin.com',
     defaultCar: newCar2,
+    baseName: 'Rathaus Augsburg',
+    baseLat: 48.368765,
+    baseLong: 10.898706,
     password: 'admin'
   }, function() {
       console.log('finished populating users');
