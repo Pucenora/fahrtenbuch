@@ -53,7 +53,6 @@ angular.module('fahrtenbuchApp')
       angular.forEach(users, function(user, i) {
         Car.getCar(user.defaultCar)
         .then(function(car) {
-          // console.log(car.description);
           user.defaultCar = car.description;
         })
         .catch(function(err) {
