@@ -13,8 +13,7 @@ angular.module('fahrtenbuchApp')
 			  maximumAge: 0
 			},
 			defaultMapOptions : {
-				zoom: 20,
-	 			// center: 'Augsburg',
+				zoom: 1000,
 	 			streetViewControl: false,
 	 			mapTypeControl: false,
 	 			scrollwhell: false,

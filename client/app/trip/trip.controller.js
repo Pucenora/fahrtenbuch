@@ -33,7 +33,7 @@ angular.module('fahrtenbuchApp')
 	 * /trip/new
 	 * create new trip
 	**/
-	.controller('CreateTripCtrl', function ($scope, $q, $location, $localStorage, Account, Car, Stay, Trip, Auth, Location, Geocode) {
+	.controller('CreateTripCtrl', function ($scope, $q, $location, $localStorage, Account, Car, Stay, Trip, Auth, Location, Geocode, Directions, config) {
 
 		// init
 		$scope.hourStep = 1;
@@ -52,6 +52,10 @@ angular.module('fahrtenbuchApp')
 		$scope.trip.destinationTime = new Date();
 	 	$scope.stays = [];
 	 	$scope.stays.push({destination: '', client: '', destinationTime: new Date()});
+	 	var base = new google.maps.LatLng($scope.user.baseLat, $scope.user.baseLong);
+	 	var mapOptions = config.defaultMapOptions
+	 	mapOptions.center = base;
+	 	var map = new google.maps.Map(document.getElementById('mapContainer'), config.defaultMapOptions);
 
 		Account.getAccounts()
     .then(function(accounts) {
@@ -94,12 +98,11 @@ angular.module('fahrtenbuchApp')
 		$scope.getPosition = function(stay) {
 			Location.getCurrentPosition()
 	    .then(function(position) {
-	    	console.log(position);
+	    	stay.destinationLat = position.latitude
+	    	stay.destinationLong = position.longitude
 	    	Geocode.reverseGeocode(null, position)
 		    .then(function(locationName) {
-		    	console.log(locationName);
 		    	stay.destination = locationName;
-		    	console.log($scope.stays);
 		    })
 		    .catch(function(err) {
 	      	$scope.errors.other = err.message;
@@ -111,11 +114,30 @@ angular.module('fahrtenbuchApp')
 		};
 
 		$scope.startWatchPosition = function() {
-			
+			Location.watchPosition();
 		};
 
 		$scope.stopWatchPosition = function() {
-			
+			Location.clearWatch()
+			.then(function(positions) {
+
+				var waypoints = [base];
+				for (var i = 0; i < positions.length; i++) {
+					waypoints.push(new google.maps.LatLng(positions[i].coords.latitude, positions[i].coords.longitude));
+				}
+
+				// Directions.getRoute(Directions, waypoints, map)
+				Directions.getRoute(null, waypoints, map)
+				.then(function(results) {
+				 console.log(results);
+				})
+				.catch(function(err) {
+				  $scope.errors.other = err.message;
+				});
+			})
+	    .catch(function(err) {
+      	$scope.errors.other = err.message;
+    	});
 		};
 
 		/**
