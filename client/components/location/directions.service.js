@@ -66,6 +66,7 @@ angular.module('fahrtenbuchApp')
         directionsService.route(request, function(response, status) {
           if (status == google.maps.DirectionsStatus.OK) {
             directionsDisplay.setDirections(response);
+            console.log(response.routes[0]);
             deferred.resolve(response.routes[0]);
           } else {
             var err = new Error('Route couldn\'t be calculated');

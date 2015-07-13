@@ -81,7 +81,8 @@ angular.module('fahrtenbuchApp')
           options = config.defaultLocalizationOptions;
         }
 
-        navigator.geolocation.watchPosition(function (position) {  
+        navigator.geolocation.watchPosition(function (position) { 
+          console.log(position); 
           $rootScope.positions.push(position);
         }, function () {
           throw new Error('watchPosition failed!');
