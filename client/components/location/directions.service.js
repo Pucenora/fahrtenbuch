@@ -52,8 +52,8 @@ angular.module('fahrtenbuchApp')
         }
 
         var request = {
-          origin: base,
-          destination: base,
+          origin: origin,
+          destination: destination,
           waypoints: waypts,
           optimizeWaypoints: true,
           travelMode: google.maps.TravelMode.DRIVING
