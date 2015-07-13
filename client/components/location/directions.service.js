@@ -26,20 +26,29 @@ angular.module('fahrtenbuchApp')
         }
 
         var marker;
-        var base;
+        // var base;
+        var origin;
+        var destination;
         var waypts = [];
 
         var directionsService = new google.maps.DirectionsService();
         var directionsDisplay = new google.maps.DirectionsRenderer();
-        base = coordinatesList[0];
+        // base = coordinatesList[0];
 
         google.maps.event.addDomListener(window, 'load', directionsDisplay.setMap(map));
 
-        for (var i = 1; i < coordinatesList.length; i++) {
-          waypts.push({
-            location: coordinatesList[i],
-            stopover: true
-          });
+        for (var i = 0; i < coordinatesList.length; i++) {
+          if (i === 0) {
+            origin = coordinatesList[i];
+          }
+          if (i === coordinatesList.length) {
+            destination = coordinatesList[i];
+          } else {
+            waypts.push({
+              location: coordinatesList[i],
+              stopover: true
+            });
+          }
         }
 
         var request = {

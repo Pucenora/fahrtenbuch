@@ -121,7 +121,7 @@ angular.module('fahrtenbuchApp')
 			Location.clearWatch()
 			.then(function(positions) {
 
-				var waypoints = [base];
+				var waypoints = [];
 				for (var i = 0; i < positions.length; i++) {
 					waypoints.push(new google.maps.LatLng(positions[i].coords.latitude, positions[i].coords.longitude));
 				}
