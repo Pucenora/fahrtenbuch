@@ -23,6 +23,7 @@ module.exports = function(config) {
       'client/bower_components/angular-socket-io/socket.js',
       'client/bower_components/angular-ui-bootstrap-datetimepicker/datetimepicker.js',
       'client/bower_components/ngstorage/ngStorage.js',
+      'client/components/test/google-mock.js',
       'client/app/app.js',
       // 'client/app/app.coffee',
       'client/app/**/*.js',
