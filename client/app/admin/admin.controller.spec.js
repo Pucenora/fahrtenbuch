@@ -74,30 +74,31 @@ describe('Controller: AdminUserCtrl', function () {
       {_id: 2, defaultCar: 2},
       {_id: 3, defaultCar: 3}
     ]);
-    $httpBackend.expectGET('/api/cars/1').respond("BMW");
-    $httpBackend.expectGET('/api/cars/2').respond("Audi");
-    $httpBackend.expectGET('/api/cars/3').respond("Opel");
+    $httpBackend.expectGET('/api/cars/1').respond({description: "BMW"});
+    $httpBackend.expectGET('/api/cars/2').respond({description: "Audi"});
+    $httpBackend.expectGET('/api/cars/3').respond({description: "Opel"});
   	$httpBackend.when('GET', 'app/admin/admin.user.html').respond(fakeResponse);
     $httpBackend.flush();
   }));
 
 	it('call AdminUserCtrl', function () {
 	  expect($scope.users).toBeDefined();
+
 	  expect(angular.equals($scope.users, [
-      {_id: 1, defaultCar: 1},
-      {_id: 2, defaultCar: 2},
-      {_id: 3, defaultCar: 3}
+      {_id: 1, defaultCar: "BMW"},
+      {_id: 2, defaultCar: "Audi"},
+      {_id: 3, defaultCar: "Opel"}
     ])).toBe(true);
 	});
 
 	it('test delete function', function () {
-    $scope.delete($scope.users[0]);
+    $scope.deleteUser($scope.users[0]);
     $httpBackend.expectDELETE('/api/users/1').respond(fakeResponse);
     $httpBackend.flush();
 
     expect(angular.equals($scope.users, [
-      {_id: 2, defaultCar: 2},
-      {_id: 3, defaultCar: 3}
+      {_id: 2, defaultCar: "Audi"},
+      {_id: 3, defaultCar: "Opel"}
     ])).toBe(true);
 	});
 });
