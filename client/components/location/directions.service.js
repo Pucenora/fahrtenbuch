@@ -41,7 +41,7 @@ angular.module('fahrtenbuchApp')
           if (i === 0) {
             origin = coordinatesList[i];
           }
-          if (i === coordinatesList.length) {
+          if (i === coordinatesList.length - 1) {
             destination = coordinatesList[i];
           } else {
             waypts.push({
