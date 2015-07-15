@@ -52,6 +52,8 @@ angular.module('fahrtenbuchApp')
 		$scope.trip.destinationTime = new Date();
 	 	$scope.stays = [];
 	 	$scope.stays.push({destination: '', client: '', destinationTime: new Date()});
+	 	$scope.recordingStatus = 'stopped'; // or started
+
 	 	var base = new google.maps.LatLng($scope.user.baseLat, $scope.user.baseLong);
 	 	var mapOptions = config.defaultMapOptions
 	 	mapOptions.center = base;
@@ -115,6 +117,7 @@ angular.module('fahrtenbuchApp')
 
 		$scope.startWatchPosition = function() {
 			Location.watchPosition();
+			$scope.recordingStatus = 'started'
 		};
 
 		$scope.stopWatchPosition = function() {
@@ -129,7 +132,8 @@ angular.module('fahrtenbuchApp')
 				// Directions.getRoute(Directions, waypoints, map)
 				Directions.getRoute(null, waypoints, map)
 				.then(function(results) {
-				 console.log(results);
+					console.log(results);
+					$scope.recordingStatus = 'stopped'
 				})
 				.catch(function(err) {
 				  $scope.errors.other = err.message;

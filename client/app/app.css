@@ -49,3 +49,11 @@
 .noncorporate {
     background-color: #FACC2E;
 }
+
+#started {
+    color: #33FF00;
+}
+
+#stopped {
+    color: #FF3300;
+}
