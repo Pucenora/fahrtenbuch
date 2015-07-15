@@ -2,7 +2,7 @@
 /* global google */
 
 angular.module('fahrtenbuchApp')
-  .factory('Directions', function Directions($q) {
+  .factory('Directions', function Directions($q, Geocode) {
 
     return {
 
@@ -10,11 +10,12 @@ angular.module('fahrtenbuchApp')
        * get route
        *
        * @param   {Function}  callback    - optional  
-       * @param   {Array}    coordinatesList
+       * @param   {Array}     coordinatesList
+       * @param   {Array}     stays
        * @param   {Object}    map
-       * @return  {Array}    routes
+       * @return  {Array}     routes
       */
-      getRoute: function(callback, coordinatesList, map) {
+      getRoute: function(callback, coordinatesList, stays, map) {
 
         var cb = callback || angular.noop;
         var deferred = $q.defer();
@@ -26,14 +27,12 @@ angular.module('fahrtenbuchApp')
         }
 
         var marker;
-        // var base;
         var origin;
         var destination;
         var waypts = [];
 
         var directionsService = new google.maps.DirectionsService();
         var directionsDisplay = new google.maps.DirectionsRenderer();
-        // base = coordinatesList[0];
 
         google.maps.event.addDomListener(window, 'load', directionsDisplay.setMap(map));
 
@@ -59,14 +58,42 @@ angular.module('fahrtenbuchApp')
           travelMode: google.maps.TravelMode.DRIVING
         };
 
-        // directionsDisplay = new google.maps.DirectionsRenderer({
-        //   suppressMarkers: true
+        directionsDisplay = new google.maps.DirectionsRenderer({
+          suppressMarkers: true
+        });
+
+        stays.forEach(function(stay) {
+          // console.log(stay);
+          new google.maps.Marker({
+            position: new google.maps.LatLng(stay.destinationLat, stay.destinationLong),
+            map: map,
+            title: stay.destination
+          });
+        });
+
+        var marker = new google.maps.Marker({
+          position: origin,
+          map: map,
+          title: 'origin'
+        });
+
+        // var infowindow = new google.maps.InfoWindow({
+        //   content: "<span>There ones was a mayden from ..../span>"
         // });
+
+        // google.maps.event.addListener(marker, 'click', function() {
+        //   infowindow.open(map, marker);
+        // });
+
+        new google.maps.Marker({
+          position: destination,
+          map: map,
+          title: 'destination'
+        });
 
         directionsService.route(request, function(response, status) {
           if (status == google.maps.DirectionsStatus.OK) {
             directionsDisplay.setDirections(response);
-            console.log(response.routes[0]);
             deferred.resolve(response.routes[0]);
           } else {
             var err = new Error('Route couldn\'t be calculated');
