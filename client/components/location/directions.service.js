@@ -58,9 +58,9 @@ angular.module('fahrtenbuchApp')
           travelMode: google.maps.TravelMode.DRIVING
         };
 
-        directionsDisplay = new google.maps.DirectionsRenderer({
-          suppressMarkers: true
-        });
+        // directionsDisplay = new google.maps.DirectionsRenderer({
+        //   suppressMarkers: true
+        // });
 
         stays.forEach(function(stay) {
           // console.log(stay);
