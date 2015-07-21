@@ -96,7 +96,8 @@ angular.module('fahrtenbuchApp')
             directionsDisplay.setDirections(response);
             deferred.resolve(response.routes[0]);
           } else {
-            var err = new Error('Route couldn\'t be calculated');
+            // var err = new Error('Route couldn\'t be calculated');
+            var err = new Error(status);
             deferred.reject(err);
             return cb(err);
           }

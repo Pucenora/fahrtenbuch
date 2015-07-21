@@ -35,6 +35,7 @@ angular.module('fahrtenbuchApp')
               deferred.reject(err);
               return cb(err);
             } else {
+              console.log(results);
               deferred.resolve(results[0].formatted_address);
             }
           } else {
