@@ -108,11 +108,12 @@ angular.module('fahrtenbuchApp')
       /**
        * draw route with polygons
        *
-       * @param   {Function}  callback    - optional  
+       * @param   {Function}  callback    - optional 
+       * @param   {Array}     coordinatesList 
        * @param   {Object}    map
        * @return  {Array}     path
       */
-      polygons: function(callback, map) {
+      polygons: function(callback, coordinatesList, map) {
 
         var cb = callback || angular.noop;
         // var deferred = $q.defer();
@@ -129,10 +130,6 @@ angular.module('fahrtenbuchApp')
         //   new google.maps.LatLng(52.516275, 13.377704),
         // ];
 
-        var first = new google.maps.LatLng(48.368765, 10.898706);
-        var second = new google.maps.LatLng(48.218800, 11.624707);
-        var third = new google.maps.LatLng(52.516275, 13.377704); 
-
         var polyOptions = {
           strokeColor: '#000000',
           strokeOpacity: 1.0,
@@ -144,38 +141,16 @@ angular.module('fahrtenbuchApp')
 
         var path = poly.getPath(); 
 
-        path.push(first);
-        path.push(second);
-        path.push(third);
+        for (var i = 0; i < coordinatesList.length; i++) {
 
-        new google.maps.Marker({
-          position: first,
-          title: '#1',
-          map: map
-        });
-            
-        new google.maps.Marker({
-          position: second,
-          title: '#2',
-          map: map
-        });
-            
-        new google.maps.Marker({
-          position: third,
-          title: '#3',
-          map: map
-        });
+          path.push(coordinatesList[i]);
 
-        // for (var i = 0; coordinatesList.length - 1; i++) {
-
-        //   path.push(coordinatesList[i]);
-
-        //   var marker = new google.maps.Marker({
-        //     position: coordinatesList[i],
-        //     title: '#' + path.getLength(),
-        //     map: map
-        //   });
-        // }
+          new google.maps.Marker({
+            position: coordinatesList[i],
+            title: '#' + (i + 1),
+            map: map
+          });
+        }
 
         // deferred.resolve(path);
         // return deferred.promise;
