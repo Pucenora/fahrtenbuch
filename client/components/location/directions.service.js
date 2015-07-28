@@ -152,6 +152,8 @@ angular.module('fahrtenbuchApp')
           });
         }
 
+        console.log(path);
+
         // deferred.resolve(path);
         // return deferred.promise;
       }
