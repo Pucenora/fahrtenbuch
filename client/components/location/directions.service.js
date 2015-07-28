@@ -130,6 +130,8 @@ angular.module('fahrtenbuchApp')
         //   new google.maps.LatLng(52.516275, 13.377704),
         // ];
 
+        console.log(coordinatesList);
+
         var polyOptions = {
           strokeColor: '#000000',
           strokeOpacity: 1.0,
