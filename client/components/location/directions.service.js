@@ -63,7 +63,6 @@ angular.module('fahrtenbuchApp')
         // });
 
         stays.forEach(function(stay) {
-          // console.log(stay);
           new google.maps.Marker({
             position: new google.maps.LatLng(stay.destinationLat, stay.destinationLong),
             map: map,
@@ -104,6 +103,82 @@ angular.module('fahrtenbuchApp')
         });
 
         return deferred.promise;
+      },
+
+      /**
+       * draw route with polygons
+       *
+       * @param   {Function}  callback    - optional  
+       * @param   {Object}    map
+       * @return  {Array}     path
+      */
+      polygons: function(callback, map) {
+
+        var cb = callback || angular.noop;
+        // var deferred = $q.defer();
+
+        // if (google === undefined) {
+        //   var err = new Error('No Connection to Google!');
+        //   deferred.reject(err);
+        //   return cb(err);
+        // }
+
+        // var coordinatesList = [
+        //   new google.maps.LatLng(48.368765, 10.898706),
+        //   new google.maps.LatLng(48.218800, 11.624707),
+        //   new google.maps.LatLng(52.516275, 13.377704),
+        // ];
+
+        var first = new google.maps.LatLng(48.368765, 10.898706);
+        var second = new google.maps.LatLng(48.218800, 11.624707);
+        var third = new google.maps.LatLng(52.516275, 13.377704); 
+
+        var polyOptions = {
+          strokeColor: '#000000',
+          strokeOpacity: 1.0,
+          strokeWeight: 3
+        };
+
+        var poly = new google.maps.Polyline(polyOptions);
+        poly.setMap(map);
+
+        var path = poly.getPath(); 
+
+        path.push(first);
+        path.push(second);
+        path.push(third);
+
+        new google.maps.Marker({
+          position: first,
+          title: '#1',
+          map: map
+        });
+            
+        new google.maps.Marker({
+          position: second,
+          title: '#2',
+          map: map
+        });
+            
+        new google.maps.Marker({
+          position: third,
+          title: '#3',
+          map: map
+        });
+
+        // for (var i = 0; coordinatesList.length - 1; i++) {
+
+        //   path.push(coordinatesList[i]);
+
+        //   var marker = new google.maps.Marker({
+        //     position: coordinatesList[i],
+        //     title: '#' + path.getLength(),
+        //     map: map
+        //   });
+        // }
+
+        // deferred.resolve(path);
+        // return deferred.promise;
       }
     };
   });

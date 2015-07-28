@@ -121,25 +121,30 @@ angular.module('fahrtenbuchApp')
 		};
 
 		$scope.stopWatchPosition = function() {
-			Location.clearWatch()
-			.then(function(positions) {
+			// Location.clearWatch()
+			// .then(function(positions) {
 
-				var waypoints = [];
-				for (var i = 0; i < positions.length; i++) {
-					waypoints.push(new google.maps.LatLng(positions[i].coords.latitude, positions[i].coords.longitude));
-				}
+			// 	var waypoints = [];
+			// 	for (var i = 0; i < positions.length; i++) {
+			// 		waypoints.push(new google.maps.LatLng(positions[i].coords.latitude, positions[i].coords.longitude));
+			// 	}
 
-				Directions.getRoute(null, waypoints, $scope.stays, map)
-				.then(function(results) {
-					$scope.recordingStatus = 'stopped'
-				})
-				.catch(function(err) {
-				  $scope.errors.other = err.message;
-				});
-			})
-	    .catch(function(err) {
-      	$scope.errors.other = err.message;
-    	});
+			// 	Directions.getRoute(null, waypoints, $scope.stays, map)
+			// 	.then(function(results) {
+			// 		console.log(results);
+			// 		$scope.recordingStatus = 'stopped'
+			// 	})
+			// 	.catch(function(err) {
+			// 	  $scope.errors.other = err.message;
+			// 	});
+			// })
+	  //   .catch(function(err) {
+   //    	$scope.errors.other = err.message;
+   //  	});
+
+			Directions.polygons(null, map);
+			$scope.recordingStatus = 'stopped'
+
 		};
 
 		/**
