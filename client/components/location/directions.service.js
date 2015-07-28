@@ -143,9 +143,13 @@ angular.module('fahrtenbuchApp')
 
         var path = poly.getPath(); 
 
+        console.log(path);
+        console.log(coordinatesList.length);
+
         for (var i = 0; i < coordinatesList.length; i++) {
 
           path.push(coordinatesList[i]);
+          console.log(i);
 
           new google.maps.Marker({
             position: coordinatesList[i],
