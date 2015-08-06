@@ -113,24 +113,15 @@ angular.module('fahrtenbuchApp')
        * @param   {Object}    map
        * @return  {Array}     path
       */
-      polygons: function(callback, coordinatesList, map) {
+      polygons: function(callback, coordinatesList , map) {
 
-        var cb = callback || angular.noop;
-        // var deferred = $q.defer();
-
-        // if (google === undefined) {
-        //   var err = new Error('No Connection to Google!');
-        //   deferred.reject(err);
-        //   return cb(err);
-        // }
-
-        // var coordinatesList = [
-        //   new google.maps.LatLng(48.368765, 10.898706),
-        //   new google.maps.LatLng(48.218800, 11.624707),
-        //   new google.maps.LatLng(52.516275, 13.377704),
-        // ];
-
+        //init
+        console.log("coordinatesList:");
         console.log(coordinatesList);
+        console.log(coordinatesList.length);
+
+        console.log("map:");
+        console.log(map);
 
         var polyOptions = {
           strokeColor: '#000000',
@@ -138,30 +129,33 @@ angular.module('fahrtenbuchApp')
           strokeWeight: 3
         };
 
+        console.log("polyOptions:");
+        console.log(polyOptions);
+
         var poly = new google.maps.Polyline(polyOptions);
+
+        console.log("poly:");
+        console.log(poly);
+
         poly.setMap(map);
+        // test: bis hier alles in trip.controller
 
-        var path = poly.getPath(); 
+        var path = poly.getPath();
 
+        console.log("path:");
         console.log(path);
-        console.log(coordinatesList.length);
 
-        for (var i = 0; i < coordinatesList.length; i++) {
+        coordinatesList.forEach(function(coord) {
+          console.log(coord);
+          path.push(coord);
 
-          path.push(coordinatesList[i]);
-          console.log(i);
-
-          new google.maps.Marker({
-            position: coordinatesList[i],
-            title: '#' + (i + 1),
+          var marker = new google.maps.Marker({
+            position: coord,
+            // title: '#' + path.getLength(),
             map: map
           });
-        }
+        });
 
-        console.log(path);
-
-        // deferred.resolve(path);
-        // return deferred.promise;
       }
     };
   });
