@@ -126,10 +126,6 @@ angular.module('fahrtenbuchApp')
 
 				console.log(positions);
 
-				var waypoints = [];
-				for (var i = 0; i < positions.length; i++) {
-					waypoints.push(new google.maps.LatLng(positions[i].coords.latitude, positions[i].coords.longitude));
-				}
 			// 	Directions.getRoute(null, waypoints, $scope.stays, map)
 			// 	.then(function(results) {
 			// 		console.log(results);
@@ -140,7 +136,7 @@ angular.module('fahrtenbuchApp')
 			// 	});
 			// })
 
-				Directions.polygons(null, waypoints, map);
+				Directions.polygons(null, positions, map);
 				$scope.recordingStatus = 'stopped';
 			})
 

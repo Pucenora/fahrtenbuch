@@ -119,6 +119,7 @@ angular.module('fahrtenbuchApp')
         console.log("coordinatesList:");
         console.log(coordinatesList);
         console.log(coordinatesList.length);
+        // anderes Format?
 
         console.log("map:");
         console.log(map);
@@ -147,7 +148,9 @@ angular.module('fahrtenbuchApp')
 
         coordinatesList.forEach(function(coord) {
           console.log(coord);
-          path.push(coord);
+
+          path.push(new google.maps.LatLng(coord.coords.latitude, coord.coords.longitude));
+          // path.push(coord);
 
           var marker = new google.maps.Marker({
             position: coord,
