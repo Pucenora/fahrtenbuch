@@ -146,18 +146,30 @@ angular.module('fahrtenbuchApp')
         console.log("path:");
         console.log(path);
 
-        coordinatesList.forEach(function(coord) {
+        // coordinatesList.forEach(function(coord) {
+        for (var coord of coordinatesList) {
           console.log(coord);
 
-          path.push(new google.maps.LatLng(coord.coords.latitude, coord.coords.longitude));
+          var lat = coord.coords.latitude;
+          var lng = coord.coords.longitude;
+          var element = new google.maps.LatLng(lat, lng);
+          // var element = coord.coords.getPosition();
+
+          // lat is no number?!!!!
+
+          // var element = { lat: lat, lng: lng };
+          console.log(element);
+
+          path.push(element);
+          // console.log(new google.maps.LatLng(coord.coords.latitude, coord.coords.longitude));
           // path.push(coord);
 
           var marker = new google.maps.Marker({
-            position: coord,
+            position: element,
             // title: '#' + path.getLength(),
             map: map
           });
-        });
+        } // );
 
       }
     };
