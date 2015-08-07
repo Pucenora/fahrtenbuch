@@ -115,62 +115,32 @@ angular.module('fahrtenbuchApp')
       */
       polygons: function(callback, coordinatesList , map) {
 
-        //init
-        console.log("coordinatesList:");
-        console.log(coordinatesList);
-        console.log(coordinatesList.length);
-        // anderes Format?
-
-        console.log("map:");
-        console.log(map);
-
         var polyOptions = {
           strokeColor: '#000000',
           strokeOpacity: 1.0,
           strokeWeight: 3
         };
 
-        console.log("polyOptions:");
-        console.log(polyOptions);
-
         var poly = new google.maps.Polyline(polyOptions);
-
-        console.log("poly:");
-        console.log(poly);
-
         poly.setMap(map);
-        // test: bis hier alles in trip.controller
 
         var path = poly.getPath();
 
-        console.log("path:");
-        console.log(path);
-
-        // coordinatesList.forEach(function(coord) {
         for (var coord of coordinatesList) {
-          console.log(coord);
 
           var lat = coord.coords.latitude;
           var lng = coord.coords.longitude;
           var element = new google.maps.LatLng(lat, lng);
-          // var element = coord.coords.getPosition();
-
-          // lat is no number?!!!!
-
-          // var element = { lat: lat, lng: lng };
-          console.log(element);
 
           path.push(element);
-          // console.log(new google.maps.LatLng(coord.coords.latitude, coord.coords.longitude));
-          // path.push(coord);
 
           var marker = new google.maps.Marker({
             position: element,
-            // title: '#' + path.getLength(),
+            // title: ,
             map: map
           });
-        } // );
-
+        }
       }
+      
     };
   });
