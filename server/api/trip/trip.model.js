@@ -19,6 +19,7 @@ var TripSchema = new Schema({
 	stays: [{ type : ObjectId, ref: 'Stay' }],
 
 	timestamp: {type: Date, default: Date.now},
+	route : [{ type : ObjectId, ref: 'Coordinate' }]
 });
 
 module.exports = mongoose.model('Trip', TripSchema);

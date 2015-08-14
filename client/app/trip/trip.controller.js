@@ -33,7 +33,7 @@ angular.module('fahrtenbuchApp')
 	 * /trip/new
 	 * create new trip
 	**/
-	.controller('CreateTripCtrl', function ($scope, $q, $location, $localStorage, Account, Car, Stay, Trip, Auth, Location, Geocode, Directions, config) {
+	.controller('CreateTripCtrl', function ($scope, $q, $location, $localStorage, Account, Car, Stay, Trip, Coordinate, Auth, Location, Geocode, Directions, config) {
 
 		// init
 		$scope.hourStep = 1;
@@ -123,7 +123,8 @@ angular.module('fahrtenbuchApp')
 		$scope.stopWatchPosition = function() {
 			Location.clearWatch()
 			.then(function(positions) {
-				Directions.polygons(null, positions, $scope.stays, map);
+				var poly = Directions.polygons(null, positions, $scope.stays, map);
+				$scope.trip.route = positions;
 				$scope.recordingStatus = 'stopped';
 			})
 	    .catch(function(err) {
@@ -191,24 +192,50 @@ angular.module('fahrtenbuchApp')
 	    	$scope.trip.account = $scope.trip.account._id;
 	    	$scope.trip.user = $scope.user._id;
 
-				Trip.postTrip($scope.trip)
-		    .then(function() {
+	    	//
+	    	var currentPromises = [];
+				if ($scope.trip.route !== null) {
+					$scope.trip.route.forEach(function(position) {
+						var coordinate = {
+							latitude: position.coords.latitude,
+							longitude: position.coords.longitude
+						};
+						var currentPromise = Coordinate.postCoordinate(coordinate)
+					  .catch(function(err) {
+					    $scope.errors.other = err.message;
+					  });
+						currentPromises.push(currentPromise);
+					});
+				}
 
-		    	car.mileage = $scope.trip.kilometerEnd;
-		    	
-					Car.patchCar(car)
+				$q.all(currentPromises)
+				.then(function(positions) {
+
+					var positionIds = [];
+					positions.forEach(function(position) {
+						positionIds.push(position._id);
+					});
+					$scope.trip.route = positionIds;
+
+					Trip.postTrip($scope.trip)
 			    .then(function() {
-			    	$scope.$storage.trip = null;
-			    	$scope.$storage.stays = null;
-			    	$location.path('/trip');
+
+			    	car.mileage = $scope.trip.kilometerEnd;
+			    	
+						Car.patchCar(car)
+				    .then(function() {
+				    	$scope.$storage.trip = null;
+				    	$scope.$storage.stays = null;
+				    	$location.path('/trip');
+				    })
+				    .catch(function(err) {
+				      $scope.errors.other = err.message;
+				    });
 			    })
 			    .catch(function(err) {
 			      $scope.errors.other = err.message;
 			    });
-		    })
-		    .catch(function(err) {
-		      $scope.errors.other = err.message;
-		    });
+			  });
 			});
 		};
 	})

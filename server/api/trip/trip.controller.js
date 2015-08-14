@@ -19,6 +19,7 @@ exports.index = function(req, res) {
     .populate('car')
     .populate('user')
     .populate('stays')
+    .populate('route')
     .exec(function (err, trips) {
       if(err) { return handleError(res, err); }
       return res.json(200, trips);
@@ -32,6 +33,7 @@ exports.show = function(req, res) {
   .populate('car')
   .populate('user')
   .populate('stays')
+  .populate('route')
   .exec(function (err, trip) {
     if(err) { return handleError(res, err); }
     if(!trip) { return res.send(404); }
