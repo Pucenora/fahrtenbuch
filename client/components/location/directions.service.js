@@ -109,11 +109,12 @@ angular.module('fahrtenbuchApp')
        * draw route with polygons
        *
        * @param   {Function}  callback    - optional 
-       * @param   {Array}     coordinatesList 
+       * @param   {Array}     coordinatesList
+       * @param   {Array}     stays
        * @param   {Object}    map
        * @return  {Array}     path
       */
-      polygons: function(callback, coordinatesList , map) {
+      polygons: function(callback, coordinatesList, stays, map) {
 
         var polyOptions = {
           strokeColor: '#000000',
@@ -133,10 +134,25 @@ angular.module('fahrtenbuchApp')
           var element = new google.maps.LatLng(lat, lng);
 
           path.push(element);
+        }
+
+        for (var stay of stays) {
+
+          var position = {};
+          if (stay.destinationLat == false || stay.destinationLong == false) {
+            Geocode.geocode(null, stay.destination)
+              .then(function(pos) {
+                position = pos;
+              })
+              .catch(function(err) {
+                $scope.errors.other = err.message;
+              });
+          } else {
+            position = new google.maps.LatLng(stay.destinationLat, stay.destinationLong);
+          }
 
           var marker = new google.maps.Marker({
-            position: element,
-            // title: ,
+            position: position,
             map: map
           });
         }

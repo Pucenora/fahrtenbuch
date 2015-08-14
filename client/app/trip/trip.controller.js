@@ -123,23 +123,9 @@ angular.module('fahrtenbuchApp')
 		$scope.stopWatchPosition = function() {
 			Location.clearWatch()
 			.then(function(positions) {
-
-				console.log(positions);
-
-			// 	Directions.getRoute(null, waypoints, $scope.stays, map)
-			// 	.then(function(results) {
-			// 		console.log(results);
-			// 		$scope.recordingStatus = 'stopped'
-			// 	})
-			// 	.catch(function(err) {
-			// 	  $scope.errors.other = err.message;
-			// 	});
-			// })
-
-				Directions.polygons(null, positions, map);
+				Directions.polygons(null, positions, $scope.stays, map);
 				$scope.recordingStatus = 'stopped';
 			})
-
 	    .catch(function(err) {
       	$scope.errors.other = err.message;
     	});
