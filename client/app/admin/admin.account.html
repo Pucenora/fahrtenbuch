@@ -9,7 +9,7 @@
 			<ul class="list-group">
 		    <li class="list-group-item" ng-repeat="account in accounts">
 	        <strong>{{account.name}}</strong>	        
-	        <button type="button" ng-click="deleteAccount(account)" class="btn btn-danger btn-sm pull-right"><i class="glyphicon glyphicon-trash"></i></button>
+	        <button type="button" confirmed-click="deleteAccount(account)" ng-confirm-click="Are your sure?" class="btn btn-danger btn-sm pull-right"><i class="glyphicon glyphicon-trash"></i></button>
 		    </li>
 		  </ul>
     </div>
