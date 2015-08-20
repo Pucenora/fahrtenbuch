@@ -3,7 +3,9 @@
 <div class="container">
   <div class="row">
     <div class="col-lg-12">
-      <h1 class="page-header">Details: {{destinations}}</h1>
+      <h1 class="page-header">Details:</h1>
+      <p>{{destinations}}</p>
+      <hr />
     </div>
   </div>
 
@@ -12,7 +14,7 @@
       <div class="thumbnail {{trip.type}}">
         <div class="caption">
           <h3>Info:</h3>
-          <p>{{trip.user.name}}</p>
+          <p>User: {{trip.user.name}}</p>
           <p>{{trip.car.licenseTag}}: {{trip.car.description}}</p>
           <p><small>
             <span>{{trip.type}}</span>
@@ -26,9 +28,12 @@
       <div class="thumbnail">
         <div class="caption">
           <h3>Details:</h3>
-          <p>{{trip.kilometerStart}} km <i class="glyphicon glyphicon-arrow-right"></i> {{trip.kilometerEnd}} km</p>
+          <p>
+            <span>Trip Length: {{trip.kilometerEnd - trip.kilometerStart }} </span>
+            <span class="pull-right">{{trip.kilometerStart}} km <i class="glyphicon glyphicon-arrow-right"></i> {{trip.kilometerEnd}} km</span>
+          </p>
           <p>{{trip.originTime | date:"dd.MM.yyyy 'um' HH:mm 'Uhr'"}} <i class="glyphicon glyphicon-arrow-right"></i> {{trip.destinationTime | date:"dd.MM.yyyy 'um' HH:mm 'Uhr'"}}</p>
-          <p>{{trip.account.name}}</p>
+          <p>Account: {{trip.account.name}}</p>
         </div>
       </div>
     </div>
