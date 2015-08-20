@@ -25,6 +25,10 @@ angular.module('fahrtenbuchApp', [
         templateUrl: 'trip/trip.detail.html',
         controller: 'DetailTripCtrl'
       })
+      .when('/help', {
+        templateUrl: 'help/help.detail.html',
+        controller: 'HelpController'
+      })
       .otherwise({
         redirectTo: '/'
       });
