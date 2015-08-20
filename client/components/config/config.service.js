@@ -13,7 +13,7 @@ angular.module('fahrtenbuchApp')
 			  maximumAge: 0
 			},
 			defaultMapOptions : {
-				zoom: 5,
+				zoom: 15,
 	 			streetViewControl: false,
 	 			mapTypeControl: false,
 	 			scrollwhell: false,
