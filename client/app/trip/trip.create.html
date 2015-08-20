@@ -36,7 +36,7 @@
       <div class="row"> 
         <div class="col-xs-12 col-md-3">
           <div class="form-group">
-      	    <label>type:</label>
+      	    <label>trip type:</label>
             <br />
             <div class="btn-group" name="type" ng-init="trip.type='corporate'" required="" >
               <label class="btn btn-primary" ng-model="trip.type" value="'corporate'" btn-radio="'corporate'" ng-click="addStay()">corporate</label>
@@ -94,49 +94,50 @@
         <hr />
       </div>
 
-      <!-- repeat -->
+      <!-- repeat start-->
       <div ng-repeat="stay in stays">
-        <ng-form name="stayForm">
-          <div class="row"> 
-            <div class="col-xs-12 col-md-6">
-              <div class="form-group">
-                <label>destination:</label>
-                <button type="button" class="btn btn-primary" ng-click="getPosition(stay)"><i class="glyphicon glyphicon-map-marker"></i></button> 
-                <input type="text" ng-model="stay.destination" class="form-control" name="destination" required="" />
-                <div ng-show="stayForm.$submitted || stayForm.destination.$touched">
-                  <div class="label label-danger" ng-show="stayForm.destination.$error.required">text field is required!</div>
+        <button type="button" class="btn btn-success btn-lg" ng-click="removeStay(stay)"><i class="glyphicon glyphicon-minus"></i></button>
+        <div class="well">
+          <ng-form name="stayForm">
+            <div class="row"> 
+              <div class="col-xs-12 col-md-6">
+                <div class="form-group">
+                  <label>destination:</label>
+                  <button type="button" class="btn btn-primary" ng-click="getPosition(stay)"><i class="glyphicon glyphicon-map-marker"></i></button> 
+                  <input type="text" ng-model="stay.destination" class="form-control" name="destination" required="" />
+                  <div ng-show="stayForm.$submitted || stayForm.destination.$touched">
+                    <div class="label label-danger" ng-show="stayForm.destination.$error.required">text field is required!</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-xs-12 col-md-6">
+                <div class="form-group">
+                  <label>client:</label>
+                  <input type="text" ng-model="stay.client" class="form-control" name="client" required="" />
+                    <div ng-show="stayForm.$submitted || stayForm.client.$touched">
+                      <div class="label label-danger" ng-show="stayForm.client.$error.required">text field is required!</div>
+                    </div>
+                  <br />
                 </div>
               </div>
             </div>
 
-            <div class="col-xs-12 col-md-6">
-              <div class="form-group">
-                <label>client:</label>
-                <input type="text" ng-model="stay.client" class="form-control" name="client" required="" />
-                  <div ng-show="stayForm.$submitted || stayForm.client.$touched">
-                    <div class="label label-danger" ng-show="stayForm.client.$error.required">text field is required!</div>
-                  </div>
-                <br />
+            <div class="row"> 
+              <div class="col-xs-12">
+                <div class="form-group">
+                  <datetimepicker min-date="minDate" show-weeks="showWeeks" hour-step="hourStep" minute-step="minuteStep" ng-model="stay.destinationTime" show-meridian="showMeridian" date-format="dd-MMM-yyyy" date-options="dateOptions" date-disabled="disabled(date, mode)" readonly-time="false"></datetimepicker>
+
+                  <!-- <button type="button" class="btn btn-success btn-lg" ng-click="removeStay(stay)"><i class="glyphicon glyphicon-minus"></i></button> -->
+                </div>
               </div>
             </div>
-          </div>
-
-          <div class="row"> 
-            <div class="col-xs-12">
-              <div class="form-group">
-              <!-- trip.destinationTime -->
-                <datetimepicker min-date="minDate" show-weeks="showWeeks" hour-step="hourStep" minute-step="minuteStep" ng-model="stay.destinationTime" show-meridian="showMeridian" date-format="dd-MMM-yyyy" date-options="dateOptions" date-disabled="disabled(date, mode)" readonly-time="false"></datetimepicker>
-
-                <button type="button" class="btn btn-success btn-lg" ng-click="removeStay(stay)"><i class="glyphicon glyphicon-minus"></i></button>
-              </div>
-            </div>
-          </div>
-        </ng-form>
-        <hr />
+          </ng-form>
+        </div>
       </div>
-      <!-- end -->
+      <!-- repeat end -->
 
-      <button type="button" class="btn btn-success btn-lg" ng-click="addStay()"><i class="glyphicon glyphicon-plus"></i></button>
+      <button type="button" class="btn btn-success btn-lg" ng-click="addStay()">Add Destination</button>
 
       <button type="submit" class="btn btn-success btn-lg" ng-click="addTrip()" ng-disabled="form.user.$dirty && form.user.$invalid || form.email.$dirty && form.email.$invalid">Submit</button>
 

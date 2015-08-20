@@ -9,15 +9,16 @@
 			<ul class="list-group">
 		    <li class="list-group-item" ng-repeat="car in cars">
 	        <strong>{{car.description}}: {{car.licenseTag}}</strong><br>
-	        <span class="text-muted">{{car.mileage}} km</span><br>
-	        <span class="text-muted">{{car.base}}</span>		        
+	        <span class="text-muted">Mileage: {{car.mileage}} km</span><br>
+	        <span class="text-muted">Base: {{car.base}}</span>		        
 	        <button type="button" ng-click="deleteCar(car)" class="btn btn-danger btn-sm pull-right"><i class="glyphicon glyphicon-trash"></i></button>
-	        <button type="button" ng-click="editCar(car)" class="btn btn-primary btn-sm pull-right"><i class="glyphicon glyphicon-cog"></i></button>
+	        <button type="button" ng-click="editCar(car)" class="btn btn-primary btn-sm pull-right"><i class="glyphicon glyphicon-pencil"></i></button>
 		    </li>
 		  </ul>
     </div>
   </div>
 
 	<button type="button" class="btn btn-primary" ng-click="addCar()">Add Car</button>
+  <a href="/admin" class="btn btn-primary pull-right">Back</a>
   <p class="help-block"><span class="label label-danger">{{ errors.other }}</span></p>
 </div>
