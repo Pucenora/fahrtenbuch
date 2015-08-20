@@ -15,7 +15,7 @@ angular.module('fahrtenbuchApp')
         })
         .then( function() {
           // Logged in, redirect to home
-          $location.path('/');
+          $location.path('/trip');
         })
         .catch( function(err) {
           $scope.errors.other = err.message;

@@ -16,7 +16,7 @@ angular.module('fahrtenbuchApp')
         })
         .then( function() {
           // Account created, redirect to home
-          $location.path('/');
+          $location.path('/trip');
         })
         .catch( function(err) {
           err = err.data;
