@@ -10,12 +10,14 @@
 	        <strong>{{user.name}}</strong><br>
 	        <span class="text-muted">Email: {{user.email}}</span><br>
 	        <span class="text-muted">Default Car: {{user.defaultCar}}</span><br>
+	        <span class="text-muted">Base: {{user.baseName}}</span><br>
 	        <span class="text-muted">Role: {{user.role}}</span>
 	        <button type="button" confirmed-click="deleteUser(user)" ng-confirm-click="Are your sure?" class="btn btn-danger btn-sm pull-right"><i class="glyphicon glyphicon-trash"></i></button>
-	        <button type="button" ng-click="editUser(user)" class="btn btn-primary btn-sm pull-right"><i class="glyphicon glyphicon-pencil"></i></button>
+	        <!-- <button type="button" ng-click="editUser(user)" class="btn btn-primary btn-sm pull-right"><i class="glyphicon glyphicon-pencil"></i></button> -->
 		    </li>
 		  </ul>
 		  <a href="/admin" class="btn btn-primary pull-right">Back</a>
+		  <p class="help-block"><span class="label label-danger">{{ errors.other }}</span></p>
 	  </div>
   </div>
 

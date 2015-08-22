@@ -43,7 +43,7 @@ angular.module('fahrtenbuchApp')
     };   
   })
 
-  .controller('AdminUserCtrl', function ($scope, $http, User, Car) {
+  .controller('AdminUserCtrl', function ($scope, $location, $http, User, Car) {
 
     // Use the User $resource to fetch all users
     $scope.users = [];
@@ -82,14 +82,17 @@ angular.module('fahrtenbuchApp')
     $scope.user = {};
     $scope.cars = [];
 
-    User.get($routeParams.id)
-    .then(function(user) {
-      $scope.user = user;
-    });
+    // User.get($routeParams.id)
+    // .then(function(user) {
+    //   $scope.user = user;
+    // });
+
+    $scope.user = User.get();
 
     Car.getCars()
     .then(function(cars) {
       $scope.cars = cars;
+      $scope.user.defaultCar = $scope.cars[0];
     }).catch(function(err) {
       $scope.errors.other = err.message;
     });
