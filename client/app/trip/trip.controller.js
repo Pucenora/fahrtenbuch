@@ -54,7 +54,12 @@ angular.module('fahrtenbuchApp')
 	 	$scope.stays.push({destination: '', client: '', destinationTime: new Date()});
 	 	$scope.recordingStatus = 'stopped'; // or started
 
-	 	var base = new google.maps.LatLng($scope.user.baseLat, $scope.user.baseLong);
+	 	var base;
+	 	if ($scope.user.baseLat && $scope.user.baseLong) {
+	 		base = new google.maps.LatLng($scope.user.baseLat, $scope.user.baseLong);
+	 	} else { // if the user has no base, set the coordinates to "Rathaus Augsburg"
+	 		base = new google.maps.LatLng(48.368801, 10.898653);
+	 	}
 	 	var mapOptions = config.defaultMapOptions
 	 	mapOptions.center = base;
 	 	var map = new google.maps.Map(document.getElementById('mapContainer'), config.defaultMapOptions);
