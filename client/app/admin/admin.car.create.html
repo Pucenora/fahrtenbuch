@@ -25,18 +25,23 @@
 		        <div class="label label-danger" ng-show="form.licenseTag.$error.required">text field is required!</div>
 		        <div class="label label-danger" ng-show="form.licenseTag.$error.licenseTag">This value must be a proper license tag!</div>
 		      </div>
-		      <p><tiny>for example: AA-BB-1234</tiny></p>
+		      <p><tiny>For example: AA-BB-1234</tiny></p>
 	      </div>
       </div>
 
 		  <div class="row"> 
   			<div class="col-xs-12 col-md-6">
 		      <label>Mileage:</label>
-		      <input type="number" ng-model="car.mileage" class="form-control" name="mileage" required=""  />
-		      <div ng-show="form.$submitted || form.mileage.$touched">
-		        <div class="label label-danger" ng-show="form.mileage.$error.required">text field is required!</div>
-		        <div class="label label-danger" ng-show="form.mileage.$error.number">This value is not a number!</div>
-		      </div>
+		      <div ng-if="modus != 'Edit'" >
+			      <input type="number" ng-model="car.mileage" class="form-control" name="mileage" required=""  />
+			      <div ng-show="form.$submitted || form.mileage.$touched">
+			        <div class="label label-danger" ng-show="form.mileage.$error.required">text field is required!</div>
+			        <div class="label label-danger" ng-show="form.mileage.$error.number">This value is not a number!</div>
+			      </div>
+			    </div>
+			    <div  ng-if="modus == 'Edit'">
+						<p>{{car.mileage}}</p>
+			    </div>
 	      </div>
       </div>
 
