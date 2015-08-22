@@ -4,6 +4,9 @@ var regex = /^(\w{1,3})\-(\w{1,3})\-(\d{1,4})/;
 
 angular.module('fahrtenbuchApp')
 
+  /**
+   * Confirm deletion in admin pages
+  **/
   .directive('ngConfirmClick', [
     function() {
       return {
@@ -34,11 +37,9 @@ angular.module('fahrtenbuchApp')
               }
 
               if (regex.test(viewValue)) {
-                console.log("Yeah!");
                 return true;
               }
 
-              console.log("Doah!");
               return false;
             };
           }
