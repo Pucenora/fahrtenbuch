@@ -20,19 +20,22 @@
 		  <div class="row">
   			<div class="col-xs-12 col-md-6">
 		      <label>License Tag:</label>
-		      <input type="text" ng-model="car.licenseTag" class="form-control" name="licenseTag" required="" />
+		      <input type="text" ng-model="car.licenseTag" class="form-control" name="licenseTag" required="" license-tag />
 		      <div ng-show="form.$submitted || form.licenseTag.$touched">
 		        <div class="label label-danger" ng-show="form.licenseTag.$error.required">text field is required!</div>
+		        <div class="label label-danger" ng-show="form.licenseTag.$error.licenseTag">This value must be a proper license tag!</div>
 		      </div>
+		      <p><tiny>for example: AA-BB-1234</tiny></p>
 	      </div>
       </div>
 
 		  <div class="row"> 
   			<div class="col-xs-12 col-md-6">
 		      <label>Mileage:</label>
-		      <input type="text" ng-model="car.mileage" class="form-control" name="mileage" required="" />
+		      <input type="number" ng-model="car.mileage" class="form-control" name="mileage" required=""  />
 		      <div ng-show="form.$submitted || form.mileage.$touched">
 		        <div class="label label-danger" ng-show="form.mileage.$error.required">text field is required!</div>
+		        <div class="label label-danger" ng-show="form.mileage.$error.number">This value is not a number!</div>
 		      </div>
 	      </div>
       </div>
