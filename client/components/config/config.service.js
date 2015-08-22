@@ -16,7 +16,7 @@ angular.module('fahrtenbuchApp')
 				zoom: 15,
 	 			streetViewControl: false,
 	 			mapTypeControl: false,
-	 			scrollwhell: false,
+	 			scrollwheel: false,
 	 			navigationControlOptions: {
 					style: google.maps.NavigationControlStyle.SMALL
 	 			},
