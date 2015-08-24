@@ -56,7 +56,7 @@ angular.module('fahrtenbuchApp')
 
         })
         .catch(function(err) {
-          $scope.errors.other = "Location not found!";
+          $scope.errors.other = 'Location not found!';
         });
       }
     };

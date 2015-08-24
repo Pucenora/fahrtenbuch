@@ -184,4 +184,6 @@ describe('Controller: AdminCarAddCtrl', function () {
 
     expect($location.path()).toBe('/admin/car');
 	});
+
+  // @todo edit
 });

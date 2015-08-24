@@ -77,7 +77,7 @@ angular.module('fahrtenbuchApp')
 	 	}
 
 	 	// use default options and base to initialize google map
-	 	var mapOptions = config.defaultMapOptions
+	 	var mapOptions = config.defaultMapOptions;
 	 	mapOptions.center = base;
 	 	var map = new google.maps.Map(document.getElementById('mapContainer'), config.defaultMapOptions);
 
@@ -133,8 +133,8 @@ angular.module('fahrtenbuchApp')
 		$scope.getPosition = function(stay) {
 			Location.getCurrentPosition()
 	    .then(function(position) {
-	    	stay.destinationLat = position.latitude
-	    	stay.destinationLong = position.longitude
+	    	stay.destinationLat = position.latitude;
+	    	stay.destinationLong = position.longitude;
 	    	Geocode.reverseGeocode(null, position)
 		    .then(function(locationName) {
 		    	stay.destination = locationName;
@@ -151,14 +151,14 @@ angular.module('fahrtenbuchApp')
 		// start recording the route
 		$scope.startWatchPosition = function() {
 			Location.watchPosition();
-			$scope.recordingStatus = 'started'
+			$scope.recordingStatus = 'started';
 		};
 
 		// stop recording the route and display it on the map
 		$scope.stopWatchPosition = function() {
 			Location.clearWatch()
 			.then(function(positions) {
-				var poly = Directions.polygons(null, positions, $scope.stays, map);
+				Directions.polygons(null, positions, $scope.stays, map);
 				$scope.trip.route = positions;
 				$scope.recordingStatus = 'stopped';
 			})

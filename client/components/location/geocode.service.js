@@ -17,10 +17,11 @@ angular.module('fahrtenbuchApp')
 
         var cb = callback || angular.noop;
         var deferred = $q.defer();
+        var err;
 
         // cancel when application can't connect to google
         if (google === undefined) {
-          var err = new Error('No Connection to Google!');
+          err = new Error('No Connection to Google!');
           deferred.reject(err);
           return cb(err);
         }
@@ -34,14 +35,14 @@ angular.module('fahrtenbuchApp')
         Geocoder.geocode({'latLng': latlng}, function(results, status) {
           if (status === google.maps.GeocoderStatus.OK) {
             if (results[0].formatted_address === undefined) {
-              var err = new Error('Could not find a name for this location!');
+              err = new Error('Could not find a name for this location!');
               deferred.reject(err);
               return cb(err);
             } else {
               deferred.resolve(results[0].formatted_address);
             }
           } else {
-            var err = new Error('Geocoding your location failed');
+            err = new Error('Geocoding your location failed');
             deferred.reject(err);
             return cb(err);
           }
@@ -61,10 +62,11 @@ angular.module('fahrtenbuchApp')
    
         var cb = callback || angular.noop;
         var deferred = $q.defer();
+        var err;
 
         // cancel when application can't connect to google
         if (google === undefined) {
-          var err = new Error('No Connection to Google!');
+          err = new Error('No Connection to Google!');
           deferred.reject(err);
           return cb(err);
         }
@@ -77,7 +79,7 @@ angular.module('fahrtenbuchApp')
           if (status === google.maps.GeocoderStatus.OK) {
             deferred.resolve(results[0].geometry.location);
           } else {
-            var err = new Error('Geocoding your location failed');
+            err = new Error('Geocoding your location failed');
             deferred.reject(err);
             return cb(err);
           }

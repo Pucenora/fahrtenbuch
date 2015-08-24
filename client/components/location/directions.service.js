@@ -28,7 +28,6 @@ angular.module('fahrtenbuchApp')
           return cb(err);
         }
 
-        var marker;
         var origin;
         var destination;
         var waypts = [];
@@ -65,7 +64,7 @@ angular.module('fahrtenbuchApp')
 
         // calculate and display route
         directionsService.route(request, function(response, status) {
-          if (status == google.maps.DirectionsStatus.OK) {
+          if (status === google.maps.DirectionsStatus.OK) {
             directionsDisplay.setDirections(response);
             deferred.resolve(response.routes[0]);
           } else {
@@ -119,20 +118,20 @@ angular.module('fahrtenbuchApp')
         for (var stay of stays) {
           var position = {};
           // calculate coordinates of a stay, in case it didn't happen before
-          if (stay.destinationLat == false || stay.destinationLong == false) {
+          if (stay.destinationLat === false || stay.destinationLong === false) {
             Geocode.geocode(null, stay.destination)
               .then(function(pos) {
                 position = pos;
               })
               .catch(function(err) {
-                $scope.errors.other = err.message;
+                throw new Error(err.message);
               });
           } else {
             position = new google.maps.LatLng(stay.destinationLat, stay.destinationLong);
           }
 
           // add marker
-          var marker = new google.maps.Marker({
+          new google.maps.Marker({
             position: position,
             map: map
           });
