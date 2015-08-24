@@ -86,9 +86,9 @@ describe('Controller: TripCtrl', function () {
     expect(angular.equals($scope.trip.kilometerStart, 42)).toBe(true);
   }));
 
-  it('test sync function', inject(function() {
+  it('test updateKilometerStart function', inject(function() {
     $scope.trip.car = {mileage: 42};
-    $scope.sync();
+    $scope.updateKilometerStart();
 
     expect($scope.trip.kilometerStart).toBe(42);
   }));
@@ -116,6 +116,7 @@ describe('Controller: TripCtrl', function () {
     $scope.user = {_id: 1, name: 'test'};
     var stays = [{_id: 1, destination: '', client: '', destinationTime: new Date('2015-05-30 10:00:00')}];
     $scope.stays = stays;
+    $scope.trip.route = fakeResponse;
     $scope.$digest();
 
     $scope.addTrip();

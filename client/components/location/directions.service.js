@@ -106,20 +106,21 @@ angular.module('fahrtenbuchApp')
         var path = poly.getPath();
 
         // convert coordinates to LatLng-Object and add it to the route
-        for (var coord of coordinatesList) {
-          var lat = coord.coords.latitude;
-          var lng = coord.coords.longitude;
+        for (var i = 0; i < coordinatesList.length; i++) {
+          var lat = coordinatesList[i].coords.latitude;
+          var lng = coordinatesList[i].coords.longitude;
+
           var element = new google.maps.LatLng(lat, lng);
 
           path.push(element);
         }
 
         // mark stays at the route
-        for (var stay of stays) {
+        for (var j = 0; j < stays; j++) {
           var position = {};
           // calculate coordinates of a stay, in case it didn't happen before
-          if (stay.destinationLat === false || stay.destinationLong === false) {
-            Geocode.geocode(null, stay.destination)
+          if (stays[j].destinationLat === false || stays[j].destinationLong === false) {
+            Geocode.geocode(null, stays[j].destination)
               .then(function(pos) {
                 position = pos;
               })
@@ -127,7 +128,7 @@ angular.module('fahrtenbuchApp')
                 throw new Error(err.message);
               });
           } else {
-            position = new google.maps.LatLng(stay.destinationLat, stay.destinationLong);
+            position = new google.maps.LatLng(stays[j].destinationLat, stays[j].destinationLong);
           }
 
           // add marker

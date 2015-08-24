@@ -9,6 +9,7 @@
         ROADMAP: 100
       },
       LatLng: function(){},
+      Polyline: function(){}
       // and so on...
     }
   };
