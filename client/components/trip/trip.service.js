@@ -9,7 +9,7 @@ angular.module('fahrtenbuchApp')
        * get trips
        *
        * @param  {Function} callback  - optional
-       * @return {Promise}
+       * @return {Promise}  with trips
       */
       getTrips: function(callback) {
         var cb = callback || angular.noop;
@@ -32,7 +32,7 @@ angular.module('fahrtenbuchApp')
        *
        * @param  {String}   id  
        * @param  {Function} callback  - optional
-       * @return {Promise}
+       * @return {Promise}  with trip
       */
       getTrip: function(id, callback) {
         var cb = callback || angular.noop;

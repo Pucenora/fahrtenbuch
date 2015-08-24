@@ -12,7 +12,7 @@ angular.module('fahrtenbuchApp')
        * get accounts
        *
        * @param  {Function} callback  - optional
-       * @return {Promise}
+       * @return {Promise}  with accounts
       */
       getAccounts: function(callback) {
         var cb = callback || angular.noop;
@@ -35,7 +35,7 @@ angular.module('fahrtenbuchApp')
        *
        * @param  {String}   id
        * @param  {Function} callback  - optional
-       * @return {Promise}
+       * @return {Promise}  with account
       */
       deleteAccount: function(id, callback) {
         var cb = callback || angular.noop;
@@ -57,7 +57,7 @@ angular.module('fahrtenbuchApp')
       /**
        * add account
        *
-       * @param  {Object} account
+       * @param  {Object}   account
        * @param  {Function} callback  - optional
        * @return {Promise}
       */

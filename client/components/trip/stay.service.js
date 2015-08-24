@@ -1,5 +1,8 @@
 'use strict';
 
+/**
+ * Interface to stay logic in server
+**/
 angular.module('fahrtenbuchApp')
   .factory('Stay', function Stay($http, $q) {
 

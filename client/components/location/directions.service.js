@@ -14,7 +14,7 @@ angular.module('fahrtenbuchApp')
        * @param   {Array}     coordinatesList
        * @param   {Array}     stays
        * @param   {Object}    map
-       * @return  {Array}     routes
+       * @return  {Promise}   with routes
       */
       getRoute: function(callback, coordinatesList, stays, map) {
 
@@ -85,7 +85,7 @@ angular.module('fahrtenbuchApp')
        * @param   {Array}     coordinatesList
        * @param   {Array}     stays
        * @param   {Object}    map
-       * @return  {Array}     path
+       * @return  {Promise}   with path
       */
       polygons: function(callback, coordinatesList, stays, map) {
 

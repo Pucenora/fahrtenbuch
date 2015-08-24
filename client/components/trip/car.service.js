@@ -1,5 +1,8 @@
 'use strict';
 
+/**
+ * Interface to car logic in server
+**/
 angular.module('fahrtenbuchApp')
   .factory('Car', function Car($http, $q) {
 
@@ -9,7 +12,7 @@ angular.module('fahrtenbuchApp')
        * get cars
        *
        * @param  {Function} callback  - optional
-       * @return {Promise}
+       * @return {Promise}  with cars
       */
       getCars: function(callback) {
         var cb = callback || angular.noop;
@@ -32,7 +35,7 @@ angular.module('fahrtenbuchApp')
        *
        * @param  {String}   id
        * @param  {Function} callback  - optional
-       * @return {Promise}
+       * @return {Promise}  with car
       */
       getCar: function(id, callback) {
         var cb = callback || angular.noop;
@@ -102,7 +105,7 @@ angular.module('fahrtenbuchApp')
       /**
        * add car
        *
-       * @param  {Object} car
+       * @param  {Object}   car
        * @param  {Function} callback  - optional
        * @return {Promise}
       */

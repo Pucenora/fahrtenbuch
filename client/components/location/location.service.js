@@ -11,7 +11,7 @@ angular.module('fahrtenbuchApp')
        *
        * @param   {Function}  callback  - optional
        * @param   {Object}    options   - optional
-       * @return  {Object}    position
+       * @return  {Promsise}  with position
       */
       getCurrentPosition: function(callback, options) {
 
@@ -83,7 +83,7 @@ angular.module('fahrtenbuchApp')
        * stops watchPosition service and returns results
        *
        * @param   {Function}  callback  - optional
-       * @return  {Array}    positions
+       * @return  {Promise}   with positions
       */
       clearWatch: function(callback) {
 

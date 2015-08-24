@@ -1,5 +1,8 @@
 'use strict';
 
+/**
+ * Interface to coordinate logic in server
+**/
 angular.module('fahrtenbuchApp')
   .factory('Coordinate', function Coordinate($http, $q) {
 
@@ -9,7 +12,7 @@ angular.module('fahrtenbuchApp')
        * get coordinates
        *
        * @param  {Function} callback  - optional
-       * @return {Promise}
+       * @return {Promise}  with coordinates
       */
       getCoordinates: function(callback) {
         var cb = callback || angular.noop;
@@ -32,7 +35,7 @@ angular.module('fahrtenbuchApp')
        *
        * @param  {String}   id  
        * @param  {Function} callback  - optional
-       * @return {Promise}
+       * @return {Promise}  with coordinate
       */
       getCoordinate: function(id, callback) {
         var cb = callback || angular.noop;

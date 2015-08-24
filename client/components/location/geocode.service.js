@@ -11,7 +11,7 @@ angular.module('fahrtenbuchApp')
        *
        * @param   {Function}  callback    - optional  
        * @param   {Object}    coordinates 
-       * @return  {String}    address
+       * @return  {Promise}   with address
       */
       reverseGeocode: function(callback, coordinates) {
 
@@ -55,7 +55,7 @@ angular.module('fahrtenbuchApp')
        *
        * @param   {Function}  callback    - optional  
        * @param   {String}    address 
-       * @return  {Object}    coordinates
+       * @return  {Promise}   with coordinates
       */
       geocode: function(callback, address) {
    
