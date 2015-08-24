@@ -1,6 +1,8 @@
 /**
  * Using Rails-like standard naming convention for endpoints.
  * GET     /stays              ->  index
+ * POST    /stays              ->  create
+ * GET     /stays/:id          ->  show
  */
 
 'use strict';
