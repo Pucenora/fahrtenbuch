@@ -1,5 +1,6 @@
 'use strict';
 
+// regular expression for license tag
 var regex = /^(\w{1,3})\-(\w{1,3})\-(\d{1,4})/;
 
 angular.module('fahrtenbuchApp')
@@ -35,11 +36,11 @@ angular.module('fahrtenbuchApp')
               if (ctrl.$isEmpty(modelValue)) {
                 return true;
               }
-
+              // input matches regular expression
               if (regex.test(viewValue)) {
                 return true;
               }
-
+              // it doesn't
               return false;
             };
           }
