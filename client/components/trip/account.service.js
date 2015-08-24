@@ -1,5 +1,8 @@
 'use strict';
 
+/**
+ * Interface to account logic in server
+**/
 angular.module('fahrtenbuchApp')
   .factory('Account', function Account($http, $q) {
 

@@ -18,17 +18,20 @@ angular.module('fahrtenbuchApp')
         var cb = callback || angular.noop;
         var deferred = $q.defer();
 
+        // cancel when application can't connect to google
         if (google === undefined) {
           var err = new Error('No Connection to Google!');
           deferred.reject(err);
           return cb(err);
         }
 
+        // initialize geocoder service
         var Geocoder = new google.maps.Geocoder();
+        // convert coordinate to LatLng-Object
         var latlng = new google.maps.LatLng(coordinates.latitude, coordinates.longitude);
 
+        // get address
         Geocoder.geocode({'latLng': latlng}, function(results, status) {
-
           if (status === google.maps.GeocoderStatus.OK) {
             if (results[0].formatted_address === undefined) {
               var err = new Error('Could not find a name for this location!');
@@ -45,7 +48,6 @@ angular.module('fahrtenbuchApp')
         });
 
         return deferred.promise;
-
       },
 
       /**
@@ -60,16 +62,18 @@ angular.module('fahrtenbuchApp')
         var cb = callback || angular.noop;
         var deferred = $q.defer();
 
+        // cancel when application can't connect to google
         if (google === undefined) {
           var err = new Error('No Connection to Google!');
           deferred.reject(err);
           return cb(err);
         }
 
+        // initialize geocoder service
         var Geocoder = new google.maps.Geocoder();
 
+        // get coordinates
         Geocoder.geocode({'address': address}, function(results, status) {
-
           if (status === google.maps.GeocoderStatus.OK) {
             deferred.resolve(results[0].geometry.location);
           } else {

@@ -4,7 +4,7 @@ angular.module('fahrtenbuchApp')
 
 
   /**
-   * Validation - Is this value a license tag?
+   * Validation - Is the amcount of kilometers in the end higher than at the start?
   **/
   .directive('kilometerEnd', [
     function () {
@@ -15,11 +15,11 @@ angular.module('fahrtenbuchApp')
               if (ctrl.$isEmpty(modelValue)) {
                 return true;
               }
-
+              // input matches condition
               if (viewValue > scope.trip.kilometerStart) {
                 return true;
               }
-
+              // it isn't
               return false;
             };
           }

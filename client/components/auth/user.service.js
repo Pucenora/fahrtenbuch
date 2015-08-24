@@ -1,5 +1,8 @@
 'use strict';
 
+/**
+ * Interface to user logic in server
+**/
 angular.module('fahrtenbuchApp')
   .factory('User', function ($resource) {
     return $resource('/api/users/:id/:controller', {

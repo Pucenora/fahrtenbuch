@@ -2,6 +2,9 @@
 /* global google */
 /* global navigator */
 
+/**
+ * Configuration and default values for the application
+ **/
 angular.module('fahrtenbuchApp')
   .factory('config', function config() {
     return {

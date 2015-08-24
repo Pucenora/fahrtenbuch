@@ -1,5 +1,4 @@
 'use strict';
-/* global google */
 /* global navigator */
 
 angular.module('fahrtenbuchApp')
@@ -11,7 +10,7 @@ angular.module('fahrtenbuchApp')
        * get current position
        *
        * @param   {Function}  callback  - optional
-       * @param   {Object}    options
+       * @param   {Object}    options   - optional
        * @return  {Object}    position
       */
       getCurrentPosition: function(callback, options) {
@@ -19,43 +18,38 @@ angular.module('fahrtenbuchApp')
         var cb = callback || angular.noop;
         var deferred = $q.defer();
 
-        if (google === undefined) {
-          var err = new Error('No Connection to Google!');
-          deferred.reject(err);
-          return cb(err);
-        }
-
+        // cancel when application can't connect to geocode api
         if (navigator.geolocation.getCurrentPosition === undefined) {
-          var err = new Error('Googe service getCurrentPosition can not be loaded!');
+          var err = new Error('Service getCurrentPosition can not be loaded!');
           deferred.reject(err);
           return cb(err);
         }
 
+        // get default options when no options are assigned
         if (!options) {
           options = config.defaultLocalizationOptions;
         }
 
         navigator.geolocation.getCurrentPosition(function (position) {
-          
+          // case: success
           var coordinates = position.coords;
-
+          // cancel when result isn't accurate enough
           if (coordinates.accuracy > config.desktopLocalizationAccuracy) {
             var err = new Error('Warning! Result is inaccurate!');
             deferred.reject(err);
             return cb(err);
           }
-
           deferred.resolve(coordinates);
 
         }, function () {
+          // casse: error
           var err = new Error('getCurrentPosition timed out!');
           deferred.reject(err);
           return cb(err);
-
+        
         }, options);
 
         return deferred.promise;
-
       },
 
       /**
@@ -66,21 +60,18 @@ angular.module('fahrtenbuchApp')
       watchPosition: function(options) {
 
         $rootScope.positions = [];
-
-        if (google === undefined) {
-          var err = new Error('No Connection to Google!');
-          deferred.reject(err);
-          return cb(err);
-        }
-
+        
+        // cancel when application can't connect to geocode api
         if (navigator.geolocation.watchPosition === undefined) {
-          throw new Error('Googe service watchPosition can not be loaded!');
+          throw new Error('Śervice watchPosition can not be loaded!');
         }
-
+        
+        // get default options when no options are assigned
         if (!options) {
           options = config.defaultLocalizationOptions;
         }
 
+        // watch position
         navigator.geolocation.watchPosition(function (position) { 
           $rootScope.positions.push(position);
         }, function () {
@@ -89,7 +80,7 @@ angular.module('fahrtenbuchApp')
       },
 
       /**
-       * stop watchPosition
+       * stops watchPosition service and returns results
        *
        * @param   {Function}  callback  - optional
        * @return  {Array}    positions
@@ -99,20 +90,17 @@ angular.module('fahrtenbuchApp')
         var cb = callback || angular.noop;
         var deferred = $q.defer();
 
-        if (google === undefined) {
-          var err = new Error('No Connection to Google!');
-          deferred.reject(err);
-          return cb(err);
-        }
-
+        // cancel when application can't connect to geocode api
         if (navigator.geolocation.clearWatch === undefined) {
-          var err = new Error('Googe service getCurrentPosition can not be loaded!');
+          var err = new Error('Service clearWatch can not be loaded!');
           deferred.reject(err);
           return cb(err);
         }
 
+        // clear watch
         navigator.geolocation.clearWatch(Location.watchPosition);
 
+        // return positions
         deferred.resolve($rootScope.positions);
         return deferred.promise;
       }  

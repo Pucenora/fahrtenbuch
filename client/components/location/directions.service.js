@@ -7,7 +7,8 @@ angular.module('fahrtenbuchApp')
     return {
 
       /**
-       * get route
+       * calculates a optimized route for a car
+       * waypoints are limited to 8
        *
        * @param   {Function}  callback    - optional  
        * @param   {Array}     coordinatesList
@@ -20,6 +21,7 @@ angular.module('fahrtenbuchApp')
         var cb = callback || angular.noop;
         var deferred = $q.defer();
 
+        // cancel when application can't connect to google
         if (google === undefined) {
           var err = new Error('No Connection to Google!');
           deferred.reject(err);
@@ -37,9 +39,11 @@ angular.module('fahrtenbuchApp')
         google.maps.event.addDomListener(window, 'load', directionsDisplay.setMap(map));
 
         for (var i = 0; i < coordinatesList.length; i++) {
+          // first coordinates are the coordinates of the origin
           if (i === 0) {
             origin = coordinatesList[i];
           }
+          // last coordinates are the coordinates of the destination
           if (i === coordinatesList.length - 1) {
             destination = coordinatesList[i];
           } else {
@@ -50,6 +54,7 @@ angular.module('fahrtenbuchApp')
           }
         }
 
+        // options of the direction service
         var request = {
           origin: origin,
           destination: destination,
@@ -58,45 +63,13 @@ angular.module('fahrtenbuchApp')
           travelMode: google.maps.TravelMode.DRIVING
         };
 
-        // directionsDisplay = new google.maps.DirectionsRenderer({
-        //   suppressMarkers: true
-        // });
-
-        stays.forEach(function(stay) {
-          new google.maps.Marker({
-            position: new google.maps.LatLng(stay.destinationLat, stay.destinationLong),
-            map: map,
-            title: stay.destination
-          });
-        });
-
-        var marker = new google.maps.Marker({
-          position: origin,
-          map: map,
-          title: 'origin'
-        });
-
-        // var infowindow = new google.maps.InfoWindow({
-        //   content: "<span>There ones was a mayden from ..../span>"
-        // });
-
-        // google.maps.event.addListener(marker, 'click', function() {
-        //   infowindow.open(map, marker);
-        // });
-
-        new google.maps.Marker({
-          position: destination,
-          map: map,
-          title: 'destination'
-        });
-
+        // calculate and display route
         directionsService.route(request, function(response, status) {
           if (status == google.maps.DirectionsStatus.OK) {
             directionsDisplay.setDirections(response);
             deferred.resolve(response.routes[0]);
           } else {
-            // var err = new Error('Route couldn\'t be calculated');
-            var err = new Error(status);
+            var err = new Error('Route couldn\'t be calculated');
             deferred.reject(err);
             return cb(err);
           }
@@ -106,7 +79,7 @@ angular.module('fahrtenbuchApp')
       },
 
       /**
-       * draw route with polygons
+       * connect all recorded points and display route as it was driven
        *
        * @param   {Function}  callback    - optional 
        * @param   {Array}     coordinatesList
@@ -116,19 +89,28 @@ angular.module('fahrtenbuchApp')
       */
       polygons: function(callback, coordinatesList, stays, map) {
 
+        // cancel when application can't connect to google
+        if (google === undefined) {
+          var err = new Error('No Connection to Google!');
+          deferred.reject(err);
+          return cb(err);
+        }
+
+        // options of the polygons service
         var polyOptions = {
           strokeColor: '#000000',
           strokeOpacity: 1.0,
           strokeWeight: 3
         };
 
+        // initialize polylines and set map
         var poly = new google.maps.Polyline(polyOptions);
         poly.setMap(map);
 
         var path = poly.getPath();
 
+        // convert coordinates to LatLng-Object and add it to the route
         for (var coord of coordinatesList) {
-
           var lat = coord.coords.latitude;
           var lng = coord.coords.longitude;
           var element = new google.maps.LatLng(lat, lng);
@@ -136,9 +118,10 @@ angular.module('fahrtenbuchApp')
           path.push(element);
         }
 
+        // mark stays at the route
         for (var stay of stays) {
-
           var position = {};
+          // calculate coordinates of a stay, in case it didn't happen before
           if (stay.destinationLat == false || stay.destinationLong == false) {
             Geocode.geocode(null, stay.destination)
               .then(function(pos) {
@@ -151,12 +134,12 @@ angular.module('fahrtenbuchApp')
             position = new google.maps.LatLng(stay.destinationLat, stay.destinationLong);
           }
 
+          // add marker
           var marker = new google.maps.Marker({
             position: position,
             map: map
           });
         }
       }
-      
     };
   });
