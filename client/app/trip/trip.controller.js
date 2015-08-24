@@ -45,7 +45,7 @@ angular.module('fahrtenbuchApp')
   	// display recording the route has not started yet
 	 	$scope.recordingStatus = 'stopped'; 
   	// general error displayed in the view
-    $scope.errors.other = {};
+    $scope.errors = {};
 
     // initialize local storage
     $scope.$storage = $localStorage;

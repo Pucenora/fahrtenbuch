@@ -85,15 +85,12 @@ angular.module('fahrtenbuchApp')
        * @param   {Array}     coordinatesList
        * @param   {Array}     stays
        * @param   {Object}    map
-       * @return  {Promise}   with path
       */
       polygons: function(callback, coordinatesList, stays, map) {
 
         // cancel when application can't connect to google
         if (google === undefined) {
-          var err = new Error('No Connection to Google!');
-          deferred.reject(err);
-          return cb(err);
+          throw new Error('No Connection to Google!');
         }
 
         // options of the polygons service
