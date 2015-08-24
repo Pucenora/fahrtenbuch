@@ -77,37 +77,6 @@ angular.module('fahrtenbuchApp')
     };
   })
 
-  .controller('AdminUserEditCtrl', function ($scope, $location, $routeParams, User, Car) {
-
-    $scope.user = {};
-    $scope.cars = [];
-
-    // User.get($routeParams.id)
-    // .then(function(user) {
-    //   $scope.user = user;
-    // });
-
-    $scope.user = User.get();
-
-    Car.getCars()
-    .then(function(cars) {
-      $scope.cars = cars;
-      $scope.user.defaultCar = $scope.cars[0];
-    }).catch(function(err) {
-      $scope.errors.other = err.message;
-    });
-
-    // $scope.editUser = function() {
-    //   User.patchUser($scope.user)
-    //   .then(function() {
-    //     $location.path('/admin/user');
-    //   })
-    //   .catch(function(err) {
-    //     $scope.errors.other = err.message;
-    //   });
-    // };
-  })
-
   .controller('AdminCarCtrl', function ($scope, $location, Car) {
 
     $scope.car = {};
