@@ -1,7 +1,11 @@
 'use strict';
 
+/**
+ * Sign up as new user
+**/ 
 angular.module('fahrtenbuchApp')
   .controller('SignupCtrl', function ($scope, Auth, $location, Car, Geocode) {
+
     $scope.user = {};
     $scope.errors = {};
 
@@ -19,11 +23,13 @@ angular.module('fahrtenbuchApp')
 
       if(form.$valid) {
 
+        // Get position of stated location
         Geocode.geocode(null, $scope.user.baseName)
         .then(function(coords) {
           $scope.user.baseLat = coords.G;
           $scope.user.baseLong = coords.K;
 
+          // save new user
           Auth.createUser({
             name: $scope.user.name,
             baseName: $scope.user.baseName,
@@ -34,7 +40,7 @@ angular.module('fahrtenbuchApp')
             password: $scope.user.password
           })
           .then( function() {
-            // Account created, redirect to home
+            // redirect to trip overview
             $location.path('/trip');
           })
           .catch( function(err) {

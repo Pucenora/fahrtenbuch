@@ -1,5 +1,8 @@
 'use strict';
 
+/**
+ * Change password
+**/
 angular.module('fahrtenbuchApp')
   .controller('SettingsCtrl', function ($scope, User, Auth) {
     $scope.errors = {};

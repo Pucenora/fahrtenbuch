@@ -1,5 +1,8 @@
 'use strict';
 
+/**
+ * Login into application
+**/
 angular.module('fahrtenbuchApp')
   .controller('LoginCtrl', function ($scope, Auth, $location) {
     $scope.user = {};
@@ -14,7 +17,7 @@ angular.module('fahrtenbuchApp')
           password: $scope.user.password
         })
         .then( function() {
-          // Logged in, redirect to home
+          // redirect to trip overview
           $location.path('/trip');
         })
         .catch( function(err) {
