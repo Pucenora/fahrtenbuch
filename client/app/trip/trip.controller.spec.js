@@ -172,7 +172,3 @@ describe('Controller: DetailTripCtrl', function () {
     expect($location.path()).toBe('/trip');
   }));
 });
-
-
-
-

@@ -172,11 +172,10 @@ describe('Controller: AdminCarAddCtrl', function () {
     AdminCarAddCtrl = $controller('AdminCarAddCtrl', {
       $scope: $scope,
     });
-
-  	$httpBackend.when('GET', 'app/admin/admin.car.html').respond(fakeResponse);
   }));
 
-	it('test createCar function', function () {
+	it('test createCar function for add', function () {
+
 		$scope.car = {_id: 1};
     $scope.createCar();
     $httpBackend.expectPOST('/api/cars').respond(fakeResponse);
@@ -184,6 +183,38 @@ describe('Controller: AdminCarAddCtrl', function () {
 
     expect($location.path()).toBe('/admin/car');
 	});
+});
 
-  // @todo edit
+/**
+ * Test AdminCarAddCtrl
+ */
+describe('Controller: AdminCarEditCtrl', function () {
+
+  beforeEach(module('fahrtenbuchApp'));
+  var AdminCarAddCtrl, $scope, $location, $httpBackend, fakeResponse;
+
+  beforeEach(inject(function ($controller, $rootScope, _$location_, _$httpBackend_, $routeParams) {
+
+    $scope = $rootScope.$new();
+    $location = _$location_;
+    $httpBackend = _$httpBackend_;
+    fakeResponse = '';
+
+    AdminCarAddCtrl = $controller('AdminCarEditCtrl', {
+      $scope: $scope,
+      $routeParams: {id: 1}
+    });
+  }));
+
+  it('test createCar functionfor edit', function () {
+    $httpBackend.expectGET('/api/cars/1').respond({_id: 1});
+    $httpBackend.flush();
+    expect(angular.equals($scope.car, {_id: 1})).toBe(true);
+
+    $scope.createCar();
+    $httpBackend.expectPATCH('/api/cars/1').respond(fakeResponse);
+    $httpBackend.flush();
+
+    expect($location.path()).toBe('/admin/car');
+  });
 });
