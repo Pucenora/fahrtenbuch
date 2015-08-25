@@ -37,9 +37,28 @@ describe('Controller: TripCtrl', function () {
  */
  describe('Controller: CreateTripCtrl', function () {
 
-  beforeEach(module('fahrtenbuchApp'));
   var CreateTripCtrl, $scope, $httpBackend, $location;
   var stayWithOneElements, stayWithTwoElements, fakeResponse, cars, car, accounts;
+  var user = {
+    name: 'Test',
+    defaultCar: 1
+    // email, baseName, baseLat, baseLong, role
+  };
+  var position = {
+    latitude: 48.368801,
+    longitude: 10.898653
+  };
+
+  beforeEach(function () {
+    module('fahrtenbuchApp');
+    module(function($provide) {
+      $provide.service('Auth', function() {
+        this.getCurrentUser = jasmine.createSpy('getCurrentUser').andCallFake(function() {
+          return user;
+        });
+      });
+    });
+  });
 
   beforeEach(inject(function (_$httpBackend_, $controller, $rootScope, _$location_) {
     
@@ -54,6 +73,8 @@ describe('Controller: TripCtrl', function () {
 
     stayWithOneElements = [{
       destination: '',
+      // destinationLat: null,
+      // destinationLong: null,
       client: '',
       destinationTime: new Date()
     }];
@@ -74,67 +95,68 @@ describe('Controller: TripCtrl', function () {
 
     $httpBackend.expectGET('/api/accounts').respond(accounts);
     $httpBackend.expectGET('/api/cars').respond(cars);
-    $httpBackend.expectGET('/api/cars/undefined').respond(car);
+    $httpBackend.expectGET('/api/cars/1').respond(car);
     $httpBackend.flush();
-
   }));
 
   it('call CreateTripCtrl', inject(function() {
     expect(angular.equals($scope.accounts, accounts)).toBe(true);
     expect(angular.equals($scope.cars, cars)).toBe(true);
-    expect(angular.equals($scope.trip.car, car)).toBe(true);
+    expect(angular.equals($scope.trip.car, car)).toBe(true);    
+    expect(angular.equals($scope.user, user)).toBe(true);
+
     expect(angular.equals($scope.trip.kilometerStart, 42)).toBe(true);
+    expect(angular.equals($scope.defaultCar, user.defaultCar)).toBe(true);
   }));
 
   it('test updateKilometerStart function', inject(function() {
-    $scope.trip.car = {mileage: 42};
+    $scope.trip.car = {mileage: 333};
     $scope.updateKilometerStart();
 
-    expect($scope.trip.kilometerStart).toBe(42);
+    expect($scope.trip.kilometerStart).toBe(333);
   }));
   
-  // it('test addStay function', inject(function() {
-  //   $scope.stays = stayWithOneElements;
-  //   $scope.addStay();
-
-  //   $scope.$digest();
-  //   // expect($scope.stays).toEqual(stayWithTwoElements);
-  //   expect(angular.equals($scope.stays, stayWithTwoElements)).toBe(true);
-  // }));
+  it('test addStay function', inject(function() {
+    $scope.stays = stayWithOneElements;
+    expect(angular.equals($scope.stays.length, 1)).toBe(true);
+    
+    $scope.addStay();
+    expect(angular.equals($scope.stays.length, 2)).toBe(true);
+  }));
   
   it('test removeStay function', inject(function() {
     $scope.stays = stayWithTwoElements;
-    $scope.removeStay($scope.stays[0]);
+    expect(angular.equals($scope.stays.length, 2)).toBe(true);
 
-    // expect($scope.stays).toEqual(stayWithOneElements);
-    expect(angular.equals($scope.stays, stayWithOneElements)).toBe(true);
+    $scope.removeStay($scope.stays[0]);
+    expect(angular.equals($scope.stays.length, 1)).toBe(true);
   }));
  
-  it('test addTrip function', inject(function() {
+  // it('test addTrip function', inject(function() {
 
-    $scope.trip.account = accounts[0];
-    $scope.user = {_id: 1, name: 'test'};
-    var stays = [{_id: 1, destination: '', client: '', destinationTime: new Date('2015-05-30 10:00:00')}];
-    $scope.stays = stays;
-    $scope.trip.route = fakeResponse;
-    $scope.$digest();
+  //   $scope.trip.account = accounts[0];
+  //   $scope.user = {_id: 1, name: 'test'};
+  //   var stays = [{_id: 1, destination: '', client: '', destinationTime: new Date('2015-05-30 10:00:00')}];
+  //   $scope.stays = stays;
+  //   $scope.trip.route = fakeResponse;
+  //   $scope.$digest();
 
-    $scope.addTrip();
-    $httpBackend.expectPOST('/api/stays').respond(stays);
-    $httpBackend.expectPOST('/api/trips').respond(fakeResponse);
-    $httpBackend.expectPATCH('/api/cars/1').respond(fakeResponse);
-    $httpBackend.flush();
+  //   $scope.addTrip();
+  //   $httpBackend.expectPOST('/api/stays').respond(stays);
+  //   $httpBackend.expectPOST('/api/trips').respond(fakeResponse);
+  //   $httpBackend.expectPATCH('/api/cars/1').respond(fakeResponse);
+  //   $httpBackend.flush();
 
-    expect(angular.equals($scope.trip.car, 1)).toBe(true);
-    expect(angular.equals($scope.trip.account, 1)).toBe(true);
+  //   expect(angular.equals($scope.trip.car, 1)).toBe(true);
+  //   expect(angular.equals($scope.trip.account, 1)).toBe(true);
 
-    expect(angular.equals($scope.trip.user, 1)).toBe(true);
-    console.log($scope.trip.stays);
-    // expect(angular.equals($scope.trip.stays, [1])).toBe(true);
-    // car.mileage = $scope.trip.kilometerEnd;
-    // expect($location.path()).toBe('/trip');
-  }));
-
+  //   expect(angular.equals($scope.trip.user, 1)).toBe(true);
+  //   //
+  //   console.log($scope.trip.stays);
+  //   // expect(angular.equals($scope.trip.stays, [1])).toBe(true);
+  //   // car.mileage = $scope.trip.kilometerEnd;
+  //   // expect($location.path()).toBe('/trip');
+  // }));
 });
 
 /**
@@ -163,7 +185,7 @@ describe('Controller: DetailTripCtrl', function () {
     $httpBackend.expectGET('/api/trips/' + testTrip._id).respond(testTrip);
     $httpBackend.flush();
 
-    expect($scope.trip).toEqual({_id: 1, stays: [{destination: 'test'}]});
+    expect($scope.trip).toEqual(testTrip);
     expect($scope.destinations).toEqual('test');
   }));
 
@@ -172,3 +194,10 @@ describe('Controller: DetailTripCtrl', function () {
     expect($location.path()).toBe('/trip');
   }));
 });
+
+// @todo
+// $scope.$storage.trip, $scope.$storage.stays
+// getPosition
+// startWatchPosition
+// stopWatchPosition
+// with trips or without

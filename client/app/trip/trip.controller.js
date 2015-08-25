@@ -217,31 +217,33 @@ angular.module('fahrtenbuchApp')
 	    	$scope.trip.account = $scope.trip.account._id;
 	    	$scope.trip.user = $scope.user._id;
 
+	    	$scope.trip.route = null;
+
 	    	// save all associated positions of the route to database
-	    	var currentPromises = [];
-				if ($scope.trip.route !== null) {
-					$scope.trip.route.forEach(function(position) {
-						var coordinate = {
-							latitude: position.coords.latitude,
-							longitude: position.coords.longitude
-						};
-						var currentPromise = Coordinate.postCoordinate(coordinate)
-					  .catch(function(err) {
-					    $scope.errors.other = err.message;
-					  });
-						currentPromises.push(currentPromise);
-					});
-				}
+	   //  	var currentPromises = [];
+				// if ($scope.trip.route !== null) {
+				// 	$scope.trip.route.forEach(function(position) {
+				// 		var coordinate = {
+				// 			latitude: position.coords.latitude,
+				// 			longitude: position.coords.longitude
+				// 		};
+				// 		var currentPromise = Coordinate.postCoordinate(coordinate)
+				// 	  .catch(function(err) {
+				// 	    $scope.errors.other = err.message;
+				// 	  });
+				// 		currentPromises.push(currentPromise);
+				// 	});
+				// }
 
-				$q.all(currentPromises)
-				.then(function(positions) {
+				// $q.all(currentPromises)
+				// .then(function(positions) {
 
-					// add positions to route in trip
-					var positionIds = [];
-					positions.forEach(function(position) {
-						positionIds.push(position._id);
-					});
-					$scope.trip.route = positionIds;
+				// 	// add positions to route in trip
+				// 	var positionIds = [];
+				// 	positions.forEach(function(position) {
+				// 		positionIds.push(position._id);
+				// 	});
+				// 	$scope.trip.route = positionIds;
 
 					// save trip in database
 					Trip.postTrip($scope.trip)
@@ -262,7 +264,7 @@ angular.module('fahrtenbuchApp')
 			    .catch(function(err) {
 			      $scope.errors.other = err.message;
 			    });
-			  });
+			  // });
 			});
 		};
 	})

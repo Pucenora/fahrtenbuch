@@ -5,8 +5,8 @@ var mongoose = require('mongoose'),
 
 var StayShema = new Schema({
 	destination: {type: String, required: true},
+	destinationLat: {type: Number, required: false},	
 	destinationLong: {type: Number, required: false},
-	destinationLat: {type: Number, required: false},
 	client: {type: String, required: false},
 	destinationTime: {type: Date, required: true}
 });
