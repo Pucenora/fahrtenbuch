@@ -44,10 +44,6 @@ describe('Controller: TripCtrl', function () {
     defaultCar: 1
     // email, baseName, baseLat, baseLong, role
   };
-  var position = {
-    latitude: 48.368801,
-    longitude: 10.898653
-  };
 
   beforeEach(function () {
     module('fahrtenbuchApp');
@@ -132,31 +128,27 @@ describe('Controller: TripCtrl', function () {
     expect(angular.equals($scope.stays.length, 1)).toBe(true);
   }));
  
-  // it('test addTrip function', inject(function() {
+  it('test addTrip function', inject(function() {
 
-  //   $scope.trip.account = accounts[0];
-  //   $scope.user = {_id: 1, name: 'test'};
-  //   var stays = [{_id: 1, destination: '', client: '', destinationTime: new Date('2015-05-30 10:00:00')}];
-  //   $scope.stays = stays;
-  //   $scope.trip.route = fakeResponse;
-  //   $scope.$digest();
+    $scope.user = {_id: 1, name: 'test'};
+    $scope.trip.account = accounts[0];
+    $scope.trip.car = cars[0];    
 
-  //   $scope.addTrip();
-  //   $httpBackend.expectPOST('/api/stays').respond(stays);
-  //   $httpBackend.expectPOST('/api/trips').respond(fakeResponse);
-  //   $httpBackend.expectPATCH('/api/cars/1').respond(fakeResponse);
-  //   $httpBackend.flush();
+    var stays = [{_id: 1, destination: '', client: '', destinationTime: new Date('2015-05-30 10:00:00')}];
+    $scope.stays = stays;
+    $scope.trip.route = fakeResponse;
 
-  //   expect(angular.equals($scope.trip.car, 1)).toBe(true);
-  //   expect(angular.equals($scope.trip.account, 1)).toBe(true);
+    $scope.addTrip();
+    $httpBackend.expectPOST('/api/stays').respond(stays);
+    $httpBackend.expectPOST('/api/trips').respond(fakeResponse);
+    $httpBackend.expectPATCH('/api/cars/1').respond(fakeResponse);
+    $httpBackend.flush();
 
-  //   expect(angular.equals($scope.trip.user, 1)).toBe(true);
-  //   //
-  //   console.log($scope.trip.stays);
-  //   // expect(angular.equals($scope.trip.stays, [1])).toBe(true);
-  //   // car.mileage = $scope.trip.kilometerEnd;
-  //   // expect($location.path()).toBe('/trip');
-  // }));
+    expect(angular.equals($scope.trip.user, 1)).toBe(true);
+    expect(angular.equals($scope.trip.account, 1)).toBe(true);
+    expect(angular.equals($scope.trip.car, 1)).toBe(true);
+    expect($location.path()).toBe('/trip');
+  }));
 });
 
 /**

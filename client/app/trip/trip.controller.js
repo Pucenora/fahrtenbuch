@@ -56,7 +56,8 @@ angular.module('fahrtenbuchApp')
 
 	 	$scope.accounts = [];
 	 	$scope.cars = [];
-	 	$scope.trip = {}; 
+	 	$scope.trip = {};
+	 	$scope.route = [];
 
 		// initialize dates in datetimepicker
   	$scope.trip.originTime = new Date();
@@ -159,7 +160,8 @@ angular.module('fahrtenbuchApp')
 			Location.clearWatch()
 			.then(function(positions) {
 				Directions.polygons(null, positions, $scope.stays, map);
-				$scope.trip.route = positions;
+				// $scope.trip.route = positions;
+				$scope.route = positions;
 				$scope.recordingStatus = 'stopped';
 			})
 	    .catch(function(err) {
@@ -189,6 +191,7 @@ angular.module('fahrtenbuchApp')
 		$scope.addTrip = function() {
 
 			var promises = [];
+			var count = 0;
 
 			// save all associated stays to database
 			if ($scope.stays !== null) {
@@ -198,73 +201,73 @@ angular.module('fahrtenbuchApp')
 				    $scope.errors.other = err.message;
 				  });
 					promises.push(promise);
+					count ++;
+				});
+			}
+
+			// save all associated positions to database
+			if ($scope.route !== null) {
+    		var currentPromises = [];
+				$scope.route.forEach(function(position) {
+					var coordinate = {
+						latitude: position.coords.latitude,
+						longitude: position.coords.longitude
+					};
+					var currentPromise = Coordinate.postCoordinate(coordinate)
+				  .catch(function(err) {
+				    $scope.errors.other = err.message;
+				  });
+					promises.push(currentPromise);
 				});
 			}
 
 			$q.all(promises)
-			.then(function(stays) {
+			.then(function(data) {
 
 				// add stays to trip
 				var stayIds = [];
-				stays.forEach(function(stay) {
-					stayIds.push(stay._id);
-				});
+				for (var i = 0; i<count; i++) {
+					stayIds.push(data[i]._id);
+				}
 				$scope.trip.stays = stayIds;
-	    	var car = $scope.trip.car;
+
+				// add positions to trip
+				var positionIds = [];
+				for (var j = count + 1; j<data.length; j++) {
+					positionIds.push(data[j]._id);
+				}
+				$scope.trip.route = positionIds;
 
 				// add car, account and user to trip
-	    	$scope.trip.car = $scope.trip.car._id;
-	    	$scope.trip.account = $scope.trip.account._id;
 	    	$scope.trip.user = $scope.user._id;
+	    	var car = $scope.trip.car;
+	    	$scope.trip.car = $scope.trip.car._id;
 
-	    	$scope.trip.route = null;
+	    	if ($scope.trip.account === undefined) {
+	    		$scope.trip.account = null;
+	    	} else {
+	    		$scope.trip.account = $scope.trip.account._id;
+	    	}
 
-	    	// save all associated positions of the route to database
-	   //  	var currentPromises = [];
-				// if ($scope.trip.route !== null) {
-				// 	$scope.trip.route.forEach(function(position) {
-				// 		var coordinate = {
-				// 			latitude: position.coords.latitude,
-				// 			longitude: position.coords.longitude
-				// 		};
-				// 		var currentPromise = Coordinate.postCoordinate(coordinate)
-				// 	  .catch(function(err) {
-				// 	    $scope.errors.other = err.message;
-				// 	  });
-				// 		currentPromises.push(currentPromise);
-				// 	});
-				// }
+				// save trip in database
+				Trip.postTrip($scope.trip)
+		    .then(function() {
 
-				// $q.all(currentPromises)
-				// .then(function(positions) {
-
-				// 	// add positions to route in trip
-				// 	var positionIds = [];
-				// 	positions.forEach(function(position) {
-				// 		positionIds.push(position._id);
-				// 	});
-				// 	$scope.trip.route = positionIds;
-
-					// save trip in database
-					Trip.postTrip($scope.trip)
+		    	// update mileage in used car
+		    	car.mileage = $scope.trip.kilometerEnd;		    	
+					Car.patchCar(car)
 			    .then(function() {
-
-			    	// update mileage in used car
-			    	car.mileage = $scope.trip.kilometerEnd;		    	
-						Car.patchCar(car)
-				    .then(function() {
-				    	$scope.$storage.trip = null;
-				    	$scope.$storage.stays = null;
-				    	$location.path('/trip');
-				    })
-				    .catch(function(err) {
-				      $scope.errors.other = err.message;
-				    });
+			    	$scope.$storage.trip = null;
+			    	$scope.$storage.stays = null;
+			    	$location.path('/trip');
 			    })
 			    .catch(function(err) {
 			      $scope.errors.other = err.message;
 			    });
-			  // });
+		    })
+		    .catch(function(err) {
+		      $scope.errors.other = err.message;
+		    });
 			});
 		};
 	})
