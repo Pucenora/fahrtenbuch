@@ -156,8 +156,18 @@ describe('Controller: TripCtrl', function () {
  */
 describe('Controller: DetailTripCtrl', function () {
 
-  beforeEach(module('fahrtenbuchApp'));
   var DetailTripCtrl, $scope, $httpBackend, $location, testTrip;
+
+  beforeEach(function () {
+    module('fahrtenbuchApp');
+    module(function($provide) {
+      $provide.service('Directions', function() {
+        this.polygons = jasmine.createSpy('polygons').andCallFake(function() {
+          return null;
+        });
+      });
+    });
+  });
 
   beforeEach(inject(function (_$httpBackend_, $controller, $rootScope, $routeParams, _$location_) {
     

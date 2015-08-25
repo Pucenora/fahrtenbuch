@@ -82,10 +82,9 @@ angular.module('fahrtenbuchApp')
        *
        * @param   {Function}  callback    - optional 
        * @param   {Array}     coordinatesList
-       * @param   {Array}     stays
        * @param   {Object}    map
       */
-      polygons: function(callback, coordinatesList, stays, map) {
+      polygons: function(callback, coordinatesList, map) {
 
         // cancel when application can't connect to google
         if (google === undefined) {
@@ -102,40 +101,22 @@ angular.module('fahrtenbuchApp')
         // initialize polylines and set map
         var poly = new google.maps.Polyline(polyOptions);
         poly.setMap(map);
-
         var path = poly.getPath();
 
         // convert coordinates to LatLng-Object and add it to the route
         for (var i = 0; i < coordinatesList.length; i++) {
-          var lat = coordinatesList[i].coords.latitude;
-          var lng = coordinatesList[i].coords.longitude;
 
-          var element = new google.maps.LatLng(lat, lng);
-
-          path.push(element);
-        }
-
-        // mark stays at the route
-        for (var j = 0; j < stays; j++) {
-          var position = {};
-          // calculate coordinates of a stay, in case it didn't happen before
-          if (stays[j].destinationLat === false || stays[j].destinationLong === false) {
-            Geocode.geocode(null, stays[j].destination)
-              .then(function(pos) {
-                position = pos;
-              })
-              .catch(function(err) {
-                throw new Error(err.message);
-              });
+          var lat, lng;
+          if (coordinatesList[i].coords !== undefined) {
+            lat = coordinatesList[i].coords.latitude;
+            lng = coordinatesList[i].coords.longitude;
           } else {
-            position = new google.maps.LatLng(stays[j].destinationLat, stays[j].destinationLong);
+            lat = coordinatesList[i].latitude;
+            lng = coordinatesList[i].longitude;
           }
 
-          // add marker
-          new google.maps.Marker({
-            position: position,
-            map: map
-          });
+          var element = new google.maps.LatLng(lat, lng);
+          path.push(element);
         }
       }
     };

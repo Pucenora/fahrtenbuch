@@ -159,8 +159,7 @@ angular.module('fahrtenbuchApp')
 		$scope.stopWatchPosition = function() {
 			Location.clearWatch()
 			.then(function(positions) {
-				Directions.polygons(null, positions, $scope.stays, map);
-				// $scope.trip.route = positions;
+				Directions.polygons(null, positions, map);
 				$scope.route = positions;
 				$scope.recordingStatus = 'stopped';
 			})
@@ -279,16 +278,47 @@ angular.module('fahrtenbuchApp')
 	/**
 	 * show trip details
 	**/
-	.controller('DetailTripCtrl', function ($scope, $routeParams, $location, Stay, Trip) {
+	.controller('DetailTripCtrl', function ($scope, $routeParams, $location, Stay, Trip, Auth, Directions, config) {
 
 		$scope.trip = {};
 		$scope.destinations = '';
+    $scope.user = Auth.getCurrentUser();
+    $scope.errors = {};
 
 		Trip.getTrip($routeParams.id)
     .then(function(trip) {
 			$scope.trip = trip;
     	// the description of the trip consists of all destinations of a stay
   		$scope.destinations = Stay.getDestinationsAsString(trip.stays);
+
+  		var base;
+		 	if ($scope.user.baseLat && $scope.user.baseLong) {
+		 		base = new google.maps.LatLng($scope.user.baseLat, $scope.user.baseLong);
+		 	} 
+		 	// if the user has no base, set the coordinates to "Rathaus Augsburg"
+		 	else {
+		 		base = new google.maps.LatLng(48.368801, 10.898653);
+		 	}
+
+		 	// use default options and base to initialize google map
+		 	var mapOptions = config.defaultMapOptions;
+		 	mapOptions.center = base;
+		 	var map = new google.maps.Map(document.getElementById('mapContainer'), config.defaultMapOptions);
+			
+			if ($scope.trip.route !== []) {
+				Directions.polygons(null, $scope.trip.route, map);
+			}
+
+			for (var i = 0; i < $scope.trip.stays.length; i++) {
+				var lat = $scope.trip.stays[i].destinationLat;
+				var lng = $scope.trip.stays[i].destinationLong;
+				if (lat && lng) {
+					new google.maps.Marker({
+				    position: new google.maps.LatLng(lat, lng),
+				    map: map
+	  			});
+				}
+			}
     })
     .catch(function(err) {
       $scope.errors.other = err.message;
