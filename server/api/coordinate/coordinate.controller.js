@@ -22,7 +22,7 @@ exports.index = function(req, res) {
 
 // Get a single coordinate
 exports.show = function(req, res) {
-  coordinate.findById(req.params.id, function (err, coordinate) {
+  Coordinate.findById(req.params.id, function (err, coordinate) {
     if(err) { return handleError(res, err); }
     if(!coordinate) { return res.send(404); }
     return res.json(coordinate);
