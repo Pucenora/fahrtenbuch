@@ -65,7 +65,7 @@ angular.module('fahrtenbuchApp')
         var cb = callback || angular.noop;
         var deferred = $q.defer();
 
-        $http.post('/api/coordinates', coordinate)
+        $http.post('/api/coordinates', angular.toJson(coordinate))
         .success(function(coordinate) {
           deferred.resolve(coordinate);
         })
