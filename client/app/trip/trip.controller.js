@@ -46,6 +46,7 @@ angular.module('fahrtenbuchApp')
 	 	$scope.recordingStatus = 'stopped'; 
   	// general error displayed in the view
     $scope.errors = {};
+    $scope.saveRoute = false;
 
     // initialize local storage
     $scope.$storage = $localStorage;
@@ -205,7 +206,7 @@ angular.module('fahrtenbuchApp')
 			}
 
 			// save all associated positions to database
-			if ($scope.route !== null) {
+			if ($scope.route !== null && $scope.saveRoute !== false) {
     		var currentPromises = [];
 				$scope.route.forEach(function(position) {
 					var coordinate = {

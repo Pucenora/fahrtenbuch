@@ -19,6 +19,12 @@
   <button type="button" class="btn btn-success btn-lg" ng-click="stopWatchPosition()">Stop</button>
   Recording: <label id="{{ recordingStatus }}">{{ recordingStatus }}</label>
 
+  <div class="checkbox">
+    <label>
+      Save route? <input type="checkbox" ng-model="saveRoute">
+    </label>
+  </div>
+
   <form class="css-form" novalidate name="form">
     <p class="input-group">
 
