@@ -104,9 +104,13 @@
 
       <!-- repeat start-->
       <div ng-repeat="stay in stays">
-        <button type="button" class="btn btn-success btn-lg" ng-click="removeStay(stay)"><i class="glyphicon glyphicon-minus"></i></button>
         <div class="well">
           <ng-form name="stayForm">
+            <div class="row"> 
+              <div class="col-xs-12 col-md-12">
+                <button type="button" class="btn btn-danger pull-right" ng-click="removeStay(stay)"><i class="glyphicon glyphicon-remove-circle"></i></button>
+              </div>
+            </div>
             <div class="row"> 
               <div class="col-xs-12 col-md-6">
                 <div class="form-group">
@@ -135,8 +139,6 @@
               <div class="col-xs-12">
                 <div class="form-group">
                   <datetimepicker min-date="minDate" show-weeks="showWeeks" hour-step="hourStep" minute-step="minuteStep" ng-model="stay.destinationTime" show-meridian="showMeridian" date-format="dd-MMM-yyyy" date-options="dateOptions" date-disabled="disabled(date, mode)" readonly-time="false"></datetimepicker>
-
-                  <!-- <button type="button" class="btn btn-success btn-lg" ng-click="removeStay(stay)"><i class="glyphicon glyphicon-minus"></i></button> -->
                 </div>
               </div>
             </div>

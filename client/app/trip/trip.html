@@ -7,15 +7,14 @@
     </div>
   </div>
 
+  <button class="btn btn-success btn-lg" ng-click="addTrip()">Add Trip</button>
+  <p class="help-block"><span class="label label-danger">{{ errors.other }}</span></p>
+
   <div class="row">
     <div class="col-lg-12">
       <ul ng-repeat="trip in trips">
         <li><a href="/trip/{{trip._id}}" tooltip="{{trip.stays}}">{{trip.stays}}</a></li>
       </ul>
     </div>
-  </div>
-
-  <p class="help-block"><span class="label label-danger">{{ errors.other }}</span></p>
-  <button class="btn btn-success btn-lg" ng-click="addTrip()">Add Trip</button>
-  
+  </div>  
 </div>
