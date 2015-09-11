@@ -31,6 +31,16 @@
       <div class="row"> 
         <div class="col-xs-12">
           <div class="form-group">
+            <label>label:</label>
+            <input ng-model="trip.label" class="form-control" name="label" required="" />
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="row"> 
+        <div class="col-xs-12">
+          <div class="form-group">
       	    <label>car:</label>
             <select ng-model="trip.car" ng-click="updateKilometerStart()" class="form-control" ng-options="car.description for car in cars">
             </select>

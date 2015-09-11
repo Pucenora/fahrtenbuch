@@ -7,9 +7,10 @@ angular.module('fahrtenbuchApp')
 	 * /trip
 	 * Trip overview 
 	**/
-	.controller('TripCtrl', function ($scope, $location, Stay, Trip) {
+	.controller('TripCtrl', function ($scope, $location, Stay, Trip, Auth) {
 	
 		$scope.trips = [];
+		$scope.user = Auth.getCurrentUser();
 
 		Trip.getTrips()
     .then(function(trips) {

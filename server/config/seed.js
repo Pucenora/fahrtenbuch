@@ -343,6 +343,7 @@ Stay.find({}).remove(function() {
 Trip.find({}).remove(function() {
   Trip.create({
     user: newUser,
+    label: 'Klinikum Augsburg',
     car: newCar2,
     type: 'corporate',
     account: newAccount,
@@ -354,6 +355,7 @@ Trip.find({}).remove(function() {
     timestamp: new Date("January 04, 2011 20:00:00"),
   }, {
     user: newUser,
+    label: 'Uniklinik Regensburg',
     car: newCar2,
     type: 'corporate',
     account: newAccount,
@@ -365,6 +367,7 @@ Trip.find({}).remove(function() {
     timestamp: new Date("January 05, 2011 20:00:00"),
   }, {
     user: newUser,
+    label: 'Tübingen und Günzburg',
     car: newCar2,
     type: 'corporate',
     account: newAccount,
@@ -376,6 +379,7 @@ Trip.find({}).remove(function() {
     timestamp: new Date("January 07, 2011 20:00:00"),
   }, {
     user: newUser,
+    label: 'Günzburg, Tübingen und Würzburg',
     car: newCar2,
     type: 'corporate',
     account: newAccount,
@@ -387,6 +391,7 @@ Trip.find({}).remove(function() {
     timestamp: new Date("January 11, 2011 20:00:00"),
   }, {
     user: newUser,
+    label: 'München',
     car: newCar2,
     type: 'corporate',
     account: newAccount,
@@ -398,6 +403,7 @@ Trip.find({}).remove(function() {
     timestamp: new Date("January 12, 2011 20:00:00"),
   }, {
     user: newUser,
+    label: 'Kehl Kork',
     car: newCar2,
     type: 'corporate',
     account: newAccount,
@@ -409,6 +415,7 @@ Trip.find({}).remove(function() {
     timestamp: new Date("January 13, 2011 20:00:00"),
   }, {
     user: newUser,
+    label: 'München-Schwabing',
     car: newCar2,
     type: 'corporate',
     account: newAccount,
@@ -420,6 +427,7 @@ Trip.find({}).remove(function() {
     timestamp: new Date("January 17, 2011 20:00:00"),
   }, {
     user: newUser,
+    label: 'Tübingen und Würzburg',
     car: newCar2,
     type: 'corporate',
     account: newAccount,
@@ -431,6 +439,7 @@ Trip.find({}).remove(function() {
     timestamp: new Date("January 19, 2011 20:00:00"),
   }, {
     user: newUser,
+    label: 'privat',
     car: newCar2,
     type: 'noncorporate',
     kilometerStart: 84429,
@@ -440,6 +449,7 @@ Trip.find({}).remove(function() {
     timestamp: new Date("January 23, 2011 20:00:00"),
   }, {
     user: newUser,
+    label: 'Uniklinik Tübingen',
     car: newCar2,
     type: 'corporate',
     account: newAccount,
@@ -451,6 +461,7 @@ Trip.find({}).remove(function() {
     timestamp: new Date("January 24, 2011 20:00:00"),
   }, {
     user: newUser,
+    label: 'Tübingen und München-Schwabing',
     car: newCar2,
     type: 'corporate',
     account: newAccount,
@@ -462,6 +473,7 @@ Trip.find({}).remove(function() {
     timestamp: new Date("January 26, 2011 20:00:00"),
   }, {  
     user: newUser,
+    label: 'Bogenhausen und Günzburg',
     car: newCar2,
     type: 'corporate',
     account: newAccount,
@@ -473,6 +485,7 @@ Trip.find({}).remove(function() {
     timestamp: new Date("January 27, 2011 20:00:00"),
   }, {  
     user: newUser,
+    label: 'Uniklinikum Regensburg',
     car: newCar2,
     type: 'corporate',
     account: newAccount,
