@@ -33,7 +33,8 @@
             <span class="pull-right">{{trip.kilometerStart}} km <i class="glyphicon glyphicon-arrow-right"></i> {{trip.kilometerEnd}} km</span>
           </p>
           <p>{{trip.originTime | date:"dd.MM.yyyy 'um' HH:mm 'Uhr'"}} <i class="glyphicon glyphicon-arrow-right"></i> {{trip.destinationTime | date:"dd.MM.yyyy 'um' HH:mm 'Uhr'"}}</p>
-          <p>Account: {{trip.account.name}}</p>
+          <p ng-if="trip.account === null">Account: None</p>
+          <p ng-if="trip.account !== null">Account: {{trip.account.name}}</p>
         </div>
       </div>
     </div>

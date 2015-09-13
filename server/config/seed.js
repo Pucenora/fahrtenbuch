@@ -54,7 +54,7 @@ var newCar2 = new Car({
   description: 'Mercedes C Klasse',
   licenseTag: 'A-Z-4321',
   mileage: 5000,
-    base: 'Augsburg',
+  base: 'Augsburg',
 });
 newCar2.save();
 
@@ -88,9 +88,6 @@ var newUser = new User({
   name: 'Test User',
   email: 'test@test.com',
   defaultCar: newCar1,
-  baseName: 'Rathaus Augsburg',
-  baseLat: 48.368765,
-  baseLong: 10.898706,
   password: 'test'
 });
 newUser.save();
@@ -102,9 +99,6 @@ User.find({}).remove(function() {
     name: 'Admin',
     email: 'admin@admin.com',
     defaultCar: newCar2,
-    baseName: 'Rathaus Augsburg',
-    baseLat: 48.368765,
-    baseLong: 10.898706,
     password: 'admin'
   }, function() {
       console.log('finished populating users');

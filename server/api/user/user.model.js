@@ -9,9 +9,6 @@ var UserSchema = new Schema({
   name: String,
   email: { type: String, lowercase: true },
   defaultCar: { type: ObjectId, ref: 'Car' },
-  baseName: { type: String},
-  baseLat: { type: Number},
-  baseLong: { type: Number},
   role: {
     type: String,
     default: 'user'

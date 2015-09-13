@@ -22,6 +22,11 @@
             <td><strong>Label</strong></td>
             <td><strong>Milage</strong></td>
           </tr>
+          <tr ng-show="trips.length === 0">
+            <td><i>No trips yet!</i></td>
+            <td></td>
+            <td></td>
+          </tr>
           <tr ng-repeat="trip in trips">
             <td>{{trip.originTime  | date:"dd.MM.yyyy 'um' HH:mm 'Uhr'"}}</a></td>
             <td><a href="/trip/{{trip._id}}" title="{{trip.stays}}">{{trip.label}}</a></td>

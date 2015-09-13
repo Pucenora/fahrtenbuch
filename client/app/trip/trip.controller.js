@@ -60,6 +60,7 @@ angular.module('fahrtenbuchApp')
 	 	$scope.cars = [];
 	 	$scope.trip = {};
 	 	$scope.route = [];
+	 	var map;
 
 		// initialize dates in datetimepicker
   	$scope.trip.originTime = new Date();
@@ -69,20 +70,17 @@ angular.module('fahrtenbuchApp')
 	 	$scope.stays = [];
 	 	$scope.stays.push({destination: '', client: '', destinationTime: new Date()});
 
-	 	// get user's base
-	 	var base;
-	 	if ($scope.user.baseLat && $scope.user.baseLong) {
-	 		base = new google.maps.LatLng($scope.user.baseLat, $scope.user.baseLong);
-	 	} 
-	 	// if the user has no base, set the coordinates to "Rathaus Augsburg"
-	 	else {
-	 		base = new google.maps.LatLng(48.368801, 10.898653);
-	 	}
-
-	 	// use default options and base to initialize google map
-	 	var mapOptions = config.defaultMapOptions;
-	 	mapOptions.center = base;
-	 	var map = new google.maps.Map(document.getElementById('mapContainer'), config.defaultMapOptions);
+	 	// get current position
+		Location.getCurrentPosition()
+    .then(function(position) {
+			// use default options and current position to initialize google map
+		 	var mapOptions = config.defaultMapOptions;
+		 	mapOptions.center = new google.maps.LatLng(position.latitude, position.longitude);
+		 	map = new google.maps.Map(document.getElementById('mapContainer'), config.defaultMapOptions);
+    })
+    .catch(function(err) {
+    	$scope.errors.other = err.message;
+  	});
 
 		/**
 		 * End initialize variables
@@ -92,6 +90,8 @@ angular.module('fahrtenbuchApp')
 		Account.getAccounts()
     .then(function(accounts) {
     	$scope.accounts = accounts;
+    	$scope.accounts.push({name: 'None'});
+    	$scope.trip.account = $scope.accounts[$scope.accounts.length - 1];
     })
     .catch(function(err) {
       $scope.errors.other = err.message;
@@ -244,7 +244,7 @@ angular.module('fahrtenbuchApp')
 	    	var car = $scope.trip.car;
 	    	$scope.trip.car = $scope.trip.car._id;
 
-	    	if ($scope.trip.account === undefined) {
+	    	if ($scope.trip.account === undefined || $scope.trip.account.name === 'None') {
 	    		$scope.trip.account = null;
 	    	} else {
 	    		$scope.trip.account = $scope.trip.account._id;
@@ -280,12 +280,13 @@ angular.module('fahrtenbuchApp')
 	/**
 	 * show trip details
 	**/
-	.controller('DetailTripCtrl', function ($scope, $routeParams, $location, Stay, Trip, Auth, Directions, config) {
+	.controller('DetailTripCtrl', function ($scope, $routeParams, $location, Stay, Trip, Auth, Location,  Directions, config) {
 
 		$scope.trip = {};
 		$scope.destinations = '';
     $scope.user = Auth.getCurrentUser();
     $scope.errors = {};
+    var map;
 
 		Trip.getTrip($routeParams.id)
     .then(function(trip) {
@@ -293,23 +294,21 @@ angular.module('fahrtenbuchApp')
     	// the description of the trip consists of all destinations of a stay
   		$scope.destinations = Stay.getDestinationsAsString(trip.stays);
 
-  		var base;
-		 	if ($scope.user.baseLat && $scope.user.baseLong) {
-		 		base = new google.maps.LatLng($scope.user.baseLat, $scope.user.baseLong);
-		 	} 
-		 	// if the user has no base, set the coordinates to "Rathaus Augsburg"
-		 	else {
-		 		base = new google.maps.LatLng(48.368801, 10.898653);
-		 	}
+			Location.getCurrentPosition()
+	    .then(function(position) {
+	    	// use default options and base to initialize google map
+			 	var mapOptions = config.defaultMapOptions;
+		 		mapOptions.center = new google.maps.LatLng(position.latitude, position.longitude);
+			 	map = new google.maps.Map(document.getElementById('mapContainer'), config.defaultMapOptions);
 
-		 	// use default options and base to initialize google map
-		 	var mapOptions = config.defaultMapOptions;
-		 	mapOptions.center = base;
-		 	var map = new google.maps.Map(document.getElementById('mapContainer'), config.defaultMapOptions);
-			
-			if ($scope.trip.route !== []) {
-				Directions.polygons(null, $scope.trip.route, map);
-			}
+			 	console.log($scope.trip.route );
+				if ($scope.trip.route !== []) {
+					Directions.polygons(null, $scope.trip.route, map);
+				}
+	    })
+	    .catch(function(err) {
+	    	$scope.errors.other = err.message;
+	  	});
 
 			for (var i = 0; i < $scope.trip.stays.length; i++) {
 				var lat = $scope.trip.stays[i].destinationLat;
