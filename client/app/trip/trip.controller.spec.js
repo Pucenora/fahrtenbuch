@@ -1,5 +1,20 @@
 'use strict';
 /* global google */
+/* global navigator */
+
+// navigator mock
+window.navigator = {
+  geolocation: {
+    getCurrentPosition: function(){
+      return {
+        coords: {
+          latitude: 48.368801,
+          longitude: 10.898653
+        }
+      }
+    },
+  }
+};
 
 /**
  * Test TripCtrl
@@ -38,7 +53,7 @@ describe('Controller: TripCtrl', function () {
  describe('Controller: CreateTripCtrl', function () {
 
   var CreateTripCtrl, $scope, $httpBackend, $location;
-  var stayWithOneElements, stayWithTwoElements, fakeResponse, cars, car, accounts;
+  var stayWithOneElements, stayWithTwoElements, fakeResponse, cars, car, accounts, accountsWithNone;
   var user = {
     name: 'Test',
     defaultCar: 1
@@ -88,6 +103,7 @@ describe('Controller: TripCtrl', function () {
     cars = [{_id: 1, __v: 0, mileage: 42}, {_id: 2, __v: 1, mileage: 123}];
     car = {_id: 1, __v: 0, mileage: 42};
     accounts = [{_id: 1, name: 'test'}];
+    accountsWithNone = [{_id: 1, name: 'test'}, {name: 'None'}];
 
     $httpBackend.expectGET('/api/accounts').respond(accounts);
     $httpBackend.expectGET('/api/cars').respond(cars);
@@ -96,9 +112,9 @@ describe('Controller: TripCtrl', function () {
   }));
 
   it('call CreateTripCtrl', inject(function() {
-    expect(angular.equals($scope.accounts, accounts)).toBe(true);
+    expect(angular.equals($scope.accounts, accountsWithNone)).toBe(true);
     expect(angular.equals($scope.cars, cars)).toBe(true);
-    expect(angular.equals($scope.trip.car, car)).toBe(true);    
+    expect(angular.equals($scope.trip.car, car)).toBe(true);
     expect(angular.equals($scope.user, user)).toBe(true);
 
     expect(angular.equals($scope.trip.kilometerStart, 42)).toBe(true);
