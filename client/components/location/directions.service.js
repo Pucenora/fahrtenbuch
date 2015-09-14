@@ -106,7 +106,8 @@ angular.module('fahrtenbuchApp')
         // initialize polylines and set map
         var poly = new google.maps.Polyline(polyOptions);
         poly.setMap(map);
-        $rootScope.path = poly.getPath();        
+        $rootScope.path = poly.getPath();
+        $rootScope.pathLength = 0;        
       },
 
       addPointToPolyline: function(position) {    
@@ -116,6 +117,7 @@ angular.module('fahrtenbuchApp')
 
         $rootScope.path.push(currentPosition);
         $rootScope.marker.position = currentPosition;
+        $rootScope.pathLength = google.maps.geometry.spherical.computeLength($rootScope.path.getArray());
       }
     };
   });

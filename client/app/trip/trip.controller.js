@@ -34,7 +34,7 @@ angular.module('fahrtenbuchApp')
 	 * /trip/new
 	 * Create new trip
 	**/
-	.controller('CreateTripCtrl', function ($scope, $q, $location, $localStorage, Account, Car, Stay, Trip, Coordinate, Auth, Location, Geocode, Directions, config) {
+	.controller('CreateTripCtrl', function ($scope, $q, $location, $localStorage, $rootScope, Account, Car, Stay, Trip, Coordinate, Auth, Location, Geocode, Directions, config) {
 
 		/**
 		 * Start initialize variables
@@ -44,7 +44,7 @@ angular.module('fahrtenbuchApp')
 		$scope.hourStep = 1;
   	$scope.minuteStep = 5;
   	// display recording the route has not started yet
-	 	$scope.recordingStatus = 'stopped'; 
+	 	$scope.recordingStatus = 0 + ' km';
   	// general error displayed in the view
     $scope.errors = {};
     $scope.saveRoute = false;
@@ -155,7 +155,7 @@ angular.module('fahrtenbuchApp')
 		// start recording the route
 		$scope.startWatchPosition = function() {
 			Location.watchPosition();
-			$scope.recordingStatus = 'started';
+			$scope.recordingStatus = $rootScope.pathLength + ' km';
 		};
 
 		// stop recording the route and display it on the map
@@ -163,7 +163,7 @@ angular.module('fahrtenbuchApp')
 			Location.clearWatch()
 			.then(function(positions) {
 				$scope.route = positions;
-				$scope.recordingStatus = 'stopped';
+				$scope.trip.kilometerEnd = $scope.trip.kilometerStart = $scope.trip.kilometerStart + $rootScope.pathLength;
 			})
 	    .catch(function(err) {
       	$scope.errors.other = err.message;
