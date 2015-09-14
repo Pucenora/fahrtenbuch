@@ -2,7 +2,7 @@
 /* global navigator */
 
 angular.module('fahrtenbuchApp')
-  .factory('Location', function Location($q, $rootScope, config) {
+  .factory('Location', function Location($q, $rootScope, config, Directions) {
 
     return {
 
@@ -73,7 +73,7 @@ angular.module('fahrtenbuchApp')
 
         // watch position
         navigator.geolocation.watchPosition(function (position) { 
-          $rootScope.positions.push(position);
+          Directions.addPointToPolyline(position);
         }, function () {
           throw new Error('watchPosition failed!');
         }, options);
@@ -100,8 +100,7 @@ angular.module('fahrtenbuchApp')
         // clear watch
         navigator.geolocation.clearWatch(Location.watchPosition);
 
-        // return positions
-        deferred.resolve($rootScope.positions);
+        deferred.resolve($rootScope.path);
         return deferred.promise;
       }  
     };

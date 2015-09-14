@@ -2,7 +2,7 @@
 /* global google */
 
 angular.module('fahrtenbuchApp')
-  .factory('Directions', function Directions($q, Geocode) {
+  .factory('Directions', function Directions($q, Geocode, $rootScope) {
 
     return {
 
@@ -84,8 +84,7 @@ angular.module('fahrtenbuchApp')
        * @param   {Array}     coordinatesList
        * @param   {Object}    map
       */
-      polygons: function(callback, coordinatesList, map) {
-
+      polygons: function(callback, map) {
         // cancel when application can't connect to google
         if (google === undefined) {
           throw new Error('No Connection to Google!');
@@ -98,26 +97,25 @@ angular.module('fahrtenbuchApp')
           strokeWeight: 3
         };
 
+        var center = map.data.map.center;
+        $rootScope.marker = new google.maps.Marker({
+          position: new google.maps.LatLng(center.G, center.K),
+          map: map
+        });
+
         // initialize polylines and set map
         var poly = new google.maps.Polyline(polyOptions);
         poly.setMap(map);
-        var path = poly.getPath();
+        $rootScope.path = poly.getPath();        
+      },
 
-        // convert coordinates to LatLng-Object and add it to the route
-        for (var i = 0; i < coordinatesList.length; i++) {
+      addPointToPolyline: function(position) {    
+        var lat = position.coords.latitude;
+        var lng = position.coords.longitude;
+        var currentPosition = new google.maps.LatLng(lat, lng);
 
-          var lat, lng;
-          if (coordinatesList[i].coords !== undefined) {
-            lat = coordinatesList[i].coords.latitude;
-            lng = coordinatesList[i].coords.longitude;
-          } else {
-            lat = coordinatesList[i].latitude;
-            lng = coordinatesList[i].longitude;
-          }
-
-          var element = new google.maps.LatLng(lat, lng);
-          path.push(element);
-        }
+        $rootScope.path.push(currentPosition);
+        $rootScope.marker.position = currentPosition;
       }
     };
   });

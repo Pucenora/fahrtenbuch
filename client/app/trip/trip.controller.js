@@ -77,6 +77,7 @@ angular.module('fahrtenbuchApp')
 		 	var mapOptions = config.defaultMapOptions;
 		 	mapOptions.center = new google.maps.LatLng(position.latitude, position.longitude);
 		 	map = new google.maps.Map(document.getElementById('mapContainer'), config.defaultMapOptions);
+		 	Directions.polygons(null, map);
     })
     .catch(function(err) {
     	$scope.errors.other = err.message;
@@ -161,7 +162,6 @@ angular.module('fahrtenbuchApp')
 		$scope.stopWatchPosition = function() {
 			Location.clearWatch()
 			.then(function(positions) {
-				Directions.polygons(null, positions, map);
 				$scope.route = positions;
 				$scope.recordingStatus = 'stopped';
 			})
@@ -301,9 +301,15 @@ angular.module('fahrtenbuchApp')
 		 		mapOptions.center = new google.maps.LatLng(position.latitude, position.longitude);
 			 	map = new google.maps.Map(document.getElementById('mapContainer'), config.defaultMapOptions);
 
-			 	console.log($scope.trip.route );
 				if ($scope.trip.route !== []) {
-					Directions.polygons(null, $scope.trip.route, map);
+					Directions.polygons(null, map);
+
+					for (var i = 0; i < $scope.trip.route.length; i++) {
+						var lat = $scope.trip.route[i].latitude;
+	    			var lng = $scope.trip.route[i].longitude;
+	    			var element = new google.maps.LatLng(lat, lng);
+	    			$rootScope.path.push(element);
+    			}
 				}
 	    })
 	    .catch(function(err) {
