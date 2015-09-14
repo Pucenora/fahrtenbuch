@@ -17,7 +17,7 @@
 
   <button type="button" class="btn btn-success btn-lg" ng-click="startWatchPosition()">Start</button>
   <button type="button" class="btn btn-success btn-lg" ng-click="stopWatchPosition()">Stop</button>
-  Current amount of kilometers: <strong>{{ recordingStatus }}</strong>
+  Current amount of kilometers: <strong>{{ recordingStatus }}</strong> <i ng-if="recording === false" id="stopped" class="glyphicon glyphicon-record"></i><i ng-if="recording === true" id="started" class="glyphicon glyphicon-record"></i>
 
   <form class="css-form" novalidate name="form">
     <p class="input-group">

@@ -45,6 +45,7 @@ angular.module('fahrtenbuchApp')
   	$scope.minuteStep = 5;
   	// display recording the route has not started yet
 	 	$scope.recordingStatus = 0 + ' km';
+	 	$scope.recording = false;
   	// general error displayed in the view
     $scope.errors = {};
     $scope.saveRoute = false;
@@ -156,6 +157,7 @@ angular.module('fahrtenbuchApp')
 		$scope.startWatchPosition = function() {
 			Location.watchPosition();
 			$scope.recordingStatus = $rootScope.pathLength + ' km';
+			$scope.recording = true;
 		};
 
 		// stop recording the route and display it on the map
@@ -164,6 +166,7 @@ angular.module('fahrtenbuchApp')
 			.then(function(positions) {
 				$scope.route = positions;
 				$scope.trip.kilometerEnd = $scope.trip.kilometerStart = $scope.trip.kilometerStart + $rootScope.pathLength;
+				$scope.recording = false;
 			})
 	    .catch(function(err) {
       	$scope.errors.other = err.message;

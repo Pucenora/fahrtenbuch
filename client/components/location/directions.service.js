@@ -116,8 +116,8 @@ angular.module('fahrtenbuchApp')
         var currentPosition = new google.maps.LatLng(lat, lng);
 
         $rootScope.path.push(currentPosition);
-        $rootScope.marker.position = currentPosition;
-        $rootScope.pathLength = google.maps.geometry.spherical.computeLength($rootScope.path.getArray());
+        $rootScope.marker.setPosition(currentPosition);
+        $rootScope.pathLength = Math.round(google.maps.geometry.spherical.computeLength($rootScope.path.getArray()) /1000);
       }
     };
   });
