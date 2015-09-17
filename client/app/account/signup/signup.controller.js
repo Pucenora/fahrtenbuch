@@ -23,40 +23,26 @@ angular.module('fahrtenbuchApp')
 
       if(form.$valid) {
 
-        // Get position of stated location
-        Geocode.geocode(null, $scope.user.baseName)
-        .then(function(coords) {
-          $scope.user.baseLat = coords.G;
-          $scope.user.baseLong = coords.K;
-
-          // save new user
-          Auth.createUser({
-            name: $scope.user.name,
-            baseName: $scope.user.baseName,
-            baseLat: $scope.user.baseLat,
-            baseLong: $scope.user.baseLong,
-            defaultCar: $scope.car._id,
-            email: $scope.user.email,
-            password: $scope.user.password
-          })
-          .then( function() {
-            // redirect to trip overview
-            $location.path('/trip');
-          })
-          .catch( function(err) {
-            err = err.data;
-            $scope.errors = {};
-
-            // Update validity of form fields that match the mongoose errors
-            angular.forEach(err.errors, function(error, field) {
-              form[field].$setValidity('mongoose', false);
-              $scope.errors[field] = error.message;
-            });
-          });
-
+        // save new user
+        Auth.createUser({
+          name: $scope.user.name,
+          defaultCar: $scope.car._id,
+          email: $scope.user.email,
+          password: $scope.user.password
         })
-        .catch(function(err) {
-          $scope.errors.other = 'Location not found!';
+        .then( function() {
+          // redirect to trip overview
+          $location.path('/trip');
+        })
+        .catch( function(err) {
+          err = err.data;
+          $scope.errors = {};
+
+          // Update validity of form fields that match the mongoose errors
+          angular.forEach(err.errors, function(error, field) {
+            form[field].$setValidity('mongoose', false);
+            $scope.errors[field] = error.message;
+          });
         });
       }
     };

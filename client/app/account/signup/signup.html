@@ -17,12 +17,6 @@
             A name is required
           </p>
 
-          <label>Base</label>
-          <input type="text" name="base" class="form-control" ng-model="user.baseName" required/>
-          <p class="help-block" ng-show="form.base.$error.required && submitted">
-            A base is required
-          </p>
-
           <label>Default Car</label>
             <select ng-model="car" class="form-control" ng-options="car.description for car in cars">
             </select>
